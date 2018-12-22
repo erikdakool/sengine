@@ -1,0 +1,13 @@
+.idea
+.cache
+.pytest_cache
+cmake-build-*
+solutions
+*.swp
+*.tmp
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+The_Game/The_Game*
+The_Game/cmake-build-debug*
