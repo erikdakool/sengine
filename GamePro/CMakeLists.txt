@@ -3,4 +3,15 @@ project(GamePro)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(GamePro main.cpp)
+add_executable(GamePro
+        main.cpp
+        App.cpp
+        App.h
+        Gameobject.cpp
+        Gameobject.h
+        Components/Transform.cpp
+        Components/Transform.h
+        Components/Component.cpp
+        Components/Component.h Components/RenderCom.cpp Components/RenderCom.h WindowController.cpp WindowController.h Manager.h)
+
+target_link_libraries (GamePro jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)
