@@ -5,6 +5,8 @@
 #ifndef GAMEPRO_COMPONENT_H
 #define GAMEPRO_COMPONENT_H
 
+#include <string>
+
 class Gameobject;
 class Component {
 public:
@@ -15,9 +17,15 @@ public:
     virtual void update(float deltaT);
 
     Gameobject &getGameobject() const;
+
+    bool isActive() const;
+
 private:
+    //Component data
     Gameobject& gameobject;
-    bool active;
+    unsigned int id;
+    std::string name;
+    bool active = true;
 };
 
 

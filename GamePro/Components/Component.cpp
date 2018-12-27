@@ -25,3 +25,7 @@ void Component::update(float deltaT) {
 Gameobject &Component::getGameobject() const {
     return gameobject;
 }
+
+bool Component::isActive() const {
+    return active;
+}

@@ -12,6 +12,6 @@ add_executable(GamePro
         Components/Transform.cpp
         Components/Transform.h
         Components/Component.cpp
-        Components/Component.h Components/RenderCom.cpp Components/RenderCom.h WindowController.cpp WindowController.h Manager.h)
+        Components/Component.h Components/RenderCom.cpp Components/RenderCom.h WindowController.cpp WindowController.h Manager.h Components/Movement.cpp Components/Movement.h ObjectController.cpp ObjectController.h Components/Collider.cpp Components/Collider.h)
 
 target_link_libraries (GamePro jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)

@@ -5,7 +5,15 @@
 #ifndef GAMEPRO_MANAGER_H
 #define GAMEPRO_MANAGER_H
 
+//RenderData
 #include "WindowController.h"
+//InputData
+
+//AssetData
+
+//ObjectData
+#include "ObjectController.h"
+
 
 struct RenderData{
     RenderData(sf::RenderWindow& window)
@@ -19,6 +27,10 @@ struct InputData{
 
 struct AssetData{
 
+};
+
+struct ObjectData{
+    ObjectController objectController;
 };
 
 

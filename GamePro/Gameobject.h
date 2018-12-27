@@ -6,6 +6,8 @@
 #define GAMEPRO_GAMEOBJECT_H
 
 #include <memory>
+#include <list>
+#include <string>
 
 #include "Components/Transform.h"
 #include "Components/RenderCom.h"
@@ -42,15 +44,29 @@ public:
     unsigned int getId() const{
         return id;
     }
+
+    template<typename T>
+    T getComponent();
+
     RenderData& getRenderData() const;
 
+    Transform* trasform()const { return this->transform.get();}
+
 private:
-    std::unique_ptr<Transform> transform;
-    RenderCom* renderCom;
-    RenderData& renderData;
+    //Gameobject info
     unsigned int id;
+    std::string name;
     bool active;
     ObjectTag tag = TagGameobject;
+
+    //Controllers
+    RenderData& renderData;
+
+    //transform
+    std::unique_ptr<Transform> transform;
+
+    //Components
+    std::list<std::shared_ptr<Component>> components;
 };
 
 

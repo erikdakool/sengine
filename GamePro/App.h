@@ -22,9 +22,7 @@ public:
 private:
     bool running = true;
     RenderData renderData;
-    std::list<std::shared_ptr<Gameobject>> objects;
-    std::list<std::shared_ptr<Gameobject>> inactiveObjects;
+    ObjectData objectData;
 };
-
 
 #endif //GAMEPRO_APP_H
