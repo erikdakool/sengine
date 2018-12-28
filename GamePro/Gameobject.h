@@ -46,7 +46,17 @@ public:
     }
 
     template<typename T>
-    T getComponentP();
+    T getComponentP(){
+        for(auto i = components.begin(); i != components.end();i++){
+            auto com = dynamic_cast<T>(i->get());
+            if(com){
+                return com;
+            }
+        }
+        return nullptr;
+    }
+
+    void AddComponent(std::shared_ptr<Component> component);
 
     RenderData& getRenderData() const;
 

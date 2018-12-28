@@ -5,7 +5,7 @@
 #include <ctime>
 
 #include "App.h"
-
+#include "Components/PlayerController.h"
 App::App()
 :renderData(*this)
 {
@@ -27,7 +27,7 @@ void App::run() {
     }
 
     for (int i = 0; i <5; ++i) {
-        auto object = std::make_shared<Gameobject>(i,true,renderData,objectData);
+        auto object = std::make_shared<Gameobject>(i, false,renderData,objectData);
         objectData.objectController.addObject(object);
     }
 
@@ -36,10 +36,16 @@ void App::run() {
         objectData.objectController.addObject(object);
     }
 
+    auto object = std::make_shared<Gameobject>(11, true,renderData,objectData);
+    auto playerController = std::make_shared<PlayerController>(*object.get());
+    object.get()->AddComponent(playerController);
+    objectData.objectController.addObject(object);
+
     objectData.objectController.clearInactive();
 
     while(running){
-        float deltaT = clock.getElapsedTime().asMilliseconds();
+        //float deltaT = clock.getElapsedTime().asMilliseconds();
+        float deltaT = 1.f/60.f;
         //std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
         objectData.objectController.update(deltaT);
         objectData.objectController.draw();

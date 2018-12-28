@@ -9,12 +9,13 @@
 Gameobject::Gameobject(unsigned int id, bool active,RenderData& renderData,ObjectData& objectData)
 :renderData(renderData),objectData(objectData)
 {
+    this->transform = std::make_unique<Transform>();
     this->id = id;
     this->active = active;
     auto renderCom = std::make_shared<RenderCom>(*this);
     components.push_back(std::move(renderCom));
     auto move = std::make_shared<Movement>(*this);
-    //components.push_back(std::move(move));
+    components.push_back(std::move(move));
     auto collider = std::make_shared<Collider>(*this);
     components.push_back(collider);
     objectData.collisionController.addCollider(collider);
@@ -34,8 +35,6 @@ void Gameobject::update(float deltaT) {
             i->get()->update(deltaT);
         }
     }
-    auto com = getComponentP<RenderCom *>();
-    auto movement = getComponentP<Movement *>();
 }
 
 void Gameobject::destroy() {
@@ -45,17 +44,9 @@ void Gameobject::destroy() {
     objectData.collisionController.removeCollider();
 }
 
-template <typename T>
-T Gameobject::getComponentP() {
-    for(auto i = components.begin(); i != components.end();i++){
-        auto com = dynamic_cast<T>(i->get());
-        if(com){
-            return com;
-        }
-    }
-    return nullptr;
+void Gameobject::AddComponent(std::shared_ptr<Component> component) {
+    components.push_back(component);
 }
-
 
 RenderData& Gameobject::getRenderData() const {
     return renderData;

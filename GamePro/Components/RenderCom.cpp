@@ -2,6 +2,7 @@
 // Created by erik on 23.12.18.
 //
 
+#include <iostream>
 #include "RenderCom.h"
 
 #include "../Gameobject.h"
@@ -22,17 +23,19 @@ void RenderCom::init() {
     auto tex = std::make_shared<sf::Texture>();
     tex->loadFromFile("Data/Textures/Sample_3D.png");
     this->textureRectCon->texture = tex;
-    sf::IntRect intRect(0,0,1000,1000);
+    sf::IntRect intRect(0,0,20,20);
     this->textureRectCon->intRect = intRect;
 
     this->setTexture(*this->textureRectCon->texture);
     this->setTextureRect(this->textureRectCon->intRect);
-    this->setPosition(0,0);
+    this->setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     this->setScale(1,1);
 }
 
 void RenderCom::update(float deltaT) {
     this->setTexture(*this->textureRectCon->texture);
     this->setTextureRect(this->textureRectCon->intRect);
-    this->getGameobject().getRenderData().windowController.draw(*this);
+    setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
+    getGameobject().getRenderData().windowController.draw(*this);
+    std::cout << getGameobject().trasform()->getX() << "     " << getGameobject().trasform()->getY() << std::endl;
 }

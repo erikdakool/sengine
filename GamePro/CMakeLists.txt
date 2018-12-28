@@ -25,6 +25,6 @@ add_executable(GamePro
         Components/Collider.cpp
         Components/Collider.h
         CollisionController.cpp
-        CollisionController.h)
+        CollisionController.h Components/PlayerController.cpp Components/PlayerController.h)
 
 target_link_libraries (GamePro jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)

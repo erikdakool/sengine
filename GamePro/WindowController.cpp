@@ -27,8 +27,16 @@ void WindowController::draw(sf::Sprite &sprite) {
 void WindowController::drawToWindow() {
     window.setActive(true);
     window.clear();
+
     this->gameOut.display();
     sf::Sprite spriteGame(this->gameOut.getTexture());
     window.draw(spriteGame);
+
+    this->interfaceOut.display();
+    sf::Sprite spriteInterface(this->interfaceOut.getTexture());
+    window.draw(spriteInterface);
+
     window.display();
+    this->gameOut.clear(sf::Color::Transparent);
+    this->interfaceOut.clear(sf::Color::Transparent);
 }

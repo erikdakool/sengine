@@ -23,7 +23,7 @@ public:
     void moveDown(float deltaT);
 
 private:
-    float speed = 1;
+    float speed = 300.0f;
 };
 
 
