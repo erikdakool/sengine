@@ -34,3 +34,10 @@ void ObjectController::addObject(std::shared_ptr<Gameobject> object) {
         inactiveObjects.push_back(object);
     }
 }
+
+void ObjectController::clearInactive() {
+    for(auto i = inactiveObjects.begin(); i != inactiveObjects.end(); i++){
+        i->get()->destroy();
+    }
+    inactiveObjects.clear();
+}

@@ -24,7 +24,7 @@ enum ObjectTag{
 class App;
 class Gameobject {
 public:
-    Gameobject(unsigned int id, bool active,RenderData& renderData);
+    Gameobject(unsigned int id, bool active,RenderData& renderData,ObjectData& objectData);
     ~Gameobject();
     virtual void init();
     virtual void update(float deltaT);
@@ -46,7 +46,7 @@ public:
     }
 
     template<typename T>
-    T getComponent();
+    T getComponentP();
 
     RenderData& getRenderData() const;
 
@@ -61,6 +61,7 @@ private:
 
     //Controllers
     RenderData& renderData;
+    ObjectData& objectData;
 
     //transform
     std::unique_ptr<Transform> transform;

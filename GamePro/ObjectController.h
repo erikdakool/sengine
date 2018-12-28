@@ -18,10 +18,10 @@ public:
     void draw();
 
     void addObject(std::shared_ptr<Gameobject> object);
+    void clearInactive();
 private:
     std::list<std::shared_ptr<Gameobject>> objects;
     std::list<std::shared_ptr<Gameobject>> inactiveObjects;
 };
-
 
 #endif //GAMEPRO_OBJECTCONTROLLER_H

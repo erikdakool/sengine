@@ -26,6 +26,18 @@ Gameobject &Component::getGameobject() const {
     return gameobject;
 }
 
+bool Component::isDestroy() const {
+    return destroy;
+}
+
+void Component::setDestroy(bool destroy) {
+    Component::destroy = destroy;
+}
+
 bool Component::isActive() const {
     return active;
+}
+
+void Component::setActive(bool active) {
+    Component::active = active;
 }

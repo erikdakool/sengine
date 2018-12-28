@@ -13,6 +13,7 @@
 
 //ObjectData
 #include "ObjectController.h"
+#include "CollisionController.h"
 
 
 struct RenderData{
@@ -31,6 +32,7 @@ struct AssetData{
 
 struct ObjectData{
     ObjectController objectController;
+    CollisionController collisionController;
 };
 
 

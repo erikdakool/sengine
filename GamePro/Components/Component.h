@@ -15,16 +15,23 @@ public:
 
     virtual void init();
     virtual void update(float deltaT);
-
     Gameobject &getGameobject() const;
 
+
+    bool isDestroy() const;
+
+    void setDestroy(bool destroy);
+
     bool isActive() const;
+
+    void setActive(bool active);
 
 private:
     //Component data
     Gameobject& gameobject;
     unsigned int id;
     std::string name;
+    bool destroy = false;
     bool active = true;
 };
 

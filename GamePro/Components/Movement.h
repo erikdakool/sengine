@@ -13,7 +13,17 @@ class Movement : public Component {
 public:
     Movement(Gameobject& gameobject);
     ~Movement();
-    int counter;
+
+    void init();
+    void update(float deltaT);
+
+    void moveLeft(float deltaT);
+    void moveRight(float deltaT);
+    void moveUp(float deltaT);
+    void moveDown(float deltaT);
+
+private:
+    float speed = 1;
 };
 
 

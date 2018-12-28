@@ -13,3 +13,11 @@ Movement::Movement(Gameobject &gameobject)
 Movement::~Movement() {
 
 }
+
+void Movement::init() {
+
+}
+
+void Movement::update(float deltaT) {
+
+}
