@@ -3,7 +3,7 @@
 //
 
 #include "WindowController.h"
-
+#include "Gameobject.h"
 WindowController::WindowController(sf::RenderWindow& window)
 :window(window)
 {
@@ -21,6 +21,7 @@ WindowController::~WindowController() {
 }
 
 void WindowController::draw(sf::Sprite &sprite) {
+    sprite.setPosition(sprite.getPosition().x-camera.x,sprite.getPosition().y-camera.y);
     gameOut.draw(sprite);
 }
 
@@ -39,4 +40,9 @@ void WindowController::drawToWindow() {
     window.display();
     this->gameOut.clear(sf::Color::Transparent);
     this->interfaceOut.clear(sf::Color::Transparent);
+}
+
+void WindowController::updateCamera(Gameobject& gameobject) {
+    camera.x = gameobject.trasform()->getX() - camera.width/2;
+    camera.y = gameobject.trasform()->getY() - camera.height/2;
 }

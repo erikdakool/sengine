@@ -8,18 +8,25 @@
 #include <list>
 #include <memory>
 
+struct RenderData;
+struct ObjectData;
 class Gameobject;
 class ObjectController {
 public:
+    friend class App;
     ObjectController();
     ~ObjectController();
 
     void update(float deltaT);
-    void draw();
+
+    void spawnPlayer();
 
     void addObject(std::shared_ptr<Gameobject> object);
     void clearInactive();
 private:
+    ObjectData* objectData;
+    RenderData* renderData;
+    std::shared_ptr<Gameobject> player;
     std::list<std::shared_ptr<Gameobject>> objects;
     std::list<std::shared_ptr<Gameobject>> inactiveObjects;
 };

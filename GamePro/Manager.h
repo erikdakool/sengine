@@ -15,7 +15,6 @@
 #include "ObjectController.h"
 #include "CollisionController.h"
 
-
 struct RenderData{
     RenderData(sf::RenderWindow& window)
     :windowController(window){}
@@ -35,5 +34,11 @@ struct ObjectData{
     CollisionController collisionController;
 };
 
+struct AllData{
+    RenderData renderData;
+    InputData inputData;
+    AssetData assetData;
+    ObjectData objectData;
+};
 
 #endif //GAMEPRO_MANAGER_H

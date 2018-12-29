@@ -7,19 +7,29 @@
 
 #include <SFML/Graphics.hpp>
 
+struct Camera{
+    float x;
+    float y;
+    float width = 800;
+    float height = 600;
+};
+
+class Gameobject;
 class WindowController {
 public:
-    WindowController(sf::RenderWindow& window);
+    explicit WindowController(sf::RenderWindow& window);
     ~WindowController();
 
     void draw(sf::Sprite& sprite);
     void drawToWindow();
-
+    void updateCamera(Gameobject& gameobject);
+    bool onScreen(sf::Sprite& sprite);
 private:
     sf::RenderTexture gameOut;
     sf::RenderTexture interfaceOut;
     sf::RenderWindow& window;
     sf::VideoMode vm;
+    Camera camera;
 };
 
 

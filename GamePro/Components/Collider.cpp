@@ -10,11 +10,11 @@
 Collider::Collider(Gameobject &gameobject)
 :Component(gameobject)
 {
-    std::cout << "collider made" << std::endl;
+
 }
 
 Collider::~Collider() {
-    std::cout << "Collider deleted" << std::endl;
+
 }
 
 void Collider::init() {
@@ -33,23 +33,15 @@ bool Collider::checkCollision(Collider& collider) {
     if (this->getGameobject().getId() == collider.getGameobject().getId())
         return false;
 
-    if(((collider.getX()+collider.getWidth())<= this->x))
+    if(((collider.getGameobject().trasform()->getX()+collider.xOff+collider.getWidth())<= getGameobject().trasform()->getX()+this->xOff))
         return false;
-    else if((this->x+this->width) <= collider.getX())
+    else if((getGameobject().trasform()->getX()+this->xOff+this->width) <= collider.getGameobject().trasform()->getX()+collider.xOff)
         return false;
-    else if((collider.getY()+collider.getHeight()) <= this->y)
+    else if((collider.getGameobject().trasform()->getY()+collider.yOff+collider.getHeight()) <= getGameobject().trasform()->getY()+this->yOff)
         return false;
-    else if((this->y+this->height) <= collider.getY())
+    else if((getGameobject().trasform()->getY()+this->yOff+this->height) <= collider.getGameobject().trasform()->getY()+collider.yOff)
         return false;
     else return true;
-}
-
-float Collider::getX() const {
-    return x;
-}
-
-float Collider::getY() const {
-    return y;
 }
 
 float Collider::getWidth() const {
@@ -58,4 +50,20 @@ float Collider::getWidth() const {
 
 float Collider::getHeight() const {
     return height;
+}
+
+float Collider::getXOff() const {
+    return xOff;
+}
+
+float Collider::getYOff() const {
+    return yOff;
+}
+
+void Collider::setXOff(float xOff) {
+    Collider::xOff = xOff;
+}
+
+void Collider::setYOff(float yOff) {
+    Collider::yOff = yOff;
 }

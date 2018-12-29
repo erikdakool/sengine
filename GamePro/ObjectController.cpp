@@ -4,6 +4,8 @@
 
 #include "ObjectController.h"
 #include "Gameobject.h"
+#include "Components/PlayerController.h"
+#include "Components/Physics.h"
 
 ObjectController::ObjectController() {
 
@@ -23,8 +25,22 @@ void ObjectController::update(float deltaT) {
     }
 }
 
-void ObjectController::draw() {
+void ObjectController::spawnPlayer() {
+    auto object = std::make_shared<Gameobject>(11, true,*renderData,*objectData);
 
+    auto playerController = std::make_shared<PlayerController>(*object.get());
+    object.get()->AddComponent(playerController);
+
+    auto render = object.get()->getComponentP<RenderCom*>();
+    render->setColor(sf::Color::Red);
+
+    auto physics = std::make_shared<Physics>(*object.get());
+    object.get()->AddComponent(physics);
+
+    object.get()->trasform()->setY(0);
+    object.get()->trasform()->setX(500);
+    objects.push_back(object);
+    player = object;
 }
 
 void ObjectController::addObject(std::shared_ptr<Gameobject> object) {

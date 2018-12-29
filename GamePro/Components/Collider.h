@@ -12,24 +12,29 @@
 class Gameobject;
 class Collider : public Component{
 public:
-    Collider(Gameobject& gameobject);
+    explicit Collider(Gameobject& gameobject);
     ~Collider();
 
     void init();
     void update(float deltaT);
     bool checkCollision(Collider& collider);
 
-    float getX() const;
+    float getXOff() const;
 
-    float getY() const;
+    void setXOff(float xOff);
+
+    void setYOff(float yOff);
+
+    float getYOff() const;
 
     float getWidth() const;
 
     float getHeight() const;
 
 private:
-    float x = 0, y = 0;
-    float width = 0, height = 0;
+    float xOff = 0;
+    float yOff = 0;
+    float width = 40, height = 40;
     bool collider = true;
     bool trigger = false;
     unsigned int eventId;

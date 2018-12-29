@@ -10,7 +10,6 @@
 
 #include "Components/Collider.h"
 
-class Collider;
 class CollisionController {
 public:
     CollisionController();
@@ -19,6 +18,7 @@ public:
     Collider* collision(Collider& collider);
     void addCollider(std::shared_ptr<Collider> collider);
     void removeCollider();
+    Collider* checkCollision(Collider& collider, Dir dir, float distance);
 private:
     std::list<std::shared_ptr<Collider>> colliders;
 };

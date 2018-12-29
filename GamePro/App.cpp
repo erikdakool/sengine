@@ -5,10 +5,13 @@
 #include <ctime>
 
 #include "App.h"
-#include "Components/PlayerController.h"
+#include "Components/Physics.h"
+
 App::App()
 :renderData(*this)
 {
+    objectData.objectController.objectData = &objectData;
+    objectData.objectController.renderData = &renderData;
     srand(time(NULL));//Restarts so we dont get the same randoms.
 }
 
@@ -20,35 +23,31 @@ void App::run() {
     sf::Clock clock;
     sf::Event event;
 
-    //Handle input
-    while (this->pollEvent(event))
-    {
-        if (event.type == sf::Event::Closed)this->close();
+    for (int i = 0; i < 5; ++i) {
+        for (int j = 0; j < 5; ++j) {
+            auto object = std::make_shared<Gameobject>((i*j)+i, true,renderData,objectData);
+            auto phys = std::make_shared<Physics>(*object.get());
+            object.get()->AddComponent(phys);
+            object.get()->trasform()->setX(i*80);
+            object.get()->trasform()->setY(j*80);
+            objectData.objectController.addObject(object);
+        }
     }
 
-    for (int i = 0; i <5; ++i) {
-        auto object = std::make_shared<Gameobject>(i, false,renderData,objectData);
-        objectData.objectController.addObject(object);
-    }
-
-    for (int i = 5; i <10; ++i) {
-        auto object = std::make_shared<Gameobject>(i, false,renderData,objectData);
-        objectData.objectController.addObject(object);
-    }
-
-    auto object = std::make_shared<Gameobject>(11, true,renderData,objectData);
-    auto playerController = std::make_shared<PlayerController>(*object.get());
-    object.get()->AddComponent(playerController);
-    objectData.objectController.addObject(object);
-
+    objectData.objectController.spawnPlayer();
     objectData.objectController.clearInactive();
-
     while(running){
+        //Handle input
+        renderData.windowController.updateCamera(*objectData.objectController.player);
+        while (this->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)this->close();
+        }
+
         //float deltaT = clock.getElapsedTime().asMilliseconds();
         float deltaT = 1.f/60.f;
-        //std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
+        //std::cout << clock.getElapsedTime().asMicroseconds() << std::endl;
         objectData.objectController.update(deltaT);
-        objectData.objectController.draw();
         renderData.windowController.drawToWindow();
         clock.restart();
     }

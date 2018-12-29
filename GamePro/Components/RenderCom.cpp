@@ -23,13 +23,14 @@ void RenderCom::init() {
     auto tex = std::make_shared<sf::Texture>();
     tex->loadFromFile("Data/Textures/Sample_3D.png");
     this->textureRectCon->texture = tex;
-    sf::IntRect intRect(0,0,20,20);
+    sf::IntRect intRect(0,0,40,40);
     this->textureRectCon->intRect = intRect;
 
     this->setTexture(*this->textureRectCon->texture);
     this->setTextureRect(this->textureRectCon->intRect);
     this->setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     this->setScale(1,1);
+    this->setColor(color);
 }
 
 void RenderCom::update(float deltaT) {
@@ -37,5 +38,4 @@ void RenderCom::update(float deltaT) {
     this->setTextureRect(this->textureRectCon->intRect);
     setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     getGameobject().getRenderData().windowController.draw(*this);
-    std::cout << getGameobject().trasform()->getX() << "     " << getGameobject().trasform()->getY() << std::endl;
 }

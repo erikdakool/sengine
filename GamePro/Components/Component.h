@@ -7,6 +7,14 @@
 
 #include <string>
 
+
+enum Dir{
+    Right,
+    Left,
+    Up,
+    Down
+};
+
 class Gameobject;
 class Component {
 public:
@@ -25,6 +33,10 @@ public:
     bool isActive() const;
 
     void setActive(bool active);
+
+    unsigned int getId() const;
+
+    void setId(unsigned int id);
 
 private:
     //Component data

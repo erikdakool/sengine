@@ -26,6 +26,7 @@ public:
 
 private:
     std::shared_ptr<TextureRect> textureRectCon;
+    sf::Color color = sf::Color(255,255,255);
 };
 
 

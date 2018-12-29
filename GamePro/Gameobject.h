@@ -60,6 +60,8 @@ public:
 
     RenderData& getRenderData() const;
 
+    ObjectData &getObjectData() const;
+
     Transform* trasform()const { return this->transform.get();}
 
 private:

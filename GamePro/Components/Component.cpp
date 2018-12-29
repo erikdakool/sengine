@@ -41,3 +41,11 @@ bool Component::isActive() const {
 void Component::setActive(bool active) {
     Component::active = active;
 }
+
+unsigned int Component::getId() const {
+    return id;
+}
+
+void Component::setId(unsigned int id) {
+    Component::id = id;
+}

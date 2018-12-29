@@ -51,3 +51,7 @@ void Gameobject::AddComponent(std::shared_ptr<Component> component) {
 RenderData& Gameobject::getRenderData() const {
     return renderData;
 }
+
+ObjectData &Gameobject::getObjectData() const {
+    return objectData;
+}
