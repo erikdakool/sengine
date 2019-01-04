@@ -28,6 +28,10 @@ void Transform::decreaseY(float value) {
     y-=value;
 }
 
+void Transform::rotateD(float value) {
+    rotation+=value;
+}
+
 float Transform::getX() const {
     return x;
 }

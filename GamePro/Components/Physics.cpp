@@ -13,6 +13,7 @@ Physics::Physics(Gameobject &gameobject)
 :Component(gameobject)
 {
     cyAcc = 9.81f;
+    col = getGameobject().getComponentP<Collider*>();
 }
 
 Physics::~Physics() {
@@ -27,24 +28,21 @@ void Physics::update(float deltaT) {
     deltaT = deltaT*10;
 
     //check gravity applicable
-    auto col = getGameobject().getComponentP<Collider*>();
     auto obj = getGameobject().getObjectData().collisionController.checkCollision(*col,Down,.1f);
     if(obj)
     {
         cyAcc = 0;
-        yVel = 0;
     } else{
         cyAcc = 0; //9.81f;
     }
 
     //Resistance force calculated
-    float yrFor = dragCo * (yVel*yVel);
-    float xrFor = dragCo * (xVel*xVel);
+    float yrFor = 0;//dragCo * (yVel*yVel);
+    float xrFor = 0;//dragCo * (xVel*xVel);
 
     //total force for tick calculated
     yFor = (cyAcc* mass * deltaT)-yrFor + yImp;
     xFor = (cxAcc* mass * deltaT)-xrFor + xImp;
-
 
     bool xHit = false;
     bool yHit = false;
@@ -52,12 +50,11 @@ void Physics::update(float deltaT) {
     float yPosD = yVel * deltaT +(0.5f*lyAcc*(deltaT*deltaT));
     if(yPosD>0){
         getGameobject().trasform()->increaseY(yPosD);
-        auto col = getGameobject().getComponentP<Collider*>();
         auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
-                phys->addFor(Down,this->yFor);
+                phys->addVel(Down,this->mass*fabsf(yVel));
             }
             getGameobject().trasform()->setY(t->getGameobject().trasform()->getY()+t->getYOff()-col->getHeight());
             yHit = true;
@@ -68,7 +65,7 @@ void Physics::update(float deltaT) {
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
-                phys->addFor(Down,this->yFor);
+                phys->addVel(Up,this->mass*fabsf(yVel));
             }
             getGameobject().trasform()->setY(t->getGameobject().trasform()->getY()+t->getYOff()+t->getHeight());
             yHit = true;
@@ -79,17 +76,15 @@ void Physics::update(float deltaT) {
     yVel += avyAcc * deltaT;
     lyAcc = yAcc;
 
-
     //xpos change
     float xPosD = xVel * deltaT +(0.5f*lxAcc*(deltaT*deltaT));
     if(xPosD>0){
         getGameobject().trasform()->increaseX(xPosD);
-        auto col = getGameobject().getComponentP<Collider*>();
         auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
-                phys->addFor(Right,this->xFor);
+                phys->addVel(Right,this->mass*fabsf(xVel));
             }
             getGameobject().trasform()->setX(t->getGameobject().trasform()->getX()+t->getXOff()-col->getWidth());
             xHit = true;
@@ -100,7 +95,7 @@ void Physics::update(float deltaT) {
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
-                phys->addFor(Right,this->xFor);
+                phys->addVel(Left,this->mass*fabsf(xVel));
             }
             getGameobject().trasform()->setX(t->getGameobject().trasform()->getX()+t->getXOff()+t->getWidth());
             xHit = true;
@@ -122,7 +117,10 @@ void Physics::update(float deltaT) {
         xVel = 0;
         xImp = 0;
     }
-
+    //std::cout << xFor << "      " << xImp << "      " << xVel << "     " << xrFor <<    std::endl;
+    //std::cout << yFor << "      " << yImp << "      " << yVel << "     " << yrFor <<    std::endl;
+    xImp = 0;
+    yImp = 0;
     //std::cout <<getGameobject().trasform()->getY() << "     " <<  yPosD << "    " << yVel << "     " << yAcc << "      " << yFor << std::endl;
 }
 
@@ -144,5 +142,18 @@ void Physics::addFor(Dir dir, float value) {
 }
 
 void Physics::addVel(Dir dir, float value) {
-
+    switch (dir){
+        case Right:
+            xVel +=value/mass;
+            break;
+        case Left:
+            xVel-= value/mass;
+            break;
+        case Up:
+            yVel -= value/mass;
+            break;
+        case Down:
+            yVel += value/mass;
+            break;
+    }
 }

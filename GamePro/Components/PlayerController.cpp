@@ -39,4 +39,10 @@ void PlayerController::update(float deltaT) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
         movement->moveDown(deltaT);
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+        getGameobject().trasform()->rotateD(1);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+        getGameobject().trasform()->rotateD(-1);
+    }
 }

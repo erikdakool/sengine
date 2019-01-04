@@ -16,6 +16,8 @@ public:
     void increaseY(float value);
     void decreaseY(float value);
 
+    void rotateD(float value);
+
     float getX() const;
 
     void setX(float x);
@@ -40,7 +42,7 @@ private:;
     float x = 0, y = 0;
 
     float xScale = 1.0, yScale = 1.0;
-    float rotation = 0;
+    float rotation = 0.f;
 };
 
 

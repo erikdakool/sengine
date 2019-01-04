@@ -27,7 +27,7 @@ void Movement::update(float deltaT) {
 void Movement::moveRight(float deltaT) {
     //getGameobject().trasform()->increaseX(deltaT*speed);
     auto phys = getGameobject().getComponentP<Physics*>();
-    phys->addFor(Right,deltaT*10);
+    phys->addFor(Right,deltaT*speed);
     auto col = getGameobject().getComponentP<Collider*>();
     auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
     if(t){
@@ -38,7 +38,7 @@ void Movement::moveRight(float deltaT) {
 void Movement::moveLeft(float deltaT) {
     //getGameobject().trasform()->decreaseX(deltaT*speed);
     auto phys = getGameobject().getComponentP<Physics*>();
-    phys->addFor(Left,deltaT*100);
+    phys->addFor(Left,deltaT*speed);
     auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
     if(t){
         getGameobject().trasform()->setX(t->getGameobject().trasform()->getX()+t->getXOff()+t->getWidth());
@@ -48,7 +48,7 @@ void Movement::moveLeft(float deltaT) {
 void Movement::moveDown(float deltaT) {
     //getGameobject().trasform()->increaseY(deltaT*speed);
     auto phys = getGameobject().getComponentP<Physics*>();
-    phys->addFor(Down,deltaT*100);
+    phys->addFor(Down,deltaT*speed);
     auto col = getGameobject().getComponentP<Collider*>();
     auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
     if(t){
@@ -59,7 +59,7 @@ void Movement::moveDown(float deltaT) {
 void Movement::moveUp(float deltaT) {
     //getGameobject().trasform()->decreaseY(deltaT*speed);
     auto phys = getGameobject().getComponentP<Physics*>();
-    phys->addFor(Up,deltaT*10);
+    phys->addFor(Up,deltaT*speed);
     auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
     if(t){
         getGameobject().trasform()->setY(t->getGameobject().trasform()->getY()+t->getYOff()+t->getHeight());

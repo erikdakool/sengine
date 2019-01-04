@@ -30,12 +30,14 @@ void RenderCom::init() {
     this->setTextureRect(this->textureRectCon->intRect);
     this->setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     this->setScale(1,1);
+    this->setOrigin(20,20);
     this->setColor(color);
 }
 
 void RenderCom::update(float deltaT) {
     this->setTexture(*this->textureRectCon->texture);
     this->setTextureRect(this->textureRectCon->intRect);
+    this->setRotation(getGameobject().trasform()->getRotation());
     setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     getGameobject().getRenderData().windowController.draw(*this);
 }
