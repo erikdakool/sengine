@@ -31,11 +31,14 @@ void RenderCom::init() {
     this->setTextureRect(this->textureRectCon->intRect);
     this->setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     this->setScale(1,1);
-    this->setOrigin(20,20);
+    this->setOrigin((float)intRect.width/2,(float)intRect.height/2);
     this->setColor(color);
 }
 
 void RenderCom::update(float deltaT) {
+    onscreen = getGameobject().getManager().windowController.onScreen(*this);
+    if(!onscreen)
+        return;
     this->setTexture(*this->textureRectCon->texture);
     this->setTextureRect(this->textureRectCon->intRect);
     this->setRotation(getGameobject().trasform()->getRotation());

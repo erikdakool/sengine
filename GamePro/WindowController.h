@@ -15,6 +15,7 @@ struct Camera{
 };
 
 class Gameobject;
+class RenderCom;
 class WindowController {
 public:
     explicit WindowController(sf::RenderWindow& window);
@@ -23,7 +24,7 @@ public:
     void draw(sf::Sprite& sprite);
     void drawToWindow();
     void updateCamera(Gameobject& gameobject);
-    bool onScreen(sf::Sprite& sprite);
+    bool onScreen(RenderCom& renderCom);
 private:
     sf::RenderTexture gameOut;
     sf::RenderTexture interfaceOut;

@@ -46,3 +46,16 @@ void WindowController::updateCamera(Gameobject& gameobject) {
     camera.x = gameobject.trasform()->getX() - camera.width/2;
     camera.y = gameobject.trasform()->getY() - camera.height/2;
 }
+
+bool WindowController::onScreen(RenderCom &renderCom) {
+    if(renderCom.getGameobject().trasform()->getX()>camera.x+camera.width)
+        return false;
+    if(renderCom.getGameobject().trasform()->getX()<camera.x)
+        return false;
+    if(renderCom.getGameobject().trasform()->getY()>camera.y+camera.height)
+        return false;
+    if(renderCom.getGameobject().trasform()->getY()<camera.y)
+        return false;
+    return true;
+
+}
