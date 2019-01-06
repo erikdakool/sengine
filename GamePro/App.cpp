@@ -8,10 +8,9 @@
 #include "Components/Physics.h"
 
 App::App()
-:renderData(*this)
+:manager(*this)
 {
-    objectData.objectController.objectData = &objectData;
-    objectData.objectController.renderData = &renderData;
+    manager.objectController.manager = &manager;
     srand(time(NULL));//Restarts so we dont get the same randoms.
 }
 
@@ -23,22 +22,22 @@ void App::run() {
     sf::Clock clock;
     sf::Event event;
 
-    for (int i = 0; i < 40; ++i) {
-        for (int j = 0; j < 40; ++j) {
-            auto object = std::make_shared<Gameobject>((i*j)+i, true,renderData,objectData);
+    for (int i = 0; i < 140; ++i) {
+        for (int j = 0; j < 140; ++j) {
+            auto object = std::make_shared<Gameobject>((i*j)+i, true,manager);
             auto phys = std::make_shared<Physics>(*object.get());
-            object.get()->AddComponent(phys);
+            //object.get()->AddComponent(phys);
             object.get()->trasform()->setX(i*41);
             object.get()->trasform()->setY(j*41+100);
-            objectData.objectController.addObject(object);
+            manager.objectController.addObject(object);
         }
     }
 
-    objectData.objectController.spawnPlayer();
-    objectData.objectController.clearInactive();
+    manager.objectController.spawnPlayer();
+    manager.objectController.clearInactive();
     while(running){
         //Handle input
-        renderData.windowController.updateCamera(*objectData.objectController.player);
+        manager.windowController.updateCamera(*manager.objectController.player);
         while (this->pollEvent(event))
         {
             if (event.type == sf::Event::Closed)this->close();
@@ -47,8 +46,8 @@ void App::run() {
         //float deltaT = clock.getElapsedTime().asMilliseconds();
         float deltaT = 1.f/60.f;
         std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
-        objectData.objectController.update(deltaT);
-        renderData.windowController.drawToWindow();
+        manager.objectController.update(deltaT*3);
+        manager.windowController.drawToWindow();
         clock.restart();
     }
 }

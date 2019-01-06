@@ -5,40 +5,29 @@
 #ifndef GAMEPRO_MANAGER_H
 #define GAMEPRO_MANAGER_H
 
-//RenderData
+//Manager
 #include "WindowController.h"
 //InputData
 
 //AssetData
+#include "AssetController.h"
 
-//ObjectData
+//Manager
 #include "ObjectController.h"
 #include "CollisionController.h"
 
-struct RenderData{
-    RenderData(sf::RenderWindow& window)
-    :windowController(window){}
+struct Manager {
+    Manager(sf::RenderWindow& window)
+            :windowController(window){}
+    //Render controllers
     WindowController windowController;
-};
-
-struct InputData{
-
-};
-
-struct AssetData{
-
-};
-
-struct ObjectData{
+    //Asset controller
+    AssetController assetController;
+    //ObjectControllers
     ObjectController objectController;
     CollisionController collisionController;
 };
 
-struct AllData{
-    RenderData renderData;
-    InputData inputData;
-    AssetData assetData;
-    ObjectData objectData;
-};
+typedef std::shared_ptr<Manager> Data;
 
 #endif //GAMEPRO_MANAGER_H

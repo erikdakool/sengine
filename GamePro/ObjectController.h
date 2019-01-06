@@ -8,8 +8,8 @@
 #include <list>
 #include <memory>
 
-struct RenderData;
-struct ObjectData;
+struct Manager;
+struct Manager;
 class Gameobject;
 class ObjectController {
 public:
@@ -24,8 +24,7 @@ public:
     void addObject(std::shared_ptr<Gameobject> object);
     void clearInactive();
 private:
-    ObjectData* objectData;
-    RenderData* renderData;
+    Manager* manager;
     std::shared_ptr<Gameobject> player;
     std::list<std::shared_ptr<Gameobject>> objects;
     std::list<std::shared_ptr<Gameobject>> inactiveObjects;

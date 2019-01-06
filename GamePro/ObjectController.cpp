@@ -26,7 +26,7 @@ void ObjectController::update(float deltaT) {
 }
 
 void ObjectController::spawnPlayer() {
-    auto object = std::make_shared<Gameobject>(11, true,*renderData,*objectData);
+    auto object = std::make_shared<Gameobject>(11, true,*manager);
 
     auto playerController = std::make_shared<PlayerController>(*object.get());
     object.get()->AddComponent(playerController);

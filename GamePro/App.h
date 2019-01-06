@@ -21,8 +21,7 @@ public:
     void run();
 private:
     bool running = true;
-    RenderData renderData;
-    ObjectData objectData;
+    Manager manager;
 };
 
 #endif //GAMEPRO_APP_H

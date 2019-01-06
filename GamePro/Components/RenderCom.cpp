@@ -20,9 +20,10 @@ RenderCom::~RenderCom() {
 void RenderCom::init() {
     auto tRect = std::make_shared<TextureRect>();
     this->textureRectCon = tRect;
-    auto tex = std::make_shared<sf::Texture>();
-    tex->loadFromFile("Data/Textures/Sample_3D.png");
-    this->textureRectCon->texture = tex;
+
+    getGameobject().getManager().assetController.loadTexture("tex","Data/Textures/Sample_3D.png");
+    tRect->texture=getGameobject().getManager().assetController.getTexture("tex");
+
     sf::IntRect intRect(0,0,40,40);
     this->textureRectCon->intRect = intRect;
 
@@ -39,5 +40,5 @@ void RenderCom::update(float deltaT) {
     this->setTextureRect(this->textureRectCon->intRect);
     this->setRotation(getGameobject().trasform()->getRotation());
     setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
-    getGameobject().getRenderData().windowController.draw(*this);
+    getGameobject().getManager().windowController.draw(*this);
 }

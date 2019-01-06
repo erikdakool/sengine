@@ -28,7 +28,7 @@ void Physics::update(float deltaT) {
     deltaT = deltaT*10;
 
     //check gravity applicable
-    auto obj = getGameobject().getObjectData().collisionController.checkCollision(*col,Down,.1f);
+    auto obj = getGameobject().getManager().collisionController.checkCollision(*col,Down,.1f);
     if(obj)
     {
         cyAcc = 0;
@@ -50,7 +50,7 @@ void Physics::update(float deltaT) {
     float yPosD = yVel * deltaT +(0.5f*lyAcc*(deltaT*deltaT));
     if(yPosD>0){
         getGameobject().trasform()->increaseY(yPosD);
-        auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
+        auto t = getGameobject().getManager().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
@@ -61,7 +61,7 @@ void Physics::update(float deltaT) {
         }
     } else if(yPosD!=0){
         getGameobject().trasform()->increaseY(yPosD);
-        auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
+        auto t = getGameobject().getManager().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
@@ -80,7 +80,7 @@ void Physics::update(float deltaT) {
     float xPosD = xVel * deltaT +(0.5f*lxAcc*(deltaT*deltaT));
     if(xPosD>0){
         getGameobject().trasform()->increaseX(xPosD);
-        auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
+        auto t = getGameobject().getManager().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){
@@ -91,7 +91,7 @@ void Physics::update(float deltaT) {
         }
     } else if (xPosD!=0){
         getGameobject().trasform()->increaseX(xPosD);
-        auto t = getGameobject().getObjectData().collisionController.collision(*getGameobject().getComponentP<Collider*>());
+        auto t = getGameobject().getManager().collisionController.collision(*getGameobject().getComponentP<Collider*>());
         if(t){
             auto phys = t->getGameobject().getComponentP<Physics*>();
             if(phys){

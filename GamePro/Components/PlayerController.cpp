@@ -28,7 +28,7 @@ void PlayerController::init() {
 void PlayerController::update(float deltaT) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         movement->moveUp(deltaT);
-        //std::cout << getGameobject().trasform()->getY() << std::endl;
+        std::cout << getGameobject().trasform()->getY() << std::endl;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         movement->moveRight(deltaT);
