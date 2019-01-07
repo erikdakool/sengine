@@ -25,6 +25,14 @@ void ObjectController::update(float deltaT) {
     }
 }
 
+Json::Value ObjectController::getJson() {
+    Json::Value gameobjects;
+    for (auto i = objects.begin(); i != objects.end(); i++) {
+        gameobjects.append(i->get()->getJson());
+    }
+    return gameobjects;
+}
+
 void ObjectController::spawnPlayer() {
     auto object = std::make_shared<Gameobject>(11, true,*manager);
 

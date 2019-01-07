@@ -24,6 +24,16 @@ void Physics::init() {
 
 }
 
+Json::Value Physics::getJson() {
+    Json::Value ret = Component::getCJson();
+    ret["name"] = "physics";
+    return ret;
+}
+
+void Physics::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
+}
+
 void Physics::update(float deltaT) {
     deltaT = deltaT*10;
 

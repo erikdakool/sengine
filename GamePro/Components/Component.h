@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include <jsoncpp/json/json.h>
 
 enum Dir{
     Right,
@@ -23,8 +24,10 @@ public:
 
     virtual void init();
     virtual void update(float deltaT);
+    virtual Json::Value getJson();
+    virtual void setValuesJson(Json::Value input);
+    Json::Value getCJson();
     Gameobject &getGameobject() const;
-
 
     bool isDestroy() const;
 
@@ -41,8 +44,7 @@ public:
 private:
     //Component data
     Gameobject& gameobject;
-    unsigned int id;
-    std::string name;
+    unsigned int id = 0;
     bool destroy = false;
     bool active = true;
 };

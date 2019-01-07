@@ -24,6 +24,18 @@ void Movement::update(float deltaT) {
 
 }
 
+Json::Value Movement::getJson() {
+    Json::Value ret;
+    ret = Component::getCJson();
+    ret["speed"] = this->speed;
+    return ret;
+}
+
+void Movement::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
+    this->speed = input["speed"].asFloat();
+}
+
 void Movement::moveRight(float deltaT) {
     //getGameobject().trasform()->increaseX(deltaT*speed);
     auto phys = getGameobject().getComponentP<Physics*>();

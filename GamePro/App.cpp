@@ -11,6 +11,7 @@ App::App()
 :manager(*this)
 {
     manager.objectController.manager = &manager;
+    manager.objectStreamer.manager = &manager;
     srand(time(NULL));//Restarts so we dont get the same randoms.
 }
 
@@ -35,6 +36,9 @@ void App::run() {
 
     manager.objectController.spawnPlayer();
     manager.objectController.clearInactive();
+
+    manager.objectStreamer.writeScene();
+
     while(running){
         //Handle input
         manager.windowController.updateCamera(*manager.objectController.player);
@@ -45,7 +49,7 @@ void App::run() {
 
         //float deltaT = clock.getElapsedTime().asMilliseconds();
         float deltaT = 1.f/60.f;
-        std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
+        //std::cout << clock.getElapsedTime().asMilliseconds() << std::endl;
         manager.objectController.update(deltaT*3);
         manager.windowController.drawToWindow();
         clock.restart();

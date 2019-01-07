@@ -15,6 +15,7 @@
 //Manager
 #include "ObjectController.h"
 #include "CollisionController.h"
+#include "ObjectStreamer.h"
 
 struct Manager {
     Manager(sf::RenderWindow& window)
@@ -24,6 +25,7 @@ struct Manager {
     //Asset controller
     AssetController assetController;
     //ObjectControllers
+    ObjectStreamer objectStreamer;
     ObjectController objectController;
     CollisionController collisionController;
 };

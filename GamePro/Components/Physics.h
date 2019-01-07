@@ -15,6 +15,9 @@ public:
 
     void init();
     void update(float deltaT);
+    Json::Value getJson();
+    void setValuesJson(Json::Value input);
+
     void addFor(Dir dir, float value);
     void addVel(Dir dir, float value);
 private:

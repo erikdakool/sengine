@@ -9,6 +9,8 @@
 #include <list>
 #include <string>
 
+#include <jsoncpp/json/json.h>
+
 #include "Components/Transform.h"
 #include "Components/RenderCom.h"
 #include "Manager.h"
@@ -58,9 +60,12 @@ public:
 
     void AddComponent(std::shared_ptr<Component> component);
 
+    Json::Value getJson();
+
     Manager &getManager() const;
 
     Transform* trasform()const { return this->transform.get();}
+
 
 private:
     //Gameobject info

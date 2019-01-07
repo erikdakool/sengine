@@ -23,6 +23,8 @@ public:
 
     void init();
     void update(float deltaT);
+    Json::Value getJson();
+    void setValuesJson(Json::Value input);
 
 private:
     std::shared_ptr<TextureRect> textureRectCon;

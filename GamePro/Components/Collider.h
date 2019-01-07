@@ -17,6 +17,8 @@ public:
 
     void init();
     void update(float deltaT);
+    Json::Value getJson();
+    void setValuesJson(Json::Value input);
     bool checkCollision(Collider& collider);
 
     float getXOff() const;
@@ -37,7 +39,7 @@ private:
     float width = 40, height = 40;
     bool collider = true;
     bool trigger = false;
-    unsigned int eventId;
+    unsigned int eventId = 0;
 };
 
 #endif //GAMEPRO_COLLIDER_H

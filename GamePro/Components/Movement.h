@@ -16,7 +16,8 @@ public:
 
     void init();
     void update(float deltaT);
-
+    Json::Value getJson();
+    void setValuesJson(Json::Value input);
     void moveLeft(float deltaT);
     void moveRight(float deltaT);
     void moveUp(float deltaT);

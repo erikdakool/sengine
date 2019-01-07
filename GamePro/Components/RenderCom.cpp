@@ -45,3 +45,12 @@ void RenderCom::update(float deltaT) {
     setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     getGameobject().getManager().windowController.draw(*this);
 }
+
+Json::Value RenderCom::getJson() {
+    Json::Value ret = Component::getCJson();
+    ret["name"] = "rendercom";
+    return ret;}
+
+void RenderCom::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
+}

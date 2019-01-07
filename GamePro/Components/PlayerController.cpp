@@ -28,7 +28,6 @@ void PlayerController::init() {
 void PlayerController::update(float deltaT) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
         movement->moveUp(deltaT);
-        std::cout << getGameobject().trasform()->getY() << std::endl;
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         movement->moveRight(deltaT);
@@ -45,4 +44,13 @@ void PlayerController::update(float deltaT) {
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
         getGameobject().trasform()->rotateD(-1);
     }
+}
+
+Json::Value PlayerController::getJson() {
+    Json::Value ret = Component::getCJson();
+    ret["name"] = "playercontroller";
+    return ret;}
+
+void PlayerController::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
 }

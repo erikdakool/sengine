@@ -25,6 +25,30 @@ void Collider::update(float deltaT) {
 
 }
 
+Json::Value Collider::getJson() {
+    Json::Value ret = getCJson();
+    ret["name"] = "collider";
+    ret["xoff"] = this->xOff;
+    ret["yoff"] = this->yOff;
+    ret["width"] = this->width;
+    ret["height"] = this->height;
+    ret["collider"] = this->collider;
+    ret["trigger"] = this->trigger;
+    ret["eventid"] = this-> eventId;
+    return ret;
+}
+
+void Collider::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
+    this->xOff = input["xoff"].asInt();
+    this->yOff = input["yoff"].asInt();
+    this->width = input["width"].asInt();
+    this->height = input["height"].asInt();
+    this->collider = input["collider"].asBool();
+    this->trigger = input["trigger"].asBool();
+    this->eventId = input["eventid"].asUInt();
+}
+
 bool Collider::checkCollision(Collider& collider) {
     if (!this->collider)
         return false;

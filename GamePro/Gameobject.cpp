@@ -51,3 +51,19 @@ void Gameobject::AddComponent(std::shared_ptr<Component> component) {
 Manager &Gameobject::getManager() const {
     return manager;
 }
+
+Json::Value Gameobject::getJson() {
+    Json::Value gameobject;
+    gameobject["id"] = this->id;
+    gameobject["name"] = this->name;
+    gameobject["activity"] = this->active;
+    gameobject["tag"] = this->tag;
+
+    Json::Value cArray;
+    for(auto i = components.begin(); i != components.end();i++){
+        cArray.append(i->get()->getJson());
+    }
+    gameobject["components"] = cArray;
+    gameobject["transform"] = trasform()->getJson();
+    return gameobject;
+}

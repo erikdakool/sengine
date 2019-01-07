@@ -22,6 +22,22 @@ void Component::update(float deltaT) {
 
 }
 
+Json::Value Component::getJson() {
+
+}
+
+Json::Value Component::getCJson() {
+    Json::Value ret;
+    ret["id"] = this->id;
+    ret["active"] = this->active;
+    return ret;
+}
+
+void Component::setValuesJson(Json::Value input) {
+    this-> id = input["id"].asUInt();
+    this->active = input["active"].asBool();
+}
+
 Gameobject &Component::getGameobject() const {
     return gameobject;
 }

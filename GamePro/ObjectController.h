@@ -8,7 +8,8 @@
 #include <list>
 #include <memory>
 
-struct Manager;
+#include <jsoncpp/json/json.h>
+
 struct Manager;
 class Gameobject;
 class ObjectController {
@@ -18,7 +19,7 @@ public:
     ~ObjectController();
 
     void update(float deltaT);
-
+    Json::Value getJson();
     void spawnPlayer();
 
     void addObject(std::shared_ptr<Gameobject> object);

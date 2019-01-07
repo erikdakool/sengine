@@ -5,11 +5,15 @@
 #ifndef GAMEPRO_TRANSFORM_H
 #define GAMEPRO_TRANSFORM_H
 
+#include <jsoncpp/json/json.h>
 
 class Transform {
 public:
     Transform();
     ~Transform();
+
+    Json::Value getJson();
+    void setValueJson(Json::Value input);
 
     void increaseX(float value);
     void decreaseX(float value);
