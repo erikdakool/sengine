@@ -7,24 +7,39 @@
 
 #include <string>
 #include <memory>
-#include <map>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+
+struct Texture{
+    std::string name;
+    std::string url;
+    std::shared_ptr<sf::Texture> tex;
+};
+
+struct Sound{
+    std::string name;
+    std::string url;
+    std::shared_ptr<sf::SoundBuffer> sb;
+};
 
 class AssetController {
 public:
     AssetController(){}
     ~AssetController(){}
+
     void loadTexture(std::string name, std::string url);
     std::shared_ptr<sf::Texture> getTexture(std::string name);
+    Texture getTextureStruct(std::shared_ptr<sf::Texture> tex);
 
     void loadSoundbuffer(std::string name, std::string url);
     std::shared_ptr<sf::SoundBuffer> getSoundbuffer(std::string name);
+    Sound getSoundStruct(std::shared_ptr<sf::SoundBuffer> sb);
 
 private:
-    std::map<std::string, std::shared_ptr<sf::Texture>> textures;
-    std::map<std::string, std::shared_ptr<sf::SoundBuffer>> soundbuffers;
+    std::vector<Texture> textures;
+    std::vector<Sound> sounds;
 };
 
 

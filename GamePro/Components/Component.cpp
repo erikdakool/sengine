@@ -10,6 +10,12 @@ gameobject(gameobject)
 
 }
 
+Component::Component(Gameobject &gameobject, Json::Value input):
+gameobject(gameobject)
+{
+
+}
+
 Component::~Component() {
 
 }

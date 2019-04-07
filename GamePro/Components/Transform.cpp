@@ -4,16 +4,34 @@
 
 #include "Transform.h"
 
-Transform::Transform() {
+Transform::Transform(Gameobject& gameobject)
+:Component(gameobject)
+{
 
+}
+
+Transform::Transform(Gameobject &gameobject, Json::Value input)
+:Component(gameobject)
+{
+    Transform::setValuesJson(input);
 }
 
 Transform::~Transform() {
 
 }
 
+void Transform::init() {
+
+}
+
+void Transform::update(float deltaT) {
+
+}
+
 Json::Value Transform::getJson() {
     Json::Value ret;
+    ret = Component::getCJson();
+    ret["name"] = "transform";
     ret["x"] = x;
     ret["y"] = y;
     ret["xscale"] = xScale;
@@ -22,7 +40,8 @@ Json::Value Transform::getJson() {
     return ret;
 }
 
-void Transform::setValueJson(Json::Value input) {
+void Transform::setValuesJson(Json::Value input) {
+    Component::setValuesJson(input);
     x = input["x"].asFloat();
     y = input["y"].asFloat();
     xScale = input["xscale"].asFloat();

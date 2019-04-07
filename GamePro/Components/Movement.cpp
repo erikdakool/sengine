@@ -10,6 +10,13 @@
 Movement::Movement(Gameobject &gameobject)
 :Component(gameobject)
 {
+
+}
+
+Movement::Movement(Gameobject &gameobject, Json::Value input)
+:Component(gameobject)
+{
+    Movement::setValuesJson(input);
 }
 
 Movement::~Movement() {
@@ -27,6 +34,7 @@ void Movement::update(float deltaT) {
 Json::Value Movement::getJson() {
     Json::Value ret;
     ret = Component::getCJson();
+    ret["name"] = "movement";
     ret["speed"] = this->speed;
     return ret;
 }

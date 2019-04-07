@@ -1,0 +1,10 @@
+{
+   "inputs" : {
+      "forward" : {
+         "controllerAxis" : 1,
+         "controllerButton" : 0,
+         "keyboard" : 22,
+         "name" : "forward"
+      }
+   }
+}

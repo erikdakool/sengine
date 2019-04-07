@@ -10,7 +10,13 @@
 RenderCom::RenderCom(Gameobject &gameobject)
 :Component(gameobject)
 {
-    init();
+
+}
+
+RenderCom::RenderCom(Gameobject &gameobject, Json::Value input)
+        :Component(gameobject)
+{
+    RenderCom::setValuesJson(input);
 }
 
 RenderCom::~RenderCom() {
@@ -18,29 +24,29 @@ RenderCom::~RenderCom() {
 }
 
 void RenderCom::init() {
-    auto tRect = std::make_shared<TextureRect>();
+    getGameobject().getManager().assetController.loadTexture("tex","Data/Textures/Sample_3D.png");
+    auto tex = getGameobject().getManager().assetController.getTexture("tex");
+    auto tRect = std::make_shared<TextureRect>(tex,0,0,40,40);
     this->textureRectCon = tRect;
 
-    getGameobject().getManager().assetController.loadTexture("tex","Data/Textures/Sample_3D.png");
-    tRect->texture=getGameobject().getManager().assetController.getTexture("tex");
-
-    sf::IntRect intRect(0,0,40,40);
-    this->textureRectCon->intRect = intRect;
-
     this->setTexture(*this->textureRectCon->texture);
-    this->setTextureRect(this->textureRectCon->intRect);
+    this->setTextureRect(*this->textureRectCon->intRect);
     this->setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     this->setScale(1,1);
-    this->setOrigin((float)intRect.width/2,(float)intRect.height/2);
+    this->setOrigin((float)textureRectCon->intRect->width/2,(float)textureRectCon->intRect->height/2);
     this->setColor(color);
 }
 
 void RenderCom::update(float deltaT) {
+    draw();
+}
+
+void RenderCom::draw() {
     onscreen = getGameobject().getManager().windowController.onScreen(*this);
     if(!onscreen)
         return;
     this->setTexture(*this->textureRectCon->texture);
-    this->setTextureRect(this->textureRectCon->intRect);
+    this->setTextureRect(*this->textureRectCon->intRect);
     this->setRotation(getGameobject().trasform()->getRotation());
     setPosition(getGameobject().trasform()->getX(),getGameobject().trasform()->getY());
     getGameobject().getManager().windowController.draw(*this);

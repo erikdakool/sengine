@@ -10,19 +10,19 @@
 #include <SFML/Graphics.hpp>
 
 #include "Component.h"
-
-struct TextureRect{
-    sf::IntRect intRect;
-    std::shared_ptr<sf::Texture> texture;
-};
+#include "../DataTypes/TextureRect.h"
 
 class RenderCom : public Component, public sf::Sprite {
+    friend class AnimationController;
 public:
     RenderCom(Gameobject& gameobject);
+    RenderCom(Gameobject& gameobject, Json::Value input);
+
     ~RenderCom();
 
     void init();
     void update(float deltaT);
+    void draw();
     Json::Value getJson();
     void setValuesJson(Json::Value input);
 
@@ -31,6 +31,5 @@ private:
     sf::Color color = sf::Color(255,255,255);
     bool onscreen;
 };
-
 
 #endif //GAMEPRO_RENDERCOM_H

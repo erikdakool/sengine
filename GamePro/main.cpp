@@ -1,10 +1,13 @@
 #include <iostream>
 
 #include "App.h"
-#include "ObjectStreamer.h"
+#include "ObjectLoader.h"
 
-int main() {
-    ObjectStreamer objectStreamer;
+#include <TGUI/TGUI.hpp>
+
+int main()
+{
+    ObjectLoader objectStreamer;
     App app;
     app.run();
     return 0;

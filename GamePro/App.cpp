@@ -4,6 +4,8 @@
 #include <iostream>
 #include <ctime>
 
+#include <SFML/Window/Joystick.hpp>
+
 #include "App.h"
 #include "Components/Physics.h"
 
@@ -12,6 +14,7 @@ App::App()
 {
     manager.objectController.manager = &manager;
     manager.objectStreamer.manager = &manager;
+    manager.objectFactory.manager = &manager;
     srand(time(NULL));//Restarts so we dont get the same randoms.
 }
 
@@ -23,21 +26,41 @@ void App::run() {
     sf::Clock clock;
     sf::Event event;
 
-    for (int i = 0; i < 140; ++i) {
-        for (int j = 0; j < 140; ++j) {
-            auto object = std::make_shared<Gameobject>((i*j)+i, true,manager);
-            auto phys = std::make_shared<Physics>(*object.get());
-            //object.get()->AddComponent(phys);
-            object.get()->trasform()->setX(i*41);
-            object.get()->trasform()->setY(j*41+100);
-            manager.objectController.addObject(object);
+    bool load = false;
+    if(!load){
+        for (int i = 0; i < 14; ++i) {
+            for (int j = 0; j < 14; ++j) {
+                auto object = std::make_shared<Gameobject>((i*j)+i, true,manager);
+
+                auto collider = std::make_shared<Collider>(*object.get());
+                object.get()->addComponent(collider);
+                manager.collisionController.addCollider(collider);
+
+                auto phys = std::make_shared<Physics>(*object.get());
+                //object.get()->addComponent(phys);
+
+                object.get()->trasform()->setX(i*41);
+                object.get()->trasform()->setY(j*41+100);
+                manager.objectController.addObject(object);
+            }
         }
+
+        manager.objectController.spawnPlayer();
+        manager.objectController.clearInactive();
+        manager.objectStreamer.writeScene();
+    } else{
+        manager.objectStreamer.loadScene();
+        manager.objectStreamer.writeScene();
     }
 
-    manager.objectController.spawnPlayer();
-    manager.objectController.clearInactive();
+    manager.objectController.initAll();
 
-    manager.objectStreamer.writeScene();
+
+    sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
+    manager.windowController.setTitle("Joystick " + id.name.toAnsiString());
+
+    std::cout << sf::Joystick::getButtonCount(0) << std::endl;
+    std::cout << sf::Joystick::getIdentification(0).name.toAnsiString() << std::endl;
 
     while(running){
         //Handle input

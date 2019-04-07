@@ -13,6 +13,12 @@ Collider::Collider(Gameobject &gameobject)
 
 }
 
+Collider::Collider(Gameobject &gameobject, Json::Value input)
+        :Component(gameobject)
+{
+    Collider::setValuesJson(input);
+}
+
 Collider::~Collider() {
 
 }

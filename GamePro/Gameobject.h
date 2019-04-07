@@ -24,9 +24,12 @@ enum ObjectTag{
 };
 
 class App;
+class ObjectFactory;
 class Gameobject {
 public:
+    friend class ObjectFactory;
     Gameobject(unsigned int id, bool active,Manager& manager);
+    Gameobject(Manager& manager);
     ~Gameobject();
     virtual void init();
     virtual void update(float deltaT);
@@ -58,7 +61,7 @@ public:
         return nullptr;
     }
 
-    void AddComponent(std::shared_ptr<Component> component);
+    void addComponent(std::shared_ptr<Component> component);
 
     Json::Value getJson();
 
@@ -66,22 +69,43 @@ public:
 
     Transform* trasform()const { return this->transform.get();}
 
+    const std::shared_ptr<Gameobject> &getParent() const;
+
+    const std::list<std::shared_ptr<Gameobject>> &getChildren() const;
+
+    void setParent(std::shared_ptr<Gameobject> parent);
+    void addChildren(std::shared_ptr<Gameobject> child);
+
+    const std::string &getName() const;
+
+    void setName(const std::string &name);
+
+    void setTag(ObjectTag tag);
+
+    ObjectTag getTag() const;
 
 private:
     //Gameobject info
     unsigned int id;
     std::string name;
     bool active;
+    bool isChild = false;
+
     ObjectTag tag = TagGameobject;
 
     //Controllers
     Manager& manager;
 
     //transform
-    std::unique_ptr<Transform> transform;
+    std::shared_ptr<Transform> transform;
 
     //Components
     std::list<std::shared_ptr<Component>> components;
+    void loadComponent(Json::Value& value);
+
+    //Gameobject family
+    std::shared_ptr<Gameobject> parent;
+    std::list<std::shared_ptr<Gameobject>> children;
 };
 
 

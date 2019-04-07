@@ -20,6 +20,7 @@ class Gameobject;
 class Component {
 public:
     Component(Gameobject& gameobject);
+    Component(Gameobject& gameobject, Json::Value input);
     ~Component();
 
     virtual void init();
@@ -41,7 +42,7 @@ public:
 
     void setId(unsigned int id);
 
-private:
+protected:
     //Component data
     Gameobject& gameobject;
     unsigned int id = 0;

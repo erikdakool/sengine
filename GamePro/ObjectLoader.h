@@ -11,18 +11,18 @@
 #include <jsoncpp/json/json.h>
 
 struct Manager;
-class ObjectStreamer {
+class ObjectLoader {
     friend class App;
 
 public:
-    ObjectStreamer();
-    ~ObjectStreamer(){}
+    ObjectLoader();
+    ~ObjectLoader(){}
 
     bool loadScene();
     bool writeScene();
 private:
     Manager* manager;
-    void output(const Json::Value & value);
+
     void loadTransform(const Json::Value& value);
     void loadRenderCom(const Json::Value& value);
     void loadCollider(const Json::Value& value);

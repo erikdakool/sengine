@@ -6,14 +6,19 @@
 #define GAMEPRO_TRANSFORM_H
 
 #include <jsoncpp/json/json.h>
+#include "Component.h"
 
-class Transform {
+class Transform : public Component {
 public:
-    Transform();
+    Transform(Gameobject& gameobject);
+    Transform(Gameobject& gameobject, Json::Value input);
     ~Transform();
 
+    void init();
+    void update(float deltaT);
+
     Json::Value getJson();
-    void setValueJson(Json::Value input);
+    void setValuesJson(Json::Value input);
 
     void increaseX(float value);
     void decreaseX(float value);

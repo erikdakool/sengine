@@ -5,13 +5,16 @@
 #ifndef GAMEPRO_PLAYERCONTROLLER_H
 #define GAMEPRO_PLAYERCONTROLLER_H
 
-
+#include <memory>
+#include <bits/shared_ptr.h>
 #include "Component.h"
 #include "Movement.h"
 
 class PlayerController : public Component {
 public:
     PlayerController(Gameobject& gameobject);
+    PlayerController(Gameobject& gameobject, Json::Value input);
+
     ~PlayerController();
 
     void init();
@@ -21,6 +24,8 @@ public:
 
 private:
     Movement* movement;
+    std::shared_ptr<Gameobject> flame;
+    float rot = 0;
 };
 
 

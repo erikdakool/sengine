@@ -15,7 +15,10 @@
 //Manager
 #include "ObjectController.h"
 #include "CollisionController.h"
-#include "ObjectStreamer.h"
+#include "ObjectLoader.h"
+#include "Components/InputController.h"
+#include "GraphicsController.h"
+#include "ObjectFactory.h"
 
 struct Manager {
     Manager(sf::RenderWindow& window)
@@ -25,9 +28,12 @@ struct Manager {
     //Asset controller
     AssetController assetController;
     //ObjectControllers
-    ObjectStreamer objectStreamer;
+    ObjectLoader objectStreamer;
     ObjectController objectController;
     CollisionController collisionController;
+    InputController inputController;
+    GraphicsController graphicsController;
+    ObjectFactory objectFactory;
 };
 
 typedef std::shared_ptr<Manager> Data;

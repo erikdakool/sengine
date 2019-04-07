@@ -12,6 +12,8 @@ class Gameobject;
 class Movement : public Component {
 public:
     Movement(Gameobject& gameobject);
+    Movement(Gameobject& gameobject, Json::Value input);
+
     ~Movement();
 
     void init();

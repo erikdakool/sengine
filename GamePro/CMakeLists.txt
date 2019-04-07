@@ -32,7 +32,22 @@ add_executable(GamePro
         Components/Physics.h
         AssetController.cpp
         AssetController.h
-        ObjectStreamer.cpp
-        ObjectStreamer.h)
+        ObjectLoader.cpp
+        ObjectLoader.h
+        Components/InputController.cpp
+        Components/InputController.h
+        Components/AnimationController.cpp
+        Components/AnimationController.h
+        Components/AudioCom.cpp
+        Components/AudioCom.h
+        DataTypes/TextureRect.cpp
+        DataTypes/TextureRect.h
+        DataTypes/Animation.cpp
+        DataTypes/Animation.h
+        GraphicsController.cpp
+        GraphicsController.h
+        ObjectFactory.cpp
+        ObjectFactory.h
+        )
 
-target_link_libraries (GamePro jsoncpp sfml-graphics sfml-audio sfml-window sfml-system)
+target_link_libraries (GamePro jsoncpp tgui sfml-graphics sfml-audio sfml-window sfml-system)

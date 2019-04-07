@@ -19,8 +19,10 @@ public:
     ~ObjectController();
 
     void update(float deltaT);
+    void initAll();
     Json::Value getJson();
     void spawnPlayer();
+    void addPlayer(std::shared_ptr<Gameobject> gameobject);
 
     void addObject(std::shared_ptr<Gameobject> object);
     void clearInactive();

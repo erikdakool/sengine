@@ -59,3 +59,7 @@ bool WindowController::onScreen(RenderCom &renderCom) {
     return true;
 
 }
+
+void WindowController::setTitle(std::string input) {
+    window.setTitle(input);
+}

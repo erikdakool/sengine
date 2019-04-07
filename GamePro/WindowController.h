@@ -25,6 +25,7 @@ public:
     void drawToWindow();
     void updateCamera(Gameobject& gameobject);
     bool onScreen(RenderCom& renderCom);
+    void setTitle(std::string input);
 private:
     sf::RenderTexture gameOut;
     sf::RenderTexture interfaceOut;

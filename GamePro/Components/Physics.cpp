@@ -12,8 +12,14 @@
 Physics::Physics(Gameobject &gameobject)
 :Component(gameobject)
 {
-    cyAcc = 9.81f;
-    col = getGameobject().getComponentP<Collider*>();
+
+}
+
+Physics::Physics(Gameobject &gameobject, Json::Value input)
+:Component(gameobject)
+{
+    Physics::setValuesJson(input);
+
 }
 
 Physics::~Physics() {
@@ -21,7 +27,8 @@ Physics::~Physics() {
 }
 
 void Physics::init() {
-
+    cyAcc = 9.81f;
+    col = getGameobject().getComponentP<Collider*>();
 }
 
 Json::Value Physics::getJson() {
@@ -166,4 +173,12 @@ void Physics::addVel(Dir dir, float value) {
             yVel += value/mass;
             break;
     }
+}
+
+float Physics::getXVel() const {
+    return xVel;
+}
+
+float Physics::getYVel() const {
+    return yVel;
 }

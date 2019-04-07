@@ -11,6 +11,8 @@
 class Physics : public Component{
 public:
     Physics(Gameobject& gameobject);
+    Physics(Gameobject& gameobject, Json::Value input);
+
     ~Physics();
 
     void init();
@@ -20,6 +22,11 @@ public:
 
     void addFor(Dir dir, float value);
     void addVel(Dir dir, float value);
+
+    float getXVel() const;
+
+    float getYVel() const;
+
 private:
     float xFor = 0, yFor = 0;
     float xImp = 0, yImp = 0;

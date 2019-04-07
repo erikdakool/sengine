@@ -2,14 +2,15 @@
 // Created by erik on 06.01.19.
 //
 
-#include "ObjectStreamer.h"
+#include "ObjectLoader.h"
 #include "Manager.h"
+#include "Gameobject.h"
 
-ObjectStreamer::ObjectStreamer() {
+ObjectLoader::ObjectLoader() {
 
 }
 
-bool ObjectStreamer::writeScene() {
+bool ObjectLoader::writeScene() {
     std::ofstream file;
     file.open("Data/file.json");
 
@@ -25,7 +26,7 @@ bool ObjectStreamer::writeScene() {
     file.close();
 }
 
-bool ObjectStreamer::loadScene() {
+bool ObjectLoader::loadScene() {
     Json::Value scene;
     Json::Reader reader;
 
@@ -36,13 +37,12 @@ bool ObjectStreamer::loadScene() {
     if(!parsing)
         return false;
 
+    for(Json::Value& object: scene["gameobjects"]){
+        auto ob = manager->objectFactory.createGameobject(object);
+        if(ob.get()->getTag() == TagPlayer)
+            manager->objectController.addPlayer(ob);
 
-}
-
-void ObjectStreamer::output(const Json::Value &value) {
-    // querying the json object is very simple
-    std::cout << value["hello"];
-    std::cout << value["number"];
-    std::cout << value["array"][0] << value["array"][1];
-    std::cout << value["object"]["hello"];
+        manager->objectController.addObject(ob);
+    }
+    manager->objectController.initAll();
 }

@@ -13,6 +13,8 @@ class Gameobject;
 class Collider : public Component{
 public:
     explicit Collider(Gameobject& gameobject);
+    Collider(Gameobject& gameobject, Json::Value input);
+
     ~Collider();
 
     void init();
