@@ -2,93 +2,27 @@
 #include <SFML/OpenGL.hpp>
 #include <iostream>
 #include "Cube.h"
-#include "Plane.h"
-
-static const GLfloat g_vertex_buffer_data[] = {
-        -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-        -1.0f,-1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, // triangle 1 : end
-        1.0f, 1.0f,-1.0f, // triangle 2 : begin
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f, // triangle 2 : end
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f
-};
-
-static const GLfloat g_color_buffer_data[] = {
-        0.583f,  0.771f,  0.014f,
-        0.609f,  0.115f,  0.436f,
-        0.327f,  0.483f,  0.844f,
-        0.822f,  0.569f,  0.201f,
-        0.435f,  0.602f,  0.223f,
-        0.310f,  0.747f,  0.185f,
-        0.597f,  0.770f,  0.761f,
-        0.559f,  0.436f,  0.730f,
-        0.359f,  0.583f,  0.152f,
-        0.483f,  0.596f,  0.789f,
-        0.559f,  0.861f,  0.639f,
-        0.195f,  0.548f,  0.859f,
-        0.014f,  0.184f,  0.576f,
-        0.771f,  0.328f,  0.970f,
-        0.406f,  0.615f,  0.116f,
-        0.676f,  0.977f,  0.133f,
-        0.971f,  0.572f,  0.833f,
-        0.140f,  0.616f,  0.489f,
-        0.997f,  0.513f,  0.064f,
-        0.945f,  0.719f,  0.592f,
-        0.543f,  0.021f,  0.978f,
-        0.279f,  0.317f,  0.505f,
-        0.167f,  0.620f,  0.077f,
-        0.347f,  0.857f,  0.137f,
-        0.055f,  0.953f,  0.042f,
-        0.714f,  0.505f,  0.345f,
-        0.783f,  0.290f,  0.734f,
-        0.722f,  0.645f,  0.174f,
-        0.302f,  0.455f,  0.848f,
-        0.225f,  0.587f,  0.040f,
-        0.517f,  0.713f,  0.338f,
-        0.053f,  0.959f,  0.120f,
-        0.393f,  0.621f,  0.362f,
-        0.673f,  0.211f,  0.457f,
-        0.820f,  0.883f,  0.371f,
-        0.982f,  0.099f,  0.879f
-};
 
 int main()
 {
-    Cube b(2,2,2);
-    Point a(1,2,3);
-    Plane p(4,4);
-    a.x();
-    std::cout << a.y() << std::endl;
+    double rotate_x = 0;
+    bool rotate_xClick =false;
+    double rotate_y = 0;
+    bool rotate_yClick = false;
+    double rotate_z = 0;
+    bool rotate_zClick = false;
+
+    std::vector<Cube> cubes;
+    cubes.push_back(Cube(.4,.4,.4));
+    cubes.push_back(Cube(.2,.2,.2));
+    cubes.push_back(Cube(.3,.3,.3));
+    cubes[0].Translate(Vector3D(0,-.4,0));
+    cubes[1].Translate(Vector3D(-.1,0,0));
+    cubes[2].Translate(Vector3D(0,.4,.4));
+    //cubes[0].RotateY(45*3.14/180);
+    //cubes[0].RotateZ(45*3.14/180);
+    //cubes[0].RotateX(45*3.14/180);
+
     // create the window
     sf::ContextSettings settings;
     settings.depthBits = 24;
@@ -97,8 +31,9 @@ int main()
     settings.majorVersion = 3;
     settings.minorVersion = 0;
 
-    sf::Window window(sf::VideoMode(800, 600), "OpenGL", sf::Style::Default, settings);
+    sf::Window window(sf::VideoMode(1200, 1200), "OpenGL", sf::Style::Default, settings);
     window.setVerticalSyncEnabled(true);
+    window.setFramerateLimit(60);
 
     // activate the window
     window.setActive(true);
@@ -107,12 +42,10 @@ int main()
 
     // run the main loop
 
-    glViewport(0,0, 800, 600);
+    glViewport(0,0, 1200, 1200);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glRotatef( 45, 0.0, 1.0, 0.0 );
-    glRotatef(45,1.0,0.0,0.0);
     bool running = true;
     while (running)
     {
@@ -130,14 +63,70 @@ int main()
                 // adjust the viewport when the window is resized
                 glViewport(0, 0, event.size.width, event.size.height);
             }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+                if(!rotate_xClick){
+                    rotate_x +=2;
+                    rotate_xClick = true;
+                }
+            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                if(!rotate_xClick){
+                    rotate_x -=2;
+                    rotate_xClick = true;
+                }
+            }else{
+                rotate_xClick = false;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+                if(!rotate_yClick){
+                    rotate_y +=2;
+                    rotate_yClick = true;
+                }
+            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                if(!rotate_yClick){
+                    rotate_y -=2;
+                    rotate_yClick = true;
+                }
+            }else{
+                rotate_yClick = false;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
+                if(!rotate_zClick){
+                    rotate_z +=2;
+                    rotate_zClick = true;
+                }
+            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+                if(!rotate_zClick){
+                    rotate_z -=2;
+                    rotate_zClick = true;
+                }
+            }else{
+                rotate_zClick = false;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::R)){
+                rotate_x = 0;
+                rotate_y = 0;
+                rotate_z = 0;
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                for(auto& cube : cubes){
+                    cube.Scale(Vector3D(.9,.9,.9));
+                }
+            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::X)){
+                for(auto& cube : cubes){
+                    cube.Scale(Vector3D(1.1,1.1,1.1));
+                }
+            }
         }
-
+        glRotatef(rotate_x,1.0,0.0,0.0);
+        glRotatef(rotate_y,0.0,1.0,0.0);
+        glRotatef(rotate_z,0.0,0.0,1.0);
         // clear the buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
 
-        //draw
-        b.draw();
-        //p.draw();
+        for(auto& cube : cubes){
+            cube.draw();
+        }
 
         // end the current frame (internally swaps the front and back buffers)
         window.display();

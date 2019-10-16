@@ -13,121 +13,116 @@ Cube::Cube() {
 
 }
 
-Cube::~Cube() {}
+Cube::~Cube() {
 
-Cube::Cube(float x, float y, float z) {
-    Point a(0,0,0);
-    Point b(x,0,0);
-    Point c(x,z,0);
-    Point d(0,z,0);
-    Point e(0,y,0);
-    Point f(x,y,0);
-    Point g(x,y,z);
-    Point h(0,y,z);
 }
 
-/*
-void Cube::Rotate(float r) {
-    Matrix<float> tMatrix ={
-            {cos(r), -sin(r), 0,0},
-            {sin(r), cos(r), 0,0},
-            {0,0,1,0},
-            {0,0,0,1}
-    };
-    for (int i = 0; i < points.size(); ++i) {
-        points[i] = tMatrix*points[i];
+Cube::Cube(double x, double y, double z) {
+    points[0] = Point(0,0,0);
+    points[1] = Point(x,0,0);
+    points[2] = Point(x,0,z);
+    points[3] = Point(0,0,z);
+    points[4] = Point(0,y,0);
+    points[5] = Point(x,y,0);
+    points[6] = Point(x,y,z);
+    points[7] = Point(0,y,z);
+    anchor = Point(x/2,y/2,z/2);
+}
+
+void Cube::RotateX(double r) {
+    for (int i = 0; i < 8; ++i) {
+        points[i].Translate(-anchor.getPointsV3());
+        points[i].RotateX(r);
+        points[i].Translate(anchor.getPointsV3());
+    }
+}
+void Cube::RotateY(double r) {
+    for (int i = 0; i < 8; ++i) {
+        points[i].Translate(-anchor.getPointsV3());
+        points[i].RotateY(r);
+        points[i].Translate(anchor.getPointsV3());
+    }
+}
+void Cube::RotateZ(double r) {
+    for (int i = 0; i < 8; ++i) {
+        points[i].Translate(-anchor.getPointsV3());
+        points[i].RotateZ(r);
+        points[i].Translate(anchor.getPointsV3());
     }
 }
 
-void Cube::Translate(float x, float y,float z) {
-    Matrix<float> tMatrix ={
-            {1, 0, 0, x},
-            {0, 1, 0, y},
-            {0, 0, 1, z},
-            {0,0,0,1}
-    };
-    for (int i = 0; i < points.size(); ++i) {
-        points[i] = tMatrix*points[i];
+void Cube::Translate(Vector3D v) {
+    for (int i = 0; i < 8; ++i) {
+        points[i].Translate(v);
     }
+    anchor.Translate(v);
 }
 
-void Cube::Scale(float x, float y, float z) {
-    Matrix<float> tMatrix ={
-            {x, 0, 0,0},
-            {0, y, 0,0},
-            {0, 0, z,0},
-            {0,0,0,1}
-    };
-    for (int i = 0; i < points.size(); ++i) {
-        points[i] = tMatrix*points[i];
+void Cube::Scale(Vector3D v) {
+
+    for (int i = 0; i < 8; ++i) {
+        points[i].Translate(-anchor.getPointsV3());
+        points[i].Scale(v);
+        points[i].Translate(anchor.getPointsV3());
     }
-}*/
+}
 
 void Cube::draw() {
-    // draw...
-    glBegin(GL_QUADS);
-    // top
+
+    //Back
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(.0f,1.0f,0.0f);
+    glVertex3dv(points[2].getPointsDA());
+    glVertex3dv(points[3].getPointsDA());
+    glVertex3dv(points[6].getPointsDA());
+    glVertex3dv(points[7].getPointsDA());
+    glEnd();
+
+    //Front
+    glBegin(GL_TRIANGLE_STRIP);
     glColor3f(1.0f, 0.0f, 0.0f);
-    glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3f(-0.5f, 0.5f, 0.5f);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(0.5f, 0.5f, -0.5f);
-    glVertex3f(-0.5f, 0.5f, -0.5f);
-
+    //glNormal3f(0.0f, 1.0f, 0.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(points[4].getPointsDA());
+    glVertex3dv(points[5].getPointsDA());
     glEnd();
 
-    glBegin(GL_QUADS);
-    // front
-    glColor3f(0.0f, 1.0f,0.0f);
-    glNormal3f(0.0f, 0.0f, 1.0f);
-    glVertex3f(0.5f, -0.5f, 0.5f);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(-0.5f, 0.5f, 0.5f);
-    glVertex3f(-0.5f, -0.5f, 0.5f);
-
+    //Right
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(1.0f,1.0f,0.0f);
+    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(points[2].getPointsDA());
+    glVertex3dv(points[5].getPointsDA());
+    glVertex3dv(points[6].getPointsDA());
     glEnd();
 
-    glBegin(GL_QUADS);
-    // right
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glNormal3f(1.0f, 0.0f, 0.0f);
-    glVertex3f(0.5f, 0.5f, -0.5f);
-    glVertex3f(0.5f, 0.5f, 0.5f);
-    glVertex3f(0.5f, -0.5f, 0.5f);
-
-    glVertex3f(0.5f, -0.5f, -0.5f);
-
+    //Left
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(.0f,1.0f,1.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[3].getPointsDA());
+    glVertex3dv(points[4].getPointsDA());
+    glVertex3dv(points[7].getPointsDA());
     glEnd();
 
-    glBegin(GL_QUADS);
-    // left
-    glColor3f(0.0f, 0.0f, 1.0f);
-    glNormal3f(-1.0f, 0.0f, 0.0f);
-    glVertex3f(-0.5f, -0.5f, 0.5f);
-    glVertex3f(-0.5f, 0.5f, 0.5f);
-    glVertex3f(-0.5f, 0.5f, -0.5f);
-    glVertex3f(-0.5f, -0.5f, -0.5f);
-
+    //Top
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(.0f,.0f,1.0f);
+    glVertex3dv(points[4].getPointsDA());
+    glVertex3dv(points[5].getPointsDA());
+    glVertex3dv(points[7].getPointsDA());
+    glVertex3dv(points[6].getPointsDA());
     glEnd();
 
-    glBegin(GL_QUADS);
-    // bottom
-    glColor3f(0.5f, 0.0f, 0.0f);
-    glNormal3f(0.0f, -1.0f, 0.0f);
-    glVertex3f(0.5f, -0.5f, 0.5f);
-    glVertex3f(-0.5f, -0.5f, 0.5f);
-    glVertex3f(-0.5f, -0.5f, -0.5f);
-    glVertex3f(0.5f, -0.5f, -0.5f);
-
+    //Bottom
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(1.0f,.0f,1.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(points[3].getPointsDA());
+    glVertex3dv(points[2].getPointsDA());
     glEnd();
 
-    glBegin(GL_QUADS);
-    // back
-    glColor3f(0.0f, 0.5f, 0.0f);
-    glNormal3f(0.0f, 0.0f, -1.0f);
-    glVertex3f(0.5f, 0.5f, -0.5f);
-    glVertex3f(0.5f, -0.5f, -0.5f);
-    glVertex3f(-0.5f, -0.5f, -0.5f);
-    glVertex3f(-0.5f, 0.5f, -0.5f);
-    glEnd( );
+    glFlush();
 }

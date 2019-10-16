@@ -6,25 +6,36 @@
 #define GLENGINE_POINT_H
 
 #include "Matrix.h"
+#include "Vector3D.h"
 
 class Point {
 public:
     Point();
-    Point(float x, float y, float z);
-    float x();
-    float y();
-    float z();
+    Point(Vector3D v);
+    Point(double x, double y, double z);
+    ~Point();
 
-    void Rotate(float r);
-    void Translate(float x, float y, float z);
-    void Scale(float x, float y, float z);
+    double x();
+    double y();
+    double z();
 
-    void x(float x);
-    void y(float y);
-    void z(float z);
+    void RotateX(double r);
+    void RotateY(double r);
+    void RotateZ(double r);
+    void Translate(Vector3D v);
+    void Scale(Vector3D v);
+
+    void x(double x);
+    void y(double y);
+    void z(double z);
+    double* getPointsDA();
+    Vector3D getPointsV3();
+
+    Vector3D PointDiff(Point& in);
+    void print();
 
 private:
-    Matrix<float> matrix;
+    Matrix<double> matrix;
 };
 
 

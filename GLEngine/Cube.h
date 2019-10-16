@@ -16,17 +16,19 @@ using namespace std;
 class Cube {
 public:
     Cube();
-    Cube(float x, float y, float z);
+    Cube(Vector3D v);
+    Cube(double x, double y, double z);
     ~Cube();
 
-    void Rotate(float r);
-    void Translate(float x, float y, float z);
-    void Scale(float x, float y, float z);
-
+    void RotateX(double r);
+    void RotateY(double r);
+    void RotateZ(double r);
+    void Translate(Vector3D v);
+    void Scale(Vector3D v);
     void draw();
-
 private:
-    Matrix<float> points[8];
+   Point points[8];
+   Point anchor;
 };
 
 
