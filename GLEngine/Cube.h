@@ -11,12 +11,13 @@
 #include "Matrix.h"
 #include "SFML/Graphics.hpp"
 #include "Point.h"
+#include "Transform.h"
 
 using namespace std;
 class Cube {
 public:
     Cube();
-    Cube(Vector3D v);
+    explicit Cube(const Vector3D& v);
     Cube(double x, double y, double z);
     ~Cube();
 
@@ -26,10 +27,11 @@ public:
     void Translate(Vector3D v);
     void Scale(Vector3D v);
     void draw();
-    void drawOnce();
+    void drawOnce(const Vector3D& cam);
 private:
    Point points[8];
    Point anchor;
+   Transform transform;
 };
 
 

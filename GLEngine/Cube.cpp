@@ -9,13 +9,13 @@
 
 using namespace std;
 
-Cube::Cube() {
+Cube::Cube():
+Cube(0,0,0){}
 
-}
+Cube::~Cube() {}
 
-Cube::~Cube() {
-
-}
+Cube::Cube(const Vector3D& v):
+Cube(v.x,v.y,v.z){}
 
 Cube::Cube(double x, double y, double z) {
     points[0] = Point(0,0,0);
@@ -127,7 +127,7 @@ void Cube::draw() {
     glFlush();
 }
 
-void Cube::drawOnce() {
+void Cube::drawOnce(const Vector3D& cam) {
     //Front
     glBegin(GL_TRIANGLE_STRIP);
     glColor3f(1.0f, 0.0f, 0.0f);

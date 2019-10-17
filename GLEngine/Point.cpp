@@ -61,6 +61,7 @@ void Point::RotateZ(double r) {
     this->matrix = tMatrix*this->matrix;
 }
 
+//Translate
 void Point::Translate(Vector3D v) {
     Matrix<double> tMatrix ={
             {1, 0, 0, v.x},
@@ -70,7 +71,14 @@ void Point::Translate(Vector3D v) {
     };
     this->matrix = tMatrix*this->matrix;
 }
+void Point::Translate(Matrix<double> mat3) {
+    Translate(Vector3D(mat3));
+}
+void Point::Translate(double x, double y, double z) {
+    Translate(Vector3D(x,y,z));
+}
 
+//Scale
 void Point::Scale(Vector3D v) {
     Matrix<double> tMatrix ={
             {v.x, 0, 0,0},
@@ -80,6 +88,13 @@ void Point::Scale(Vector3D v) {
     };
     this->matrix = tMatrix*this->matrix;
 }
+void Point::Scale(Matrix<double> mat3) {
+    Translate(Vector3D(mat3));
+}
+void Point::Scale(double x, double y, double z) {
+    Translate(Vector3D(x,y,z));
+}
+
 
 double* Point::getPointsDA() {
     static double ret[3];
@@ -91,14 +106,6 @@ double* Point::getPointsDA() {
 
 Vector3D Point::getPointsV3() {
     return Vector3D(matrix[0][0],matrix[1][0],matrix[2][0]);
-}
-
-Vector3D Point::PointDiff(Point& in) {
-    Vector3D v;
-    v.x = matrix[0][0] - in.x();
-    v.y = matrix[1][0] - in.y();
-    v.z = matrix[2][0] - in.z();
-    return v;
 }
 
 double Point::x() {
