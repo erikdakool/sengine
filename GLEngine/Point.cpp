@@ -61,6 +61,10 @@ void Point::RotateZ(double r) {
     this->matrix = tMatrix*this->matrix;
 }
 
+void Point::Transform(const Matrix<double>& mat) {
+    this->matrix = mat*this->matrix;
+}
+
 //Translate
 void Point::Translate(Vector3D v) {
     Matrix<double> tMatrix ={

@@ -23,6 +23,8 @@ public:
     void RotateY(double r);
     void RotateZ(double r);
 
+    void Transform(const Matrix<double>& mat);
+
     void Translate(Vector3D v);
     void Translate(Matrix<double> mat3);
     void Translate(double x, double y, double z);

@@ -18,6 +18,13 @@ public:
     void Scale(Vector3D v);
     void Move(Vector3D v);
 
+    Vector3D getrot();
+    Vector3D getscale();
+    Vector3D getpos();
+    Matrix<double> getRotationMatrix();
+    Matrix<double> getScaleMatrix();
+    Matrix<double> getTranslateMatrix();
+    Matrix<double> getTransformMatrix();
 private:
     Vector3D rotation;
     Vector3D pos;

@@ -71,3 +71,10 @@ Vector3D Vector3D::operator+(const Vector3D &in) {
     double dz = this-> z + in.z;
     return Vector3D(dx,dy,dz);
 }
+
+Vector3D& Vector3D::operator+=(const Vector3D &in) {
+    this->x += in.x;
+    this->y += in.y;
+    this->z += in.z;
+    return *this;
+}

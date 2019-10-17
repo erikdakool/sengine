@@ -12,6 +12,7 @@
 #include "SFML/Graphics.hpp"
 #include "Point.h"
 #include "Transform.h"
+#include "Camera.h"
 
 using namespace std;
 class Cube {
@@ -24,14 +25,16 @@ public:
     void RotateX(double r);
     void RotateY(double r);
     void RotateZ(double r);
+    void Rotate(Vector3D v);
+    void m_Transform();
     void Translate(Vector3D v);
     void Scale(Vector3D v);
     void draw();
-    void drawOnce(const Vector3D& cam);
+    void drawOnce(Camera camera);
+    Transform transformcom;
 private:
    Point points[8];
    Point anchor;
-   Transform transform;
 };
 
 

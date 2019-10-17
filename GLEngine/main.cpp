@@ -2,82 +2,60 @@
 #include <SFML/OpenGL.hpp>
 #include <iostream>
 #include <math.h>
+#include <assert.h>
 #include "Cube.h"
+#include "Camera.h"
 
-// compute screen coordinates first
-void Perspective(
-        const float &angleOfView,
-        const float &imageAspectRatio,
-        const float &n, const float &f,
-        float &b, float &t, float &l, float &r)
-{
-    float scale = tan(angleOfView * 0.5 * M_PI / 180) * n;
-    r = imageAspectRatio * scale, l = -r;
-    t = scale, b = -t;
-}
+Matrix<double> getPerspective(double const& fov, double const& ratio, double const& near, double const& far){
+    double const frustumDepth = far-near;
+    double const oneOverDepth = 1/frustumDepth;
+    double const rad = fov*M_PI/180.0;
+    double const tanhalvfov = tan(rad /2);
 
-// set the OpenGL perspective projection matrix
-void Frustum(
-        const float &b, const float &t, const float &l, const float &r,
-        const float &n, const float &f,
-        Matrix<double> &M)
-{
-    // set OpenGL perspective projection matrix
-    M[0][0] = 2 * n / (r - l);
-    M[0][1] = 0;
-    M[0][2] = 0;
-    M[0][3] = 0;
-
-    M[1][0] = 0;
-    M[1][1] = 2 * n / (t - b);
-    M[1][2] = 0;
-    M[1][3] = 0;
-
-    M[2][0] = (r + l) / (r - l);
-    M[2][1] = (t + b) / (t - b);
-    M[2][2] = -(f + n) / (f - n);
-    M[2][3] = -1;
-
-    M[3][0] = 0;
-    M[3][1] = 0;
-    M[3][2] = -2 * f * n / (f - n);
-    M[3][3] = 0;
-}
-
-void multPointMatrix(const Vector3D &in, Vector3D &out, const Matrix<double> &M)
-{
-    //out = in * Mproj;
-    out.x   = in.x * M[0][0] + in.y * M[1][0] + in.z * M[2][0] + /* in.z = 1 */ M[3][0];
-    out.y   = in.x * M[0][1] + in.y * M[1][1] + in.z * M[2][1] + /* in.z = 1 */ M[3][1];
-    out.z   = in.x * M[0][2] + in.y * M[1][2] + in.z * M[2][2] + /* in.z = 1 */ M[3][2];
-    float w = in.x * M[0][3] + in.y * M[1][3] + in.z * M[2][3] + /* in.z = 1 */ M[3][3];
-
-    // normalize if w is different than 1 (convert from homogeneous to Cartesian coordinates)
-    if (w != 1) {
-        out.x /= w;
-        out.y /= w;
-        out.z /= w;
-    }
+    Matrix<double> matrix = Matrix<double>(4,4);
+    matrix[1][1] = tanhalvfov;
+    matrix[0][0] = -1 * matrix[1][1] / ratio;
+    matrix[2][2] = far * oneOverDepth;
+    matrix[3][2] = (-far * near) * oneOverDepth;
+    matrix[2][3] = 1;
+    matrix[3][3] = 0;
+    return matrix;
 }
 
 int main()
 {
-    Vector3D a = Vector3D(1,2,3);
-    Vector3D b = Vector3D(2,3,4);
+    Camera camera = Camera();
+    int width = 800;
+    int height = 800;
+    float aspectRatio = (float)width/(float)height;
+    float near = 0.01;
+    float far = 1000.0;
+    float fov = 90.0;
+    camera.perspectiveMatrix = getPerspective(fov,aspectRatio,near,far);
 
+    //Input initialization
     double rotate_x = 0;
     bool rotate_xClick =false;
     double rotate_y = 0;
     bool rotate_yClick = false;
     double rotate_z = 0;
     bool rotate_zClick = false;
-    Vector3D camera = Vector3D(0,0,0);
 
-    Cube floor = Cube(2,.1,2);
-    floor.Translate(Vector3D(-1,-1,-1));
 
+    srand (time(NULL));
+    //Primitives initialization
     std::vector<Cube> cubes;
-    cubes.emplace_back(.4,.4,.4);
+    for (int i = 0; i < 5; ++i) {
+        for(int y = 0; y< 5; y ++){
+            Cube t = Cube(.2,.2,.2);
+            t.transformcom.Move(Vector3D((float)i/2,(float)y/2,-1));
+            double zoff = rand()% 10+1;
+            t.transformcom.Move(Vector3D(0,0,zoff/10));
+            cubes.emplace_back(t);
+        }
+    }
+
+    //cubes[0].Rotate(Vector3D(.1,.1,.1));
     //cubes.emplace_back(.2,.2,.2);
     //cubes.emplace_back(.3,.3,.3);
     //[0].Translate(Vector3D(0,-.4,0));
@@ -95,7 +73,7 @@ int main()
     settings.majorVersion = 3;
     settings.minorVersion = 0;
 
-    sf::Window window(sf::VideoMode(800, 800), "OpenGL", sf::Style::Default, settings);
+    sf::Window window(sf::VideoMode(width, height), "OpenGL", sf::Style::Default, settings);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
@@ -106,10 +84,10 @@ int main()
 
     // run the main loop
 
-    glViewport(0,0, 800, 800);
+    glViewport(0,0, width, height);
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+    //glMatrixMode(GL_PROJECTION);
+    //glLoadIdentity();
     bool running = true;
     while (running)
     {
@@ -173,47 +151,56 @@ int main()
             }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
                 for(auto& cube : cubes){
-                    cube.Scale(Vector3D(.9,.9,.9));
                 }
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::X)){
                 for(auto& cube : cubes){
-                    cube.Scale(Vector3D(1.1,1.1,1.1));
                 }
             }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-                camera.z += .01;
-                cubes[0].Scale(Vector3D(1.01,1.01,1.01));
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(0,0,-.01));
+                }
+                //camera.pos.z += .01;
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-                camera.z -= .01;
-                cubes[0].Scale(Vector3D(0.99,0.99,0.99));
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(0,0,.01));
+                }                //camera.pos.z -= .01;
             }
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                camera.x += .01;
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(-.01,0,0));
+                }                //camera.pos.x += .01;
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-                camera.x -= .01;
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(.01,0,0));
+                }                //camera.pos.x -= .01;
             }
 
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-                camera.y +=.01;
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(0,-.01,0));
+                }                //camera.pos.y +=.01;
             }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-                camera.y -=.01;
+                for(auto& cube : cubes){
+                    cube.transformcom.Move(Vector3D(0,.01,0));
+                }                //camera.pos.y -=.01;
             }
         }
         glRotatef(rotate_y,0.0,1.0,0.0);
         glRotatef(rotate_z,0.0,0.0,1.0);
         glRotatef(rotate_x,1.0,0.0,0.0);
+        //cubes[0].Rotate(Vector3D(rotate_x,rotate_y,rotate_z));
+
         // clear the buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
+        //glDisable(GL_CULL_FACE);
         //glEnable(GL_CULL_FACE);
 
-        floor.drawOnce(camera);
         for(auto& cube : cubes){
-            cube.Translate(-camera);
             cube.drawOnce(camera);
         }
-        camera.x = 0; camera.y = 0; camera.z = 0;
         // end the current frame (internally swaps the front and back buffers)
         window.display();
     }

@@ -51,24 +51,26 @@ void Cube::RotateZ(double r) {
     }
 }
 
-void Cube::Translate(Vector3D v) {
+void Cube::Rotate(Vector3D v) {
+    transformcom.Rotate(v);
+}
+
+void Cube::m_Transform() {
+    Matrix<double> mat = this->transformcom.getTransformMatrix();
     for (int i = 0; i < 8; ++i) {
-        points[i].Translate(v);
+        points[i].Transform(mat);
     }
-    anchor.Translate(v);
+}
+
+void Cube::Translate(Vector3D v) {
+    transformcom.Move(v);
 }
 
 void Cube::Scale(Vector3D v) {
-
-    for (int i = 0; i < 8; ++i) {
-        points[i].Translate(-anchor.getPointsV3());
-        points[i].Scale(v);
-        points[i].Translate(anchor.getPointsV3());
-    }
+    transformcom.Scale(v);
 }
 
 void Cube::draw() {
-
     //Back
     glBegin(GL_TRIANGLE_STRIP);
     glColor3f(.0f,1.0f,0.0f);
@@ -127,44 +129,55 @@ void Cube::draw() {
     glFlush();
 }
 
-void Cube::drawOnce(const Vector3D& cam) {
+void Cube::drawOnce(Camera camera) {
+    Matrix<double> tMatrix = transformcom.getTransformMatrix();
+    Matrix<double> vMatrix = camera.getViewMatrix();
+
+    Point tpoints[8];
+    copy(begin(points),end(points),begin(tpoints));
+    for (int i = 0; i < 8; ++i) {
+        tpoints[i].Transform(tMatrix);
+        tpoints[i].Transform(camera.perspectiveMatrix);
+        //points[i].Transform(vMatrix);
+    }
+
     //Front
     glBegin(GL_TRIANGLE_STRIP);
     glColor3f(1.0f, 0.0f, 0.0f);
     //glNormal3f(0.0f, 1.0f, 0.0f);
-    glVertex3dv(points[0].getPointsDA());
-    glVertex3dv(points[1].getPointsDA());
-    glVertex3dv(points[4].getPointsDA());
-    glVertex3dv(points[5].getPointsDA());
+    glVertex3dv(tpoints[0].getPointsDA());
+    glVertex3dv(tpoints[1].getPointsDA());
+    glVertex3dv(tpoints[4].getPointsDA());
+    glVertex3dv(tpoints[5].getPointsDA());
     //Top
     glColor3f(1.0f, 1.0f, 0.0f);
-    glVertex3dv(points[7].getPointsDA());
-    glVertex3dv(points[6].getPointsDA());
+    glVertex3dv(tpoints[7].getPointsDA());
+    glVertex3dv(tpoints[6].getPointsDA());
     //Back
     glColor3f(1.0f, .0f, 1.0f);
-    glVertex3dv(points[3].getPointsDA());
-    glVertex3dv(points[2].getPointsDA());
+    glVertex3dv(tpoints[3].getPointsDA());
+    glVertex3dv(tpoints[2].getPointsDA());
     //Bottom
     glColor3f(.0f, .0f, 1.0f);
-    glVertex3dv(points[0].getPointsDA());
-    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(tpoints[0].getPointsDA());
+    glVertex3dv(tpoints[1].getPointsDA());
     glEnd();
 
     //Right
     glBegin(GL_TRIANGLE_STRIP);
     glColor3f(1.0f,1.0f,0.0f);
-    glVertex3dv(points[1].getPointsDA());
-    glVertex3dv(points[2].getPointsDA());
-    glVertex3dv(points[5].getPointsDA());
-    glVertex3dv(points[6].getPointsDA());
+    glVertex3dv(tpoints[1].getPointsDA());
+    glVertex3dv(tpoints[2].getPointsDA());
+    glVertex3dv(tpoints[5].getPointsDA());
+    glVertex3dv(tpoints[6].getPointsDA());
     glEnd();
 
     //Left
     glBegin(GL_TRIANGLE_STRIP);
     glColor3f(.0f,1.0f,1.0f);
-    glVertex3dv(points[0].getPointsDA());
-    glVertex3dv(points[3].getPointsDA());
-    glVertex3dv(points[4].getPointsDA());
-    glVertex3dv(points[7].getPointsDA());
+    glVertex3dv(tpoints[0].getPointsDA());
+    glVertex3dv(tpoints[3].getPointsDA());
+    glVertex3dv(tpoints[4].getPointsDA());
+    glVertex3dv(tpoints[7].getPointsDA());
     glEnd();
 }

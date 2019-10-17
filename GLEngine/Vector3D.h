@@ -20,6 +20,7 @@ public:
     Vector3D operator -();
     Vector3D operator -(const Vector3D& in);
     Vector3D operator +(const Vector3D& in);
+    Vector3D&operator +=(const Vector3D& in);
     double x;
     double y;
     double z;
