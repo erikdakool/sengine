@@ -3,8 +3,8 @@
 //
 
 #include "Gameobject.h"
-#include "Components/RenderCom.h"
-#include "Components/Movement.h"
+#include "../Components/RenderCom.h"
+#include "../Components/Movement.h"
 
 Gameobject::Gameobject(unsigned int id, bool active,Manager& manager)
 :manager(manager)
@@ -14,10 +14,6 @@ Gameobject::Gameobject(unsigned int id, bool active,Manager& manager)
 
     this->id = id;
     this->active = active;
-    auto renderCom = std::make_shared<RenderCom>(*this);
-    components.push_back(std::move(renderCom));
-    auto move = std::make_shared<Movement>(*this);
-    components.push_back(std::move(move));
 }
 
 Gameobject::Gameobject(Manager &manager)

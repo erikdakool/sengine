@@ -8,6 +8,7 @@
 
 #include "App.h"
 #include "Components/Physics.h"
+#include "Components/Movement.h"
 
 App::App()
 :manager(*this)
@@ -26,18 +27,22 @@ void App::run() {
     sf::Clock clock;
     sf::Event event;
 
-    bool load = false;
+    bool load = true;
     if(!load){
         for (int i = 0; i < 14; ++i) {
             for (int j = 0; j < 14; ++j) {
                 auto object = std::make_shared<Gameobject>((i*j)+i, true,manager);
 
+                auto renderCom = std::make_shared<RenderCom>(*object.get());
+                object->addComponent(renderCom);
+                auto move = std::make_shared<Movement>(*object.get());
+                object->addComponent(move);
                 auto collider = std::make_shared<Collider>(*object.get());
                 object.get()->addComponent(collider);
                 manager.collisionController.addCollider(collider);
 
                 auto phys = std::make_shared<Physics>(*object.get());
-                //object.get()->addComponent(phys);
+                object.get()->addComponent(phys);
 
                 object.get()->trasform()->setX(i*41);
                 object.get()->trasform()->setY(j*41+100);
@@ -54,7 +59,6 @@ void App::run() {
     }
 
     manager.objectController.initAll();
-
 
     sf::Joystick::Identification id = sf::Joystick::getIdentification(0);
     manager.windowController.setTitle("Joystick " + id.name.toAnsiString());

@@ -3,10 +3,10 @@
 //
 
 #include "ObjectController.h"
-#include "Gameobject.h"
-#include "Components/PlayerController.h"
-#include "Components/Physics.h"
-#include "Components/AudioCom.h"
+#include "../Gameobjects/Gameobject.h"
+#include "../Components/PlayerController.h"
+#include "../Components/Physics.h"
+#include "../Components/AudioCom.h"
 
 ObjectController::ObjectController() {
 
@@ -54,8 +54,9 @@ void ObjectController::spawnPlayer() {
     auto playerController = std::make_shared<PlayerController>(*object.get());
     object.get()->addComponent(playerController);
 
-    auto render = object.get()->getComponentP<RenderCom*>();
+    auto render = std::make_shared<RenderCom>(*object.get());
     render->setColor(sf::Color::Red);
+    object.get()->addComponent(render);
 
     auto collider = std::make_shared<Collider>(*object.get());
     object.get()->addComponent(collider);
@@ -66,6 +67,9 @@ void ObjectController::spawnPlayer() {
 
     auto sound = std::make_shared<AudioCom>(*object.get());
     object.get()->addComponent(sound);
+
+    auto mov = std::make_shared<Movement>(*object.get());
+    object.get()->addComponent(mov);
 
     object.get()->trasform()->setY(0);
     object.get()->trasform()->setX(500);

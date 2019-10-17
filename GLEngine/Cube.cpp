@@ -126,3 +126,45 @@ void Cube::draw() {
 
     glFlush();
 }
+
+void Cube::drawOnce() {
+    //Front
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    //glNormal3f(0.0f, 1.0f, 0.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(points[4].getPointsDA());
+    glVertex3dv(points[5].getPointsDA());
+    //Top
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glVertex3dv(points[7].getPointsDA());
+    glVertex3dv(points[6].getPointsDA());
+    //Back
+    glColor3f(1.0f, .0f, 1.0f);
+    glVertex3dv(points[3].getPointsDA());
+    glVertex3dv(points[2].getPointsDA());
+    //Bottom
+    glColor3f(.0f, .0f, 1.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[1].getPointsDA());
+    glEnd();
+
+    //Right
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(1.0f,1.0f,0.0f);
+    glVertex3dv(points[1].getPointsDA());
+    glVertex3dv(points[2].getPointsDA());
+    glVertex3dv(points[5].getPointsDA());
+    glVertex3dv(points[6].getPointsDA());
+    glEnd();
+
+    //Left
+    glBegin(GL_TRIANGLE_STRIP);
+    glColor3f(.0f,1.0f,1.0f);
+    glVertex3dv(points[0].getPointsDA());
+    glVertex3dv(points[3].getPointsDA());
+    glVertex3dv(points[4].getPointsDA());
+    glVertex3dv(points[7].getPointsDA());
+    glEnd();
+}

@@ -8,7 +8,7 @@
 #include <memory>
 #include <list>
 
-#include "Components/RenderCom.h"
+#include "../Components/RenderCom.h"
 #include "WindowController.h"
 
 class GraphicsController {

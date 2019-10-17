@@ -4,7 +4,7 @@
 
 #include "AudioCom.h"
 
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 
 AudioCom::AudioCom(Gameobject& gameobject)
 :Component(gameobject)

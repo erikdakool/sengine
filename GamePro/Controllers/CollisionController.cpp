@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "CollisionController.h"
-#include "Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 
 CollisionController::CollisionController() {
 

@@ -8,12 +8,13 @@
 #include <memory>
 #include <list>
 #include <string>
+#include <typeinfo>
 
 #include <jsoncpp/json/json.h>
 
-#include "Components/Transform.h"
-#include "Components/RenderCom.h"
-#include "Manager.h"
+#include "../Components/Transform.h"
+#include "../Components/RenderCom.h"
+#include "../Manager.h"
 
 enum ObjectTag{
     TagGameobject = 0,
@@ -42,7 +43,7 @@ public:
         Gameobject::active = active;
     }
 
-    bool setId(unsigned int id){
+    void setId(unsigned int id){
         Gameobject::id = id;
     }
 
@@ -85,7 +86,7 @@ public:
     ObjectTag getTag() const;
 
 private:
-    //Gameobject info
+    //Gameobjects info
     unsigned int id;
     std::string name;
     bool active;
@@ -103,7 +104,7 @@ private:
     std::list<std::shared_ptr<Component>> components;
     void loadComponent(Json::Value& value);
 
-    //Gameobject family
+    //Gameobjects family
     std::shared_ptr<Gameobject> parent;
     std::list<std::shared_ptr<Gameobject>> children;
 };

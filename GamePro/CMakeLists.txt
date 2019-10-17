@@ -7,33 +7,33 @@ add_executable(GamePro
         main.cpp
         App.cpp
         App.h
-        Gameobject.cpp
-        Gameobject.h
+        Gameobjects/Gameobject.cpp
+        Gameobjects/Gameobject.h
         Components/Transform.cpp
         Components/Transform.h
         Components/Component.cpp
         Components/Component.h
         Components/RenderCom.cpp
         Components/RenderCom.h
-        WindowController.cpp
-        WindowController.h
+        Controllers/WindowController.cpp
+        Controllers/WindowController.h
         Manager.h
         Components/Movement.cpp
         Components/Movement.h
-        ObjectController.cpp
-        ObjectController.h
+        Controllers/ObjectController.cpp
+        Controllers/ObjectController.h
         Components/Collider.cpp
         Components/Collider.h
-        CollisionController.cpp
-        CollisionController.h
+        Controllers/CollisionController.cpp
+        Controllers/CollisionController.h
         Components/PlayerController.cpp
         Components/PlayerController.h
         Components/Physics.cpp
         Components/Physics.h
-        AssetController.cpp
-        AssetController.h
-        ObjectLoader.cpp
-        ObjectLoader.h
+        Controllers/AssetController.cpp
+        Controllers/AssetController.h
+        Controllers/ObjectLoader.cpp
+        Controllers/ObjectLoader.h
         Components/InputController.cpp
         Components/InputController.h
         Components/AnimationController.cpp
@@ -44,10 +44,10 @@ add_executable(GamePro
         DataTypes/TextureRect.h
         DataTypes/Animation.cpp
         DataTypes/Animation.h
-        GraphicsController.cpp
-        GraphicsController.h
-        ObjectFactory.cpp
-        ObjectFactory.h
-        )
+        Controllers/GraphicsController.cpp
+        Controllers/GraphicsController.h
+        Controllers/ObjectFactory.cpp
+        Controllers/ObjectFactory.h
+        SceneVariables.h)
 
 target_link_libraries (GamePro jsoncpp tgui sfml-graphics sfml-audio sfml-window sfml-system)

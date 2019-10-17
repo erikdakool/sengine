@@ -3,7 +3,7 @@
 //
 
 #include "WindowController.h"
-#include "Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 WindowController::WindowController(sf::RenderWindow& window)
 :window(window)
 {

@@ -8,7 +8,7 @@
 #include <cmath>
 
 #include "PlayerController.h"
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 #include "Movement.h"
 #include "AudioCom.h"
 #include "Physics.h"
@@ -17,14 +17,7 @@
 PlayerController::PlayerController(Gameobject &gameobject)
 :Component(gameobject)
 {
-    flame = std::make_shared<Gameobject>(15,true,gameobject.getManager());
-    auto anim = std::make_shared<AnimationController>(*flame.get());
-    flame.get()->addComponent(anim);
 
-    flame.get()->trasform()->setX(gameobject.trasform()->getX());
-    flame.get()->trasform()->setY(gameobject.trasform()->getY());
-    gameobject.getManager().objectController.addObject(flame);
-    gameobject.addChildren(flame);
 }
 
 PlayerController::PlayerController(Gameobject &gameobject, Json::Value input)
@@ -38,7 +31,12 @@ PlayerController::~PlayerController() {
 }
 
 void PlayerController::init() {
-    Movement* movement = gameobject.getComponentP<Movement *>();
+    renderCom = gameobject.getComponentP<RenderCom*>();
+    collider = gameobject.getComponentP<Collider*>();
+    movement = gameobject.getComponentP<Movement*>();
+    physics = gameobject.getComponentP<Physics*>();
+    audioCom = gameobject.getComponentP<AudioCom*>();
+
     this->movement =  movement;
 }
 

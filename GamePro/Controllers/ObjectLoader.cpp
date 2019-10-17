@@ -3,8 +3,8 @@
 //
 
 #include "ObjectLoader.h"
-#include "Manager.h"
-#include "Gameobject.h"
+#include "../Manager.h"
+#include "../Gameobjects/Gameobject.h"
 
 ObjectLoader::ObjectLoader() {
 

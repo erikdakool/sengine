@@ -4,7 +4,7 @@
 
 #include "AnimationController.h"
 
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 
 AnimationController::AnimationController(Gameobject& gameobject)
 :Component(gameobject)

@@ -3,12 +3,12 @@
 //
 
 #include "ObjectFactory.h"
-#include "Gameobject.h"
-#include "Components/AnimationController.h"
-#include "Components/AudioCom.h"
-#include "Components/Movement.h"
-#include "Components/Physics.h"
-#include "Components/PlayerController.h"
+#include "../Gameobjects/Gameobject.h"
+#include "../Components/AnimationController.h"
+#include "../Components/AudioCom.h"
+#include "../Components/Movement.h"
+#include "../Components/Physics.h"
+#include "../Components/PlayerController.h"
 
 ObjectFactory::ObjectFactory() {
 
@@ -42,8 +42,9 @@ std::shared_ptr<Gameobject> ObjectFactory::createGameobject(Json::Value input) {
             ob.get()->addComponent(com);
         }
         if(component["name"].asString()=="collider"){
-            auto com = std::make_shared<Collider>(*ob.get(),component);
-            ob.get()->addComponent(com);
+            auto col = std::make_shared<Collider>(*ob.get(),component);
+            manager->collisionController.addCollider(col);
+            ob.get()->addComponent(col);
         }
         if(component["name"].asString()=="movement"){
             auto com = std::make_shared<Movement>(*ob.get(),component);

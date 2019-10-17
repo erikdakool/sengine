@@ -5,7 +5,7 @@
 #include <iostream>
 #include "RenderCom.h"
 
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 
 RenderCom::RenderCom(Gameobject &gameobject)
 :Component(gameobject)

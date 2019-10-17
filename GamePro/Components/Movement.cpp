@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "Movement.h"
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 #include "Physics.h"
 
 Movement::Movement(Gameobject &gameobject)

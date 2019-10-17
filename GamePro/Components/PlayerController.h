@@ -9,6 +9,10 @@
 #include <bits/shared_ptr.h>
 #include "Component.h"
 #include "Movement.h"
+#include "Collider.h"
+#include "RenderCom.h"
+#include "Physics.h"
+#include "AudioCom.h"
 
 class PlayerController : public Component {
 public:
@@ -23,9 +27,11 @@ public:
     void setValuesJson(Json::Value input);
 
 private:
+    RenderCom* renderCom;
+    Collider* collider;
     Movement* movement;
-    std::shared_ptr<Gameobject> flame;
-    float rot = 0;
+    Physics* physics;
+    AudioCom* audioCom;
 };
 
 

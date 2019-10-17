@@ -26,6 +26,7 @@ public:
     void Translate(Vector3D v);
     void Scale(Vector3D v);
     void draw();
+    void drawOnce();
 private:
    Point points[8];
    Point anchor;

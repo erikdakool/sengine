@@ -6,8 +6,9 @@
 #include <cmath>
 
 #include "Physics.h"
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 #include "Collider.h"
+#include "../SceneVariables.h"
 
 Physics::Physics(Gameobject &gameobject)
 :Component(gameobject)
@@ -27,7 +28,9 @@ Physics::~Physics() {
 }
 
 void Physics::init() {
-    cyAcc = 9.81f;
+    PhysicConstants pc;
+    cyAcc = pc.yAcc;
+    cxAcc = pc.xAcc;
     col = getGameobject().getComponentP<Collider*>();
 }
 

@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include "Gameobject.h"
+#include "Gameobjects/Gameobject.h"
 #include "Manager.h"
 
 class App : public sf::RenderWindow{

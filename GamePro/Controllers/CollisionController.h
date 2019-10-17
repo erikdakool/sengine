@@ -8,7 +8,7 @@
 #include <memory>
 #include <list>
 
-#include "Components/Collider.h"
+#include "../Components/Collider.h"
 
 class CollisionController {
 public:

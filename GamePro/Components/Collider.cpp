@@ -3,7 +3,7 @@
 //
 
 #include "Collider.h"
-#include "../Gameobject.h"
+#include "../Gameobjects/Gameobject.h"
 
 #include <iostream>
 

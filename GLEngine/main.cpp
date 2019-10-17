@@ -13,6 +13,9 @@ int main()
     bool rotate_zClick = false;
 
     std::vector<Cube> cubes;
+    for (int i = 0; i < 1000; ++i) {
+        cubes.push_back(Cube(.4,.4,.4));
+    }
     cubes.push_back(Cube(.4,.4,.4));
     cubes.push_back(Cube(.2,.2,.2));
     cubes.push_back(Cube(.3,.3,.3));
@@ -31,7 +34,7 @@ int main()
     settings.majorVersion = 3;
     settings.minorVersion = 0;
 
-    sf::Window window(sf::VideoMode(1200, 1200), "OpenGL", sf::Style::Default, settings);
+    sf::Window window(sf::VideoMode(800, 800), "OpenGL", sf::Style::Default, settings);
     window.setVerticalSyncEnabled(true);
     window.setFramerateLimit(60);
 
@@ -42,7 +45,7 @@ int main()
 
     // run the main loop
 
-    glViewport(0,0, 1200, 1200);
+    glViewport(0,0, 800, 800);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -125,7 +128,7 @@ int main()
         glEnable(GL_DEPTH_TEST);
 
         for(auto& cube : cubes){
-            cube.draw();
+            cube.drawOnce();
         }
 
         // end the current frame (internally swaps the front and back buffers)

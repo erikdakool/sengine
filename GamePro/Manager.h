@@ -6,19 +6,19 @@
 #define GAMEPRO_MANAGER_H
 
 //Manager
-#include "WindowController.h"
+#include "Controllers/WindowController.h"
 //InputData
 
 //AssetData
-#include "AssetController.h"
+#include "Controllers/AssetController.h"
 
 //Manager
-#include "ObjectController.h"
-#include "CollisionController.h"
-#include "ObjectLoader.h"
+#include "Controllers/ObjectController.h"
+#include "Controllers/CollisionController.h"
+#include "Controllers/ObjectLoader.h"
 #include "Components/InputController.h"
-#include "GraphicsController.h"
-#include "ObjectFactory.h"
+#include "Controllers/GraphicsController.h"
+#include "Controllers/ObjectFactory.h"
 
 struct Manager {
     Manager(sf::RenderWindow& window)

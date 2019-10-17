@@ -8,7 +8,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <jsoncpp/json/json.h>
-#include "../AssetController.h"
+#include "../Controllers/AssetController.h"
 
 class TextureRect {
 public:
