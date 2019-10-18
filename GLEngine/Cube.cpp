@@ -132,12 +132,13 @@ void Cube::draw() {
 void Cube::drawOnce(Camera camera) {
     Matrix<double> tMatrix = transformcom.getTransformMatrix();
     Matrix<double> vMatrix = camera.getViewMatrix();
+    Matrix<double> transform = camera.perspectiveMatrix * vMatrix * tMatrix;
 
     Point tpoints[8];
     copy(begin(points),end(points),begin(tpoints));
     for (int i = 0; i < 8; ++i) {
-        tpoints[i].Transform(tMatrix);
-        tpoints[i].Transform(camera.perspectiveMatrix);
+
+        tpoints[i].Transform(transform);
         //points[i].Transform(vMatrix);
     }
 

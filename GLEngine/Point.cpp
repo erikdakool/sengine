@@ -6,6 +6,8 @@
 #include <iostream>
 
 #include "Point.h"
+#include <glm/gtc/matrix_transform.hpp>
+
 
 Point::Point() {}
 
@@ -80,7 +82,8 @@ void Point::Translate(Matrix<double> mat3) {
 }
 void Point::Translate(double x, double y, double z) {
     Translate(Vector3D(x,y,z));
-}
+}#include <glm/gtc/matrix_transform.hpp>
+
 
 //Scale
 void Point::Scale(Vector3D v) {

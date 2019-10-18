@@ -5,6 +5,8 @@
 #include <assert.h>
 #include "Cube.h"
 #include "Camera.h"
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 Matrix<double> getPerspective(double const& fov, double const& ratio, double const& near, double const& far){
     double const frustumDepth = far-near;
@@ -28,10 +30,20 @@ int main()
     int width = 800;
     int height = 800;
     float aspectRatio = (float)width/(float)height;
-    float near = 0.01;
-    float far = 1000.0;
+    float near = 0.1;
+    float far = 100.0;
     float fov = 90.0;
+
     camera.perspectiveMatrix = getPerspective(fov,aspectRatio,near,far);
+
+
+    glm::mat4 matrix = glm::perspective(fov,aspectRatio,near,far);
+    for (int j = 0; j < 4; ++j) {
+        for (int i = 0; i < 4; ++i) {
+            camera.perspectiveMatrix[j][i] = matrix[j][i];
+        }
+    }
+    matrix[1][1];
 
     //Input initialization
     double rotate_x = 0;
