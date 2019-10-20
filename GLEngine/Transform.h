@@ -1,34 +1,40 @@
 //
-// Created by erik on 17.10.2019.
+// Created by erik on 18.10.2019.
 //
 
 #ifndef GLENGINE_TRANSFORM_H
 #define GLENGINE_TRANSFORM_H
 
+#include <glm/glm.hpp>
 
-#include "Vector3D.h"
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/transform.hpp>
+
 
 class Transform {
 public:
     Transform();
-    Transform(Vector3D rot, Vector3D pos, Vector3D scale);
     ~Transform();
 
-    void Rotate(Vector3D v);
-    void Scale(Vector3D v);
-    void Move(Vector3D v);
+    glm::mat4 getTranslateMatrix();
+    glm::mat4 getRotationMatrix();
+    glm::mat4 getScaleMatrix();
+    glm::mat4 getTransformMatrix();
 
-    Vector3D getrot();
-    Vector3D getscale();
-    Vector3D getpos();
-    Matrix<double> getRotationMatrix();
-    Matrix<double> getScaleMatrix();
-    Matrix<double> getTranslateMatrix();
-    Matrix<double> getTransformMatrix();
+    void RotateX(float r);
+    void RotateY(float r);
+    void RotateZ(float r);
+    void RotateAll(glm::vec3 r);
+    void SetRotate(glm::vec3 v);
+
+    void move(glm::vec3 move);
+
 private:
-    Vector3D rotation;
-    Vector3D pos;
-    Vector3D scale;
+    glm::vec3 translate;
+    glm::vec3 rotation;
+    glm::vec3 scale;
+    glm::mat4 transform;
+    bool updateTransform = false;
 };
 
 

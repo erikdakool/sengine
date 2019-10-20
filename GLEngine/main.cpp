@@ -1,223 +1,225 @@
-#include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
-#include <iostream>
-#include <math.h>
-#include <assert.h>
-#include "Cube.h"
-#include "Camera.h"
+// Include standard headers
+#include <stdio.h>
+#include <stdlib.h>
+
+// Include GLEW
+#include <GL/glew.h>
+
+// Include GLFW
+#include <GLFW/glfw3.h>
+
+// Include GLM
 #include <glm/glm.hpp>
-#include <glm/ext.hpp>
+#include <vector>
+#include <iostream>
+#include "AssetController.h"
 
-Matrix<double> getPerspective(double const& fov, double const& ratio, double const& near, double const& far){
-    double const frustumDepth = far-near;
-    double const oneOverDepth = 1/frustumDepth;
-    double const rad = fov*M_PI/180.0;
-    double const tanhalvfov = tan(rad /2);
+using namespace glm;
 
-    Matrix<double> matrix = Matrix<double>(4,4);
-    matrix[1][1] = tanhalvfov;
-    matrix[0][0] = -1 * matrix[1][1] / ratio;
-    matrix[2][2] = far * oneOverDepth;
-    matrix[3][2] = (-far * near) * oneOverDepth;
-    matrix[2][3] = 1;
-    matrix[3][3] = 0;
-    return matrix;
-}
+#include "shader.hpp"
+#include "Triangle.h"
+#include "Camera.h"
+#include "Cube.h"
 
-int main()
+#define GLM_ENABLE_EXPERIMENTAL
+
+GLFWwindow* window;
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+float fov = 60;
+float width = 1600.0f;
+float height = 1200.0f;
+float near = 0.1f;
+float far = 100.0f;
+Camera camera = Camera();
+double previousTime = glfwGetTime();
+int frameCount = 0;
+
+int main( void )
 {
-    Camera camera = Camera();
-    int width = 800;
-    int height = 800;
-    float aspectRatio = (float)width/(float)height;
-    float near = 0.1;
-    float far = 100.0;
-    float fov = 90.0;
-
-    camera.perspectiveMatrix = getPerspective(fov,aspectRatio,near,far);
-
-
-    glm::mat4 matrix = glm::perspective(fov,aspectRatio,near,far);
-    for (int j = 0; j < 4; ++j) {
-        for (int i = 0; i < 4; ++i) {
-            camera.perspectiveMatrix[j][i] = matrix[j][i];
-        }
-    }
-    matrix[1][1];
-
-    //Input initialization
-    double rotate_x = 0;
-    bool rotate_xClick =false;
-    double rotate_y = 0;
-    bool rotate_yClick = false;
-    double rotate_z = 0;
-    bool rotate_zClick = false;
-
-
-    srand (time(NULL));
-    //Primitives initialization
-    std::vector<Cube> cubes;
-    for (int i = 0; i < 5; ++i) {
-        for(int y = 0; y< 5; y ++){
-            Cube t = Cube(.2,.2,.2);
-            t.transformcom.Move(Vector3D((float)i/2,(float)y/2,-1));
-            double zoff = rand()% 10+1;
-            t.transformcom.Move(Vector3D(0,0,zoff/10));
-            cubes.emplace_back(t);
-        }
-    }
-
-    //cubes[0].Rotate(Vector3D(.1,.1,.1));
-    //cubes.emplace_back(.2,.2,.2);
-    //cubes.emplace_back(.3,.3,.3);
-    //[0].Translate(Vector3D(0,-.4,0));
-    //cubes[1].Translate(Vector3D(-.1,0,0));
-    //cubes[2].Translate(Vector3D(0,.4,.4));
-    //cubes[0].RotateY(45*3.14/180);
-    //cubes[0].RotateZ(45*3.14/180);
-    //cubes[0].RotateX(45*3.14/180);
-
-    // create the window
-    sf::ContextSettings settings;
-    settings.depthBits = 24;
-    settings.stencilBits = 8;
-    settings.antialiasingLevel = 4;
-    settings.majorVersion = 3;
-    settings.minorVersion = 0;
-
-    sf::Window window(sf::VideoMode(width, height), "OpenGL", sf::Style::Default, settings);
-    window.setVerticalSyncEnabled(true);
-    window.setFramerateLimit(60);
-
-    // activate the window
-    window.setActive(true);
-
-    // load resources, initialize the OpenGL states, ...
-
-    // run the main loop
-
-    glViewport(0,0, width, height);
-
-    //glMatrixMode(GL_PROJECTION);
-    //glLoadIdentity();
-    bool running = true;
-    while (running)
+    // Initialise GLFW
+    if( !glfwInit() )
     {
-        // handle events
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-            {
-                // end the program
-                running = false;
-            }
-            else if (event.type == sf::Event::Resized)
-            {
-                // adjust the viewport when the window is resized
-                glViewport(0, 0, event.size.width, event.size.height);
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::I)){
-                if(!rotate_xClick){
-                    rotate_x +=2;
-                    rotate_xClick = true;
-                }
-            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::K)){
-                if(!rotate_xClick){
-                    rotate_x -=2;
-                    rotate_xClick = true;
-                }
-            }else{
-                rotate_xClick = false;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::U)){
-                if(!rotate_yClick){
-                    rotate_y +=2;
-                    rotate_yClick = true;
-                }
-            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::O)){
-                if(!rotate_yClick){
-                    rotate_y -=2;
-                    rotate_yClick = true;
-                }
-            }else{
-                rotate_yClick = false;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::J)){
-                if(!rotate_zClick){
-                    rotate_z +=2;
-                    rotate_zClick = true;
-                }
-            } else if(sf::Keyboard::isKeyPressed(sf::Keyboard::L)){
-                if(!rotate_zClick){
-                    rotate_z -=2;
-                    rotate_zClick = true;
-                }
-            }else{
-                rotate_zClick = false;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::P)){
-                rotate_x = 0;
-                rotate_y = 0;
-                rotate_z = 0;
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-                for(auto& cube : cubes){
-                }
-            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::X)){
-                for(auto& cube : cubes){
-                }
-            }
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(0,0,-.01));
-                }
-                //camera.pos.z += .01;
-            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(0,0,.01));
-                }                //camera.pos.z -= .01;
-            }
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(-.01,0,0));
-                }                //camera.pos.x += .01;
-            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(.01,0,0));
-                }                //camera.pos.x -= .01;
-            }
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::E)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(0,-.01,0));
-                }                //camera.pos.y +=.01;
-            }else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-                for(auto& cube : cubes){
-                    cube.transformcom.Move(Vector3D(0,.01,0));
-                }                //camera.pos.y -=.01;
-            }
-        }
-        glRotatef(rotate_y,0.0,1.0,0.0);
-        glRotatef(rotate_z,0.0,0.0,1.0);
-        glRotatef(rotate_x,1.0,0.0,0.0);
-        //cubes[0].Rotate(Vector3D(rotate_x,rotate_y,rotate_z));
-
-        // clear the buffers
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
-        //glDisable(GL_CULL_FACE);
-        //glEnable(GL_CULL_FACE);
-
-        for(auto& cube : cubes){
-            cube.drawOnce(camera);
-        }
-        // end the current frame (internally swaps the front and back buffers)
-        window.display();
+        fprintf( stderr, "Failed to initialize GLFW\n" );
+        getchar();
+        return -1;
     }
 
-    // release resources...
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    // Open a window and create its OpenGL context
+    //glfwWindowHint(GLFW_DOUBLEBUFFER,GL_FALSE);
+    window = glfwCreateWindow( width, height, "Tutorial 02 - Red triangle", NULL, NULL);
+    if( window == NULL ){
+        fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
+        getchar();
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(window);
+    glfwSetCursorPosCallback(window,mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+
+    // Initialize GLEW
+    glewExperimental = true; // Needed for core profile
+    if (glewInit() != GLEW_OK) {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        getchar();
+        glfwTerminate();
+        return -1;
+    }
+
+    // Ensure we can capture the escape key being pressed below
+    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+    // Dark blue background
+    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+    GLuint VertexArrayID;
+    glGenVertexArrays(1, &VertexArrayID);
+    glBindVertexArray(VertexArrayID);
+
+    // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+    // Accept fragment if it closer to the camera than the former one
+    glDepthFunc(GL_LESS);
+
+    glEnable(GL_CULL_FACE);
+
+    // Create and compile our GLSL program from the shaders
+    GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+    camera.programID = programID;
+    camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
+    camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
+
+    AssetController assetController = AssetController();
+
+    Triangle triangle = Triangle();
+    std::vector<Cube> cubes;
+    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
+    cubes.push_back(Cube(glm::vec3(10,1,10),assetController));
+    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
+    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
+
+    cubes[1].transform.move(glm::vec3(0,-10,0));
+    cubes[2].transform.move(glm::vec3(0,0,10));
+    cubes[3].transform.move(glm::vec3(10,0,0));
+
+    for (int i = 0; i < 10000; ++i) {
+        //cubes.push_back(Cube(glm::vec3(1,1,1)));
+    }
+
+    do{
+        double currentTime = glfwGetTime();
+        frameCount++;
+        if(currentTime - previousTime >=1.0){
+            std::cout << frameCount << std::endl;
+            frameCount = 0;
+            previousTime = currentTime;
+        }
+        // Clear the screen
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        // Use our shader
+        glUseProgram(programID);
+
+        if(glfwGetKey(window,GLFW_KEY_U) == GLFW_PRESS){
+            cubes[0].transform.RotateY(5);
+        }
+        if(glfwGetKey(window,GLFW_KEY_O) == GLFW_PRESS){
+            cubes[0].transform.RotateY(-5);
+        }
+
+        if(glfwGetKey(window,GLFW_KEY_I) == GLFW_PRESS){
+            cubes[0].transform.RotateX(5);
+        }
+        if(glfwGetKey(window,GLFW_KEY_K) == GLFW_PRESS){
+            cubes[0].transform.RotateX(-5);
+        }
+
+        if(glfwGetKey(window,GLFW_KEY_J) == GLFW_PRESS){
+            cubes[0].transform.RotateZ(5);
+        }
+        if(glfwGetKey(window,GLFW_KEY_L) == GLFW_PRESS){
+            cubes[0].transform.RotateZ(-5);
+        }if(glfwGetKey(window,GLFW_KEY_P)==GLFW_PRESS){
+            cubes[0].transform.SetRotate(glm::vec3(0,0,0));
+        }
+
+        if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
+            camera.moveUp(-1);
+        }
+        if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS) {
+            camera.moveUp(1);
+        }
+        if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
+            camera.moveForward(1);
+        }
+        if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
+            camera.moveForward(-1);
+        }
+        if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
+            camera.moveSide(1);
+        }
+        if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
+            camera.moveSide(-1);
+        }
+
+        if(glfwGetKey(window,GLFW_KEY_LEFT) == GLFW_PRESS) {
+            camera.rotate(glm::vec3(0,-5,0));
+        }
+        if(glfwGetKey(window,GLFW_KEY_RIGHT) == GLFW_PRESS) {
+            camera.rotate(glm::vec3(0,5,0));
+        }
+        if(glfwGetKey(window,GLFW_KEY_UP) == GLFW_PRESS) {
+            camera.rotate(glm::vec3(5,0,0));
+        }
+        if(glfwGetKey(window,GLFW_KEY_DOWN) == GLFW_PRESS) {
+            camera.rotate(glm::vec3(-5,0,0));
+        }
+        if(glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) {
+        }
+
+        // Draw the triangle !
+        //glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+        triangle.Draw(camera);
+        for(auto & cube : cubes){
+            cube.Draw(camera);
+        }
+        glDisableVertexAttribArray(0);
+
+        // Swap buffers
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    } // Check if the ESC key was pressed or the window was closed
+    while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
+           glfwWindowShouldClose(window) == 0 );
+
+    // Cleanup VBO
+    glDeleteVertexArrays(1, &VertexArrayID);
+    glDeleteProgram(programID);
+
+    // Close OpenGL window and terminate GLFW
+    glfwTerminate();
 
     return 0;
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+    glfwSetCursorPos(window,width/2,height/2);
+    float yoffset = (-1.f) * .1f* (float)(width/2 - xpos);
+    float xoffset = .1f* (float)(height/2 - ypos);
+
+    float sensitivity = 0.1f; // change this value to your liking
+    xoffset *= sensitivity;
+    yoffset *= sensitivity;
+
+    glm::vec3 rotate = glm::vec3(xoffset,yoffset,0);
+    camera.rotate(rotate);
 }

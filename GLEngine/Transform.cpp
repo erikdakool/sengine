@@ -1,92 +1,70 @@
 //
-// Created by erik on 17.10.2019.
+// Created by erik on 18.10.2019.
 //
 
-#include <cmath>
+#include <iostream>
 #include "Transform.h"
 
 Transform::Transform() {
-    rotation = Vector3D();
-    pos = Vector3D();
-    scale = Vector3D(1,1,1);
-}
-
-Transform::Transform(Vector3D rot, Vector3D pos, Vector3D scale) {
-    this->rotation = rot;
-    this-> pos = pos;
-    this-> scale = scale;
+    translate = glm::vec3(0.f,0.f,0.f);
+    rotation = glm::vec3(0,0,0);
+    scale = glm::vec3(1,1,1);
+    transform = getTranslateMatrix() * getRotationMatrix() * getScaleMatrix();
 }
 
 Transform::~Transform() {
 
 }
 
-void Transform::Rotate(Vector3D v) {
-    this->pos+=v;
+glm::mat4 Transform::getTranslateMatrix() {
+    return glm::translate(glm::mat4(1.0f),translate);
 }
 
-void Transform::Move(Vector3D v) {
-    this->pos+=v;
+glm::mat4 Transform::getRotationMatrix() {
+    glm::mat4 rotX = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.x),glm::vec3(1,0,0));
+    glm::mat4 rotY = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.y),glm::vec3(0,1,0));
+    glm::mat4 rotZ = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.z),glm::vec3(0,0,1));
+    return rotX * rotZ * rotY;
 }
 
-void Transform::Scale(Vector3D v) {
-    this->pos+=v;
+glm::mat4 Transform::getScaleMatrix() {
+    return glm::scale(scale);
 }
 
-Vector3D Transform::getrot() {
-    return rotation;
+glm::mat4 Transform::getTransformMatrix() {
+    if(updateTransform){
+        transform = getTranslateMatrix() * getRotationMatrix() * getScaleMatrix();
+        updateTransform = false;
+    }
+    return transform;
 }
 
-Vector3D Transform::getscale() {
-    return scale;
+void Transform::RotateX(float r) {
+    rotation.x += r;
+    updateTransform = true;
 }
 
-Vector3D Transform::getpos() {
-    return pos;
+void Transform::RotateY(float r) {
+    rotation.y += r;
+    updateTransform = true;
 }
 
-Matrix<double> Transform::getRotationMatrix() {
-    Matrix<double> zMatrix = {
-            {cos(rotation.z), -sin(rotation.z), 0, 0},
-            {sin(rotation.z), cos(rotation.z),  0, 0},
-            {0,               0,                1, 0},
-            {0,               0,                0, 1}
-    };
-    Matrix<double> yMatrix = {
-            {cos(rotation.y),  1, sin(rotation.y), 0},
-            {0,                1, 0,               0},
-            {-sin(rotation.y), 0, cos(rotation.y), 0},
-            {0,                0, 0,               1}
-    };
-    Matrix<double> xMatrix = {
-            {1, 0,               0,                0},
-            {0, cos(rotation.x), -sin(rotation.x), 0},
-            {0, sin(rotation.x), cos(rotation.x),  0},
-            {0, 0,               0,                1}
-    };
-    return yMatrix*xMatrix*zMatrix;
+void Transform::RotateZ(float r) {
+    rotation.z += r;
+    updateTransform = true;
 }
 
-Matrix<double> Transform::getTranslateMatrix() {
-    Matrix<double> tMatrix ={
-            {1, 0, 0, pos.x},
-            {0, 1, 0, pos.y},
-            {0, 0, 1, pos.z},
-            {0,0,0,1}
-    };
-    return tMatrix;
+void Transform::RotateAll(glm::vec3 r) {
+    rotation += r;
+    updateTransform = true;
 }
 
-Matrix<double> Transform::getScaleMatrix() {
-    Matrix<double> tMatrix ={
-            {scale.x, 0, 0,0},
-            {0, scale.y, 0,0},
-            {0, 0, scale.z,0},
-            {0,0,0,1}
-    };
-    return tMatrix;
+void Transform::SetRotate(glm::vec3 v) {
+    rotation = v;
+    updateTransform = true;
 }
 
-Matrix<double> Transform::getTransformMatrix(){
-    return getTranslateMatrix() * getScaleMatrix();
+void Transform::move(glm::vec3 move) {
+    translate = translate + move;
+    updateTransform = true;
 }

@@ -1,40 +1,32 @@
 //
-// Created by erik on 28.09.2019.
+// Created by erik on 19.10.2019.
 //
 
 #ifndef GLENGINE_CUBE_H
 #define GLENGINE_CUBE_H
 
-#include <memory>
-#include <vector>
 
-#include "Matrix.h"
-#include "SFML/Graphics.hpp"
-#include "Point.h"
-#include "Transform.h"
+
+#include <glm/glm.hpp>
+#include <GL/glew.h>
 #include "Camera.h"
+#include "Transform.h"
+#include "AssetController.h"
 
-using namespace std;
 class Cube {
 public:
-    Cube();
-    explicit Cube(const Vector3D& v);
-    Cube(double x, double y, double z);
+    Cube(glm::vec3 in, AssetController& assetController);
     ~Cube();
-
-    void RotateX(double r);
-    void RotateY(double r);
-    void RotateZ(double r);
-    void Rotate(Vector3D v);
-    void m_Transform();
-    void Translate(Vector3D v);
-    void Scale(Vector3D v);
-    void draw();
-    void drawOnce(Camera camera);
-    Transform transformcom;
+    void Draw(Camera& camera);
+    Transform transform = Transform();
 private:
-   Point points[8];
-   Point anchor;
+    GLfloat g_vertex_buffer_data[36*3];
+    GLfloat g_color_buffer_data[36*3];
+    GLfloat g_uv_buffer_data[36*3];
+    GLuint vertexbuffer;
+    GLuint colorbuffer;
+    GLuint uvbuffer;
+    AssetController& assetController;
 };
 
 
