@@ -14,10 +14,15 @@ AssetController::~AssetController() {
 }
 
 GLuint AssetController::loadBMPTexture(const std::string& name,const std::string& url){
+    for (int i = 0; i < Textures.size(); ++i) {
+        if(Textures.at(i).name == name){
+            return 0;
+        }
+    }
+
     std::cout << "Reading image " << name << " at " << url << std::endl;
     char imagepath[url.length()+1];
     strncpy(imagepath,url.c_str(), sizeof(imagepath));
-    imagepath[sizeof(imagepath-1)] =0;
 
     // Data read from the header of the BMP file
     unsigned char header[54]; // Each BMP file begins by a 54-bytes header
@@ -65,6 +70,7 @@ GLuint AssetController::loadBMPTexture(const std::string& name,const std::string
 
     // Give the image to OpenGL
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    delete [] data;
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -75,11 +81,10 @@ GLuint AssetController::loadBMPTexture(const std::string& name,const std::string
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     // Generate mipmaps, by the way.
     glGenerateMipmap(GL_TEXTURE_2D);
-    return textureID;
-}
 
-GLuint AssetController::getBMPTexture(const std::string &name) {
-    return false;
+    Texture texture(name,textureID);
+    Textures.push_back(texture);
+    return textureID;
 }
 
 #define FOURCC_DXT1 0x31545844 // Equivalent to "DXT1" in ASCII
@@ -87,8 +92,8 @@ GLuint AssetController::getBMPTexture(const std::string &name) {
 #define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
 
 GLuint AssetController::loadDDS(std::string name, std::string url) {
-    for (int i = 0; i < DDSTextures.size(); ++i) {
-        if(DDSTextures.at(i).name == name){
+    for (int i = 0; i < Textures.size(); ++i) {
+        if(Textures.at(i).name == name){
             return 0;
         }
     }
@@ -155,6 +160,7 @@ GLuint AssetController::loadDDS(std::string name, std::string url) {
 
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, textureID);
+    glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 
     unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
     unsigned int offset = 0;
@@ -169,18 +175,22 @@ GLuint AssetController::loadDDS(std::string name, std::string url) {
         offset += size;
         width  /= 2;
         height /= 2;
+
+        // Deal with Non-Power-Of-Two textures. This code is not included in the webpage to reduce clutter.
+        if(width < 1) width = 1;
+        if(height < 1) height = 1;
     }
     free(buffer);
 
-    DDSTexture texture(name,textureID);
-    DDSTextures.push_back(texture);
+    Texture texture(name,textureID);
+    Textures.push_back(texture);
     return textureID;
 }
 
-GLuint AssetController::getDDS(std::string name) {
-    for (int i = 0; i < DDSTextures.size(); ++i) {
-        if(DDSTextures.at(i).name == name){
-            return DDSTextures.at(i).TextureId;
+GLuint AssetController::getTextureID(const std::string& name) {
+    for (int i = 0; i < Textures.size(); ++i) {
+        if(Textures.at(i).name == name){
+            return Textures.at(i).TextureId;
         }
     }
     return 0;

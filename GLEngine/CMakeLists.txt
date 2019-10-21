@@ -18,6 +18,6 @@ add_executable(GLEngine
         Cube.cpp
         Cube.h
         AssetController.cpp
-        AssetController.h)
+        AssetController.h VboIndex.cpp VboIndex.h)
 
 target_link_libraries(GLEngine sfml-graphics sfml-audio sfml-window sfml-system GL glfw GLEW)

@@ -24,7 +24,7 @@ glm::mat4 Transform::getRotationMatrix() {
     glm::mat4 rotX = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.x),glm::vec3(1,0,0));
     glm::mat4 rotY = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.y),glm::vec3(0,1,0));
     glm::mat4 rotZ = glm::rotate(glm::mat4(1.0f),glm::radians(rotation.z),glm::vec3(0,0,1));
-    return rotX * rotZ * rotY;
+    return rotX * rotY * rotZ;
 }
 
 glm::mat4 Transform::getScaleMatrix() {

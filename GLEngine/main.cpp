@@ -60,6 +60,7 @@ int main( void )
         glfwTerminate();
         return -1;
     }
+
     glfwMakeContextCurrent(window);
     glfwSetCursorPosCallback(window,mouse_callback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
@@ -89,10 +90,9 @@ int main( void )
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
 
-    glEnable(GL_CULL_FACE);
 
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+    GLuint programID = LoadShaders( "SimpleVertexShader.glsl", "SimpleFragmentShader.glsl" );
     camera.programID = programID;
     camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
     camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
@@ -106,12 +106,17 @@ int main( void )
     cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
     cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
 
+    cubes[0].transform.move(glm::vec3(10,0,10));
     cubes[1].transform.move(glm::vec3(0,-10,0));
     cubes[2].transform.move(glm::vec3(0,0,10));
     cubes[3].transform.move(glm::vec3(10,0,0));
 
-    for (int i = 0; i < 10000; ++i) {
-        //cubes.push_back(Cube(glm::vec3(1,1,1)));
+    for (int x = 0; x < 10; ++x) {
+        for (int y = 0; y < 10; ++y) {
+            Cube cube = Cube(glm::vec3(2,2,2),assetController);
+            cube.transform.move(glm::vec3(10+x*2,-10,y*2));
+            cubes.push_back(cube);
+        }
     }
 
     do{

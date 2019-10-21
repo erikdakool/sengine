@@ -5,7 +5,7 @@
 #include "Cube.h"
 Cube::Cube(glm::vec3 in, AssetController& assetController):assetController(assetController)
 {
-    g_vertex_buffer_data[0] = -in.x;
+/*    g_vertex_buffer_data[0] = -in.x;
     g_vertex_buffer_data[1] = -in.y;
     g_vertex_buffer_data[2] = -in.z;
     g_vertex_buffer_data[3] = -in.x;
@@ -294,22 +294,24 @@ Cube::Cube(glm::vec3 in, AssetController& assetController):assetController(asset
     g_uv_buffer_data[68] = 1.000004;
     g_uv_buffer_data[69] = 0.32815300000000003;
     g_uv_buffer_data[70] = 0.667979;
-    g_uv_buffer_data[71] = 0.664149;
+    g_uv_buffer_data[71] = 0.664149;*/
 
+    //indexVBO(vertexbuffer,uvbuffer,indices,indexed_vertices,indexed_uvs);
 
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
-    glGenBuffers(1, &colorbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+    //glGenBuffers(1, &colorbuffer);
+    //glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
+    //glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
 
     glGenBuffers(1,&uvbuffer);
     glBindBuffer(GL_ARRAY_BUFFER,uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data),g_uv_buffer_data,GL_STATIC_DRAW);
 
     assetController.loadDDS("noe","Data/uvtemplate.DDS");
+    assetController.loadBMPTexture("toe","Data/cobble3x3.bmp");
 }
 
 Cube::~Cube() {
@@ -326,10 +328,12 @@ void Cube::Draw(Camera &camera) {
     glUniformMatrix4fv(camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(camera.programID, "myTextureSampler");
+    GLuint Texture = assetController.getTextureID("toe");
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, assetController.getDDS("noe"));
+    glBindTexture(GL_TEXTURE_2D, Texture);
+
     // Set our "myTextureSampler" sampler to use Texture Unit 0
     glUniform1i(TextureID, 0);
 
@@ -346,11 +350,12 @@ void Cube::Draw(Camera &camera) {
     );
 
 
-    glEnableVertexAttribArray(2);
+    // 2nd attribute buffer : UVs
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
     glVertexAttribPointer(
             1,                                // attribute. No particular reason for 1, but must match the layout in the shader.
-            3,                                // size
+            2,                                // size : U+V => 2
             GL_FLOAT,                         // type
             GL_FALSE,                         // normalized?
             0,                                // stride
@@ -358,6 +363,7 @@ void Cube::Draw(Camera &camera) {
     );
     // Draw the triangle !
     glDrawArrays(GL_TRIANGLES, 0, 12*3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
 }
