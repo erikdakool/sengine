@@ -17,7 +17,7 @@ add_executable(GLEngine
         Transform.h
         Cube.cpp
         Cube.h
-        AssetController.cpp
-        AssetController.h VboIndex.cpp VboIndex.h)
+        TextureLoader.cpp
+        TextureLoader.h VboIndex.cpp VboIndex.h Renderer.cpp Renderer.h ModelLoader.cpp ModelLoader.h Managers.h)
 
-target_link_libraries(GLEngine sfml-graphics sfml-audio sfml-window sfml-system GL glfw GLEW)
+target_link_libraries(GLEngine GL glfw GLEW)

@@ -1,6 +1,9 @@
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
+#include <iostream>
+#include <memory>
 
 // Include GLEW
 #include <GL/glew.h>
@@ -10,28 +13,26 @@
 
 // Include GLM
 #include <glm/glm.hpp>
-#include <vector>
-#include <iostream>
-#include "AssetController.h"
-
 using namespace glm;
 
 #include "shader.hpp"
 #include "Triangle.h"
 #include "Camera.h"
 #include "Cube.h"
-
+#include "Managers.h"
+#include "Renderer.h"
 #define GLM_ENABLE_EXPERIMENTAL
-
 GLFWwindow* window;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+
+
+GameDataRef _data;
 
 float fov = 60;
 float width = 1600.0f;
 float height = 1200.0f;
 float near = 0.1f;
 float far = 100.0f;
-Camera camera = Camera();
 double previousTime = glfwGetTime();
 int frameCount = 0;
 
@@ -62,8 +63,6 @@ int main( void )
     }
 
     glfwMakeContextCurrent(window);
-    glfwSetCursorPosCallback(window,mouse_callback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 
     // Initialize GLEW
@@ -77,6 +76,8 @@ int main( void )
 
     // Ensure we can capture the escape key being pressed below
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+    glfwSetCursorPosCallback(window,mouse_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     // Dark blue background
     glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
@@ -90,21 +91,28 @@ int main( void )
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
 
+    glEnable(GL_CULL_FACE);
 
     // Create and compile our GLSL program from the shaders
     GLuint programID = LoadShaders( "SimpleVertexShader.glsl", "SimpleFragmentShader.glsl" );
-    camera.programID = programID;
-    camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
-    camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
 
-    AssetController assetController = AssetController();
+    _data = std::make_shared<GameData>();
+    _data->camera = Camera();
+    _data->textureLoader = TextureLoader();
+    _data->modelLoader = ModelLoader();
+
+    _data->camera.programID = programID;
+    _data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
+    _data->camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
+
+    TextureLoader textureLoader = TextureLoader();
 
     Triangle triangle = Triangle();
     std::vector<Cube> cubes;
-    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
-    cubes.push_back(Cube(glm::vec3(10,1,10),assetController));
-    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
-    cubes.push_back(Cube(glm::vec3(1,1,1),assetController));
+    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
+    cubes.push_back(Cube(glm::vec3(10,1,10),_data));
+    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
+    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
 
     cubes[0].transform.move(glm::vec3(10,0,10));
     cubes[1].transform.move(glm::vec3(0,-10,0));
@@ -113,11 +121,15 @@ int main( void )
 
     for (int x = 0; x < 10; ++x) {
         for (int y = 0; y < 10; ++y) {
-            Cube cube = Cube(glm::vec3(2,2,2),assetController);
+            Cube cube = Cube(glm::vec3(2,2,2),_data);
             cube.transform.move(glm::vec3(10+x*2,-10,y*2));
             cubes.push_back(cube);
         }
     }
+
+    Renderer renderer = Renderer(_data);
+    renderer.transform.move(glm::vec3(0,0,-5));
+    renderer.transform.Scale(glm::vec3(2,2,2));
 
     do{
         double currentTime = glfwGetTime();
@@ -157,46 +169,46 @@ int main( void )
         }
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
-            camera.moveUp(-1);
+            _data->camera.moveUp(-1);
         }
         if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS) {
-            camera.moveUp(1);
+            _data->camera.moveUp(1);
         }
         if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
-            camera.moveForward(1);
+            _data->camera.moveForward(1);
         }
         if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
-            camera.moveForward(-1);
+            _data->camera.moveForward(-1);
         }
         if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
-            camera.moveSide(1);
+            _data->camera.moveSide(1);
         }
         if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
-            camera.moveSide(-1);
+            _data->camera.moveSide(-1);
         }
 
         if(glfwGetKey(window,GLFW_KEY_LEFT) == GLFW_PRESS) {
-            camera.rotate(glm::vec3(0,-5,0));
+            _data->camera.rotate(glm::vec3(0,-5,0));
         }
         if(glfwGetKey(window,GLFW_KEY_RIGHT) == GLFW_PRESS) {
-            camera.rotate(glm::vec3(0,5,0));
+            _data->camera.rotate(glm::vec3(0,5,0));
         }
         if(glfwGetKey(window,GLFW_KEY_UP) == GLFW_PRESS) {
-            camera.rotate(glm::vec3(5,0,0));
+            _data->camera.rotate(glm::vec3(5,0,0));
         }
         if(glfwGetKey(window,GLFW_KEY_DOWN) == GLFW_PRESS) {
-            camera.rotate(glm::vec3(-5,0,0));
+            _data->camera.rotate(glm::vec3(-5,0,0));
         }
         if(glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) {
         }
 
         // Draw the triangle !
         //glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
-        triangle.Draw(camera);
+        //triangle.Draw(_data->camera);
         for(auto & cube : cubes){
-            cube.Draw(camera);
+            cube.Draw(_data->camera);
         }
-        glDisableVertexAttribArray(0);
+        renderer.Draw();
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -204,6 +216,7 @@ int main( void )
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0 );
+
 
     // Cleanup VBO
     glDeleteVertexArrays(1, &VertexArrayID);
@@ -226,5 +239,5 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     yoffset *= sensitivity;
 
     glm::vec3 rotate = glm::vec3(xoffset,yoffset,0);
-    camera.rotate(rotate);
+    _data->camera.rotate(rotate);
 }

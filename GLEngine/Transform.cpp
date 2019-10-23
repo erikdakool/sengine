@@ -64,6 +64,10 @@ void Transform::SetRotate(glm::vec3 v) {
     updateTransform = true;
 }
 
+void Transform::Scale(glm::vec3 v) {
+    scale = v;
+}
+
 void Transform::move(glm::vec3 move) {
     translate = translate + move;
     updateTransform = true;

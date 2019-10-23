@@ -3,17 +3,17 @@
 //
 
 #include <cstring>
-#include "AssetController.h"
+#include "TextureLoader.h"
 
-AssetController::AssetController() {
-
-}
-
-AssetController::~AssetController() {
+TextureLoader::TextureLoader() {
 
 }
 
-GLuint AssetController::loadBMPTexture(const std::string& name,const std::string& url){
+TextureLoader::~TextureLoader() {
+
+}
+
+GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string& url){
     for (int i = 0; i < Textures.size(); ++i) {
         if(Textures.at(i).name == name){
             return 0;
@@ -91,7 +91,7 @@ GLuint AssetController::loadBMPTexture(const std::string& name,const std::string
 #define FOURCC_DXT3 0x33545844 // Equivalent to "DXT3" in ASCII
 #define FOURCC_DXT5 0x35545844 // Equivalent to "DXT5" in ASCII
 
-GLuint AssetController::loadDDS(std::string name, std::string url) {
+GLuint TextureLoader::loadDDS(std::string name, std::string url) {
     for (int i = 0; i < Textures.size(); ++i) {
         if(Textures.at(i).name == name){
             return 0;
@@ -187,7 +187,7 @@ GLuint AssetController::loadDDS(std::string name, std::string url) {
     return textureID;
 }
 
-GLuint AssetController::getTextureID(const std::string& name) {
+GLuint TextureLoader::getTextureID(const std::string& name) {
     for (int i = 0; i < Textures.size(); ++i) {
         if(Textures.at(i).name == name){
             return Textures.at(i).TextureId;

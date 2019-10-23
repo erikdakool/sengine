@@ -2,8 +2,8 @@
 // Created by erik on 20.10.2019.
 //
 
-#ifndef GLENGINE_ASSETCONTROLLER_H
-#define GLENGINE_ASSETCONTROLLER_H
+#ifndef GLENGINE_TEXTURELOADER_H
+#define GLENGINE_TEXTURELOADER_H
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -26,10 +26,10 @@ struct Texture{
     unsigned int users;
 };
 
-class AssetController {
+class TextureLoader {
 public:
-    AssetController();
-    ~AssetController();
+    TextureLoader();
+    ~TextureLoader();
     GLuint loadBMPTexture(const std::string& name,const std::string& url);
     GLuint loadDDS( std::string name, std::string url);
     GLuint getTextureID( const std::string& name);
@@ -38,4 +38,4 @@ private:
     std::vector<Texture> Textures;
 };
 
-#endif //GLENGINE_ASSETCONTROLLER_H
+#endif //GLENGINE_TEXTURELOADER_H

@@ -3,8 +3,9 @@
 //
 
 #include "Cube.h"
-Cube::Cube(glm::vec3 in, AssetController& assetController):assetController(assetController)
+Cube::Cube(glm::vec3 in, GameDataRef data)
 {
+    _data = data;
 /*    g_vertex_buffer_data[0] = -in.x;
     g_vertex_buffer_data[1] = -in.y;
     g_vertex_buffer_data[2] = -in.z;
@@ -298,6 +299,17 @@ Cube::Cube(glm::vec3 in, AssetController& assetController):assetController(asset
 
     //indexVBO(vertexbuffer,uvbuffer,indices,indexed_vertices,indexed_uvs);
 
+
+
+    _data->textureLoader.loadDDS("noe","Data/uvtemplate.DDS");
+    _data->textureLoader.loadBMPTexture("toe","Data/cobble3x3.bmp");
+}
+
+Cube::~Cube() {
+
+}
+
+void Cube::Draw(Camera &camera) {
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
@@ -310,15 +322,6 @@ Cube::Cube(glm::vec3 in, AssetController& assetController):assetController(asset
     glBindBuffer(GL_ARRAY_BUFFER,uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_uv_buffer_data),g_uv_buffer_data,GL_STATIC_DRAW);
 
-    assetController.loadDDS("noe","Data/uvtemplate.DDS");
-    assetController.loadBMPTexture("toe","Data/cobble3x3.bmp");
-}
-
-Cube::~Cube() {
-
-}
-
-void Cube::Draw(Camera &camera) {
     glm::mat4 Projection = camera.getPerspectiveMatrix();
     glm::mat4 View       = camera.getViewMatrix();
     glm::mat4 Model      = transform.getTransformMatrix();
@@ -328,7 +331,7 @@ void Cube::Draw(Camera &camera) {
     glUniformMatrix4fv(camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(camera.programID, "myTextureSampler");
-    GLuint Texture = assetController.getTextureID("toe");
+    GLuint Texture = _data->textureLoader.getTextureID("toe");
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);

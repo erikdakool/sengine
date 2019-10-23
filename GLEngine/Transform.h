@@ -26,7 +26,7 @@ public:
     void RotateZ(float r);
     void RotateAll(glm::vec3 r);
     void SetRotate(glm::vec3 v);
-
+    void Scale(glm::vec3 v);
     void move(glm::vec3 move);
 
 private:

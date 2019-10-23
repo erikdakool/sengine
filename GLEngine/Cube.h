@@ -7,15 +7,16 @@
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
+
 #include "Camera.h"
 #include "Transform.h"
-#include "AssetController.h"
-
+#include "TextureLoader.h"
 #include "VboIndex.h"
+#include "Managers.h"
 
 class Cube {
 public:
-    Cube(glm::vec3 in, AssetController& assetController);
+    Cube(glm::vec3 in, GameDataRef data);
     ~Cube();
     void Draw(Camera& camera);
     Transform transform = Transform();
@@ -105,7 +106,7 @@ private:
 
     GLuint vertexbuffer;
     GLuint uvbuffer;
-    AssetController& assetController;
+    GameDataRef _data;
 };
 
 
