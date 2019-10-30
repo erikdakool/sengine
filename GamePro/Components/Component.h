@@ -6,7 +6,6 @@
 #define GAMEPRO_COMPONENT_H
 
 #include <string>
-
 #include <jsoncpp/json/json.h>
 
 enum Dir{

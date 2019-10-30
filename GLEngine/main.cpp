@@ -15,12 +15,17 @@
 #include <glm/glm.hpp>
 using namespace glm;
 
-#include "shader.hpp"
-#include "Triangle.h"
+#include "Managers/shader.hpp"
+#include "Gameobject/Triangle.h"
 #include "Camera.h"
-#include "Cube.h"
+#include "Gameobject/Cube.h"
+#include "Gameobject/Gameobject.h"
 #include "Managers.h"
-#include "Renderer.h"
+#include "Components/Renderer.h"
+#include "Components/Physics.h"
+#include "Components/Collider.h"
+
+
 #define GLM_ENABLE_EXPERIMENTAL
 GLFWwindow* window;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -32,7 +37,7 @@ float fov = 60;
 float width = 1600.0f;
 float height = 1200.0f;
 float near = 0.1f;
-float far = 100.0f;
+float far = 1000.0f;
 double previousTime = glfwGetTime();
 int frameCount = 0;
 
@@ -100,6 +105,7 @@ int main( void )
     _data->camera = Camera();
     _data->textureLoader = TextureLoader();
     _data->modelLoader = ModelLoader();
+    _data->objectManager = ObjectManager();
 
     _data->camera.programID = programID;
     _data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
@@ -107,7 +113,6 @@ int main( void )
 
     TextureLoader textureLoader = TextureLoader();
 
-    Triangle triangle = Triangle();
     std::vector<Cube> cubes;
     cubes.push_back(Cube(glm::vec3(1,1,1),_data));
     cubes.push_back(Cube(glm::vec3(10,1,10),_data));
@@ -119,6 +124,15 @@ int main( void )
     cubes[2].transform.move(glm::vec3(0,0,10));
     cubes[3].transform.move(glm::vec3(10,0,0));
 
+    auto gameobject = std::make_shared<Gameobject>(_data);
+    auto renderer = std::make_shared<Renderer>(*gameobject,_data);
+    auto physics =  std::make_shared<Physics>(*gameobject,_data);
+    auto collider = std::make_shared<Collider>(*gameobject,_data);
+    gameobject.get()->AddComponent(renderer);
+    gameobject.get()->AddComponent(physics);
+    gameobject.get()->AddComponent(collider);
+    _data.get()->objectManager.AddObject(gameobject);
+
     for (int x = 0; x < 10; ++x) {
         for (int y = 0; y < 10; ++y) {
             Cube cube = Cube(glm::vec3(2,2,2),_data);
@@ -126,10 +140,6 @@ int main( void )
             cubes.push_back(cube);
         }
     }
-
-    Renderer renderer = Renderer(_data);
-    renderer.transform.move(glm::vec3(0,0,-5));
-    renderer.transform.Scale(glm::vec3(2,2,2));
 
     do{
         double currentTime = glfwGetTime();
@@ -208,7 +218,8 @@ int main( void )
         for(auto & cube : cubes){
             cube.Draw(_data->camera);
         }
-        renderer.Draw();
+
+        _data.get()->objectManager.UpdateAll(1.f);
 
         // Swap buffers
         glfwSwapBuffers(window);

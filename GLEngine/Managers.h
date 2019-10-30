@@ -7,13 +7,18 @@
 
 #include <memory>
 
-#include "TextureLoader.h"
-#include "ModelLoader.h"
+#include "Managers/TextureLoader.h"
+#include "Managers/ModelLoader.h"
+#include "Managers/ObjectManager.h"
+#include "CollisionManager.h"
+#include "Camera.h"
 
 struct GameData{
     Camera camera;
     TextureLoader textureLoader;
     ModelLoader modelLoader;
+    ObjectManager objectManager;
+    CollisionManager collisionManager;
 };
 typedef std::shared_ptr<GameData> GameDataRef;
 
