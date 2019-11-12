@@ -25,6 +25,9 @@ enum Primitive{
 class Renderer : public Component{
 public:
     Renderer(Gameobject& gameobject,GameDataRef data);
+    Renderer(Gameobject& gameobject,GameDataRef data,std::string name, std::string url);
+    Renderer(Gameobject& gameobject,GameDataRef data,std::string name, std::string url,std::string tname, std::string turl);
+
     ~Renderer();
     void update(float deltaT) override;
     void draw();
@@ -42,7 +45,8 @@ private:
 
     GLuint vertexbuffer = 0;
     GLuint uvbuffer = 0;
-
+    std::string name = "default";
+    std::string tname = "default";
 };
 
 

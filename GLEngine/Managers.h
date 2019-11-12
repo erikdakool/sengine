@@ -10,6 +10,7 @@
 #include "Managers/TextureLoader.h"
 #include "Managers/ModelLoader.h"
 #include "Managers/ObjectManager.h"
+#include "Managers/InputManager.h"
 #include "CollisionManager.h"
 #include "Camera.h"
 
@@ -19,6 +20,7 @@ struct GameData{
     ModelLoader modelLoader;
     ObjectManager objectManager;
     CollisionManager collisionManager;
+    InputManager inputManager;
 };
 typedef std::shared_ptr<GameData> GameDataRef;
 

@@ -1,6 +1,6 @@
 // Include standard headers
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdio>
+#include <cstdlib>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -24,6 +24,7 @@ using namespace glm;
 #include "Components/Renderer.h"
 #include "Components/Physics.h"
 #include "Components/Collider.h"
+#include "Gameobject/Excavator.h"
 
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -106,6 +107,7 @@ int main( void )
     _data->textureLoader = TextureLoader();
     _data->modelLoader = ModelLoader();
     _data->objectManager = ObjectManager();
+    _data->inputManager = InputManager(window);
 
     _data->camera.programID = programID;
     _data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
@@ -124,13 +126,7 @@ int main( void )
     cubes[2].transform.move(glm::vec3(0,0,10));
     cubes[3].transform.move(glm::vec3(10,0,0));
 
-    auto gameobject = std::make_shared<Gameobject>(_data);
-    auto renderer = std::make_shared<Renderer>(*gameobject,_data);
-    auto physics =  std::make_shared<Physics>(*gameobject,_data);
-    auto collider = std::make_shared<Collider>(*gameobject,_data);
-    gameobject.get()->AddComponent(renderer);
-    gameobject.get()->AddComponent(physics);
-    gameobject.get()->AddComponent(collider);
+    auto gameobject = std::make_shared<Excavator>(_data);
     _data.get()->objectManager.AddObject(gameobject);
 
     for (int x = 0; x < 10; ++x) {
@@ -155,29 +151,6 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        if(glfwGetKey(window,GLFW_KEY_U) == GLFW_PRESS){
-            cubes[0].transform.RotateY(5);
-        }
-        if(glfwGetKey(window,GLFW_KEY_O) == GLFW_PRESS){
-            cubes[0].transform.RotateY(-5);
-        }
-
-        if(glfwGetKey(window,GLFW_KEY_I) == GLFW_PRESS){
-            cubes[0].transform.RotateX(5);
-        }
-        if(glfwGetKey(window,GLFW_KEY_K) == GLFW_PRESS){
-            cubes[0].transform.RotateX(-5);
-        }
-
-        if(glfwGetKey(window,GLFW_KEY_J) == GLFW_PRESS){
-            cubes[0].transform.RotateZ(5);
-        }
-        if(glfwGetKey(window,GLFW_KEY_L) == GLFW_PRESS){
-            cubes[0].transform.RotateZ(-5);
-        }if(glfwGetKey(window,GLFW_KEY_P)==GLFW_PRESS){
-            cubes[0].transform.SetRotate(glm::vec3(0,0,0));
-        }
-
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
             _data->camera.moveUp(-1);
         }
@@ -195,21 +168,6 @@ int main( void )
         }
         if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
             _data->camera.moveSide(-1);
-        }
-
-        if(glfwGetKey(window,GLFW_KEY_LEFT) == GLFW_PRESS) {
-            _data->camera.rotate(glm::vec3(0,-5,0));
-        }
-        if(glfwGetKey(window,GLFW_KEY_RIGHT) == GLFW_PRESS) {
-            _data->camera.rotate(glm::vec3(0,5,0));
-        }
-        if(glfwGetKey(window,GLFW_KEY_UP) == GLFW_PRESS) {
-            _data->camera.rotate(glm::vec3(5,0,0));
-        }
-        if(glfwGetKey(window,GLFW_KEY_DOWN) == GLFW_PRESS) {
-            _data->camera.rotate(glm::vec3(-5,0,0));
-        }
-        if(glfwGetKey(window,GLFW_KEY_SPACE) == GLFW_PRESS) {
         }
 
         // Draw the triangle !

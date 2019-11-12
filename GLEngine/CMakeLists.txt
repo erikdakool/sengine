@@ -37,5 +37,5 @@ add_executable(GLEngine
         Managers/ObjectManager.cpp
         Managers/ObjectManager.h
         Components/Collider.cpp
-        Components/Collider.h CollisionManager.cpp CollisionManager.h)
+        Components/Collider.h CollisionManager.cpp CollisionManager.h Managers/InputManager.cpp Managers/InputManager.h Gameobject/Excavator.cpp Gameobject/Excavator.h)
 target_link_libraries(GLEngine GL glfw GLEW reactphysics3d)

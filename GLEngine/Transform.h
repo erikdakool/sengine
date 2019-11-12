@@ -28,6 +28,7 @@ public:
     void RotateX(float r);
     void RotateY(float r);
     void RotateZ(float r);
+    glm::vec3 getRotation();
     void RotateAll(glm::vec3 r);
     void SetRotate(glm::vec3 v);
     void Scale(glm::vec3 v);

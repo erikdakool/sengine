@@ -7,15 +7,46 @@
 Renderer::Renderer(Gameobject& gameobject,GameDataRef data):
 Component(gameobject,data)
 {
-    std::shared_ptr<ModelStruct> model = _data->modelLoader.LoadOBJ("noe","Data/oilplatform.obj");
+    std::shared_ptr<ModelStruct> model = _data->modelLoader.LoadOBJ(this->name,"Data/Excavator/tracks.obj");
+    _data->textureLoader.loadBMPTexture(this->tname,"Data/cobble3x3.bmp");
 
     vertices = model->vertices;
     uvs = model->uvs;
     normals = model->normals;
     indexVBO(vertices,uvs,indices,indexed_vertices,indexed_uvs);
 
-    _data->textureLoader.loadBMPTexture("tre","Data/uvtemplate.bmp");
 }
+
+Renderer::Renderer(Gameobject& gameobject,GameDataRef data,std::string name, std::string url):
+Component(gameobject,data)
+{
+    this->name = name;
+    std::shared_ptr<ModelStruct> model = _data->modelLoader.LoadOBJ(name,url);
+
+    _data->textureLoader.loadBMPTexture(this->tname,"Data/uvtemplate.bmp");
+
+    vertices = model->vertices;
+    uvs = model->uvs;
+    normals = model->normals;
+    indexVBO(vertices,uvs,indices,indexed_vertices,indexed_uvs);
+
+}
+
+Renderer::Renderer(Gameobject &gameobject, GameDataRef data, std::string name, std::string url, std::string tname, std::string turl):
+Component(gameobject,data)
+{
+    this->name = name;
+    std::shared_ptr<ModelStruct> model = _data->modelLoader.LoadOBJ(name,url);
+
+    this->tname = tname;
+    _data->textureLoader.loadBMPTexture(this->tname,turl);
+
+    vertices = model->vertices;
+    uvs = model->uvs;
+    normals = model->normals;
+    indexVBO(vertices,uvs,indices,indexed_vertices,indexed_uvs);
+}
+
 
 Renderer::~Renderer() {
 
@@ -45,7 +76,7 @@ void Renderer::draw() {
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-    GLuint Texture = _data->textureLoader.getTextureID("tre");
+    GLuint Texture = _data->textureLoader.getTextureID(this->name);
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);
@@ -113,7 +144,7 @@ void Renderer::drawIndexed() {
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-    GLuint Texture = _data->textureLoader.getTextureID("tre");
+    GLuint Texture = _data->textureLoader.getTextureID(this->tname);
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);

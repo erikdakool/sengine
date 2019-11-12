@@ -72,6 +72,10 @@ void Transform::SetRotate(glm::vec3 v) {
     updateTransform = true;
 }
 
+glm::vec3 Transform::getRotation() {
+    return rotation;
+}
+
 void Transform::Scale(glm::vec3 v) {
     scale = v;
 }
