@@ -324,11 +324,8 @@ void Cube::Draw(Camera &camera) {
 
     glm::mat4 Projection = camera.getPerspectiveMatrix();
     glm::mat4 View       = camera.getViewMatrix();
-    glm::mat4 Model      = transform.getTransformMatrix();
 
-    glm::mat4 mvp = Projection * View * Model;
 
-    glUniformMatrix4fv(camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(camera.programID, "myTextureSampler");
     GLuint Texture = _data->textureLoader.getTextureID("toe");

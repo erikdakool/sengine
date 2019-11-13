@@ -19,7 +19,6 @@ public:
     Cube(glm::vec3 in, GameDataRef data);
     ~Cube();
     void Draw(Camera& camera);
-    Transform transform = Transform();
 private:
     GLfloat g_vertex_buffer_data[108] = {
             -1.0f,-1.0f,-1.0f,

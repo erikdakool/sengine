@@ -16,7 +16,6 @@
 using namespace glm;
 
 #include "Managers/shader.hpp"
-#include "Gameobject/Triangle.h"
 #include "Camera.h"
 #include "Gameobject/Cube.h"
 #include "Gameobject/Gameobject.h"
@@ -60,7 +59,7 @@ int main( void )
 
     // Open a window and create its OpenGL context
     //glfwWindowHint(GLFW_DOUBLEBUFFER,GL_FALSE);
-    window = glfwCreateWindow( width, height, "Tutorial 02 - Red triangle", NULL, NULL);
+    window = glfwCreateWindow( width, height, "Excavator simulator", NULL, NULL);
     if( window == NULL ){
         fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n" );
         getchar();
@@ -115,27 +114,8 @@ int main( void )
 
     TextureLoader textureLoader = TextureLoader();
 
-    std::vector<Cube> cubes;
-    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
-    cubes.push_back(Cube(glm::vec3(10,1,10),_data));
-    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
-    cubes.push_back(Cube(glm::vec3(1,1,1),_data));
-
-    cubes[0].transform.move(glm::vec3(10,0,10));
-    cubes[1].transform.move(glm::vec3(0,-10,0));
-    cubes[2].transform.move(glm::vec3(0,0,10));
-    cubes[3].transform.move(glm::vec3(10,0,0));
-
     auto gameobject = std::make_shared<Excavator>(_data);
     _data.get()->objectManager.AddObject(gameobject);
-
-    for (int x = 0; x < 10; ++x) {
-        for (int y = 0; y < 10; ++y) {
-            Cube cube = Cube(glm::vec3(2,2,2),_data);
-            cube.transform.move(glm::vec3(10+x*2,-10,y*2));
-            cubes.push_back(cube);
-        }
-    }
 
     do{
         double currentTime = glfwGetTime();
@@ -168,13 +148,6 @@ int main( void )
         }
         if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
             _data->camera.moveSide(-1);
-        }
-
-        // Draw the triangle !
-        //glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
-        //triangle.Draw(_data->camera);
-        for(auto & cube : cubes){
-            cube.Draw(_data->camera);
         }
 
         _data.get()->objectManager.UpdateAll(1.f);

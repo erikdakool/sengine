@@ -11,10 +11,10 @@
 #include <glm/gtx/transform.hpp>
 #include <reactphysics3d/reactphysics3d.h>
 
-
+class Gameobject;
 class Transform {
 public:
-    Transform();
+    Transform(Gameobject& gameobject);
     ~Transform();
 
     glm::mat4 getTranslateMatrix();
@@ -31,15 +31,21 @@ public:
     glm::vec3 getRotation();
     void RotateAll(glm::vec3 r);
     void SetRotate(glm::vec3 v);
+
+    glm::vec3 RotateAroundPointY(glm::vec3 point,float r);
+    glm::vec3 RotateAroundPointX(glm::vec3 point,float r);
+    glm::vec3 RotateAroundPointZ(glm::vec3 point,float r);
+
     void Scale(glm::vec3 v);
     void move(glm::vec3 move);
-
+    glm::vec3 getPosition();
 private:
     glm::vec3 translate;
     glm::vec3 rotation;
     glm::vec3 scale;
     glm::mat4 transform;
     bool updateTransform = false;
+    Gameobject& gameobject;
 };
 
 

@@ -5,7 +5,7 @@
 #ifndef GLENGINE_GAMEOBJECT_H
 #define GLENGINE_GAMEOBJECT_H
 
-#include <list>
+#include <vector>
 
 #include "../Components/Component.h"
 #include "../Managers.h"
@@ -18,19 +18,20 @@ public:
     Transform& transform();
     void update(float deltaT) override;
     void AddComponent(std::shared_ptr<Component> component);
+    void AddChild(std::shared_ptr<Gameobject> gameobject);
+    std::vector<std::shared_ptr<Gameobject>> getChildren();
 private:
 
 protected:
     //Gameobject info/data
     bool isChild = false;
-    Transform transformcom;
+    Transform* transformcom;
 
     //Compoents
-    std::list<std::shared_ptr<Component>> components;
+    std::vector<std::shared_ptr<Component>> components;
 
     //Gameobject family
-    std::list<std::shared_ptr<Gameobject>> parent;
-    std::list<std::shared_ptr<Gameobject>> children;
+    std::vector<std::shared_ptr<Gameobject>> children;
 };
 
 #endif //GLENGINE_GAMEOBJECT_H

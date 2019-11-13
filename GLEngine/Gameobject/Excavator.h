@@ -15,11 +15,10 @@ public:
     void update(float deltaT) override;
 
 private:
-    std::shared_ptr<Gameobject> tracks;
     std::shared_ptr<Gameobject> cabin;
     std::shared_ptr<Gameobject> arm1;
     std::shared_ptr<Gameobject> arm2;
-    std::shared_ptr<Gameobject> boom;
+    std::shared_ptr<Gameobject> broom;
 };
 
 

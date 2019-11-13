@@ -7,8 +7,6 @@ add_executable(GLEngine
         main.cpp
         Camera.cpp
         Camera.h
-        Gameobject/Triangle.cpp
-        Gameobject/Triangle.h
         Managers/shader.cpp
         Managers/shader.hpp
         Gameobject/Point.cpp
