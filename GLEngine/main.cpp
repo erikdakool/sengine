@@ -114,9 +114,15 @@ int main( void )
 
     TextureLoader textureLoader = TextureLoader();
 
-    auto gameobject = std::make_shared<Excavator>(_data);
-    _data.get()->objectManager.AddObject(gameobject);
+    auto excavator = std::make_shared<Excavator>(_data);
+    _data.get()->objectManager.AddObject(excavator);
 
+    auto gameobject = std::make_shared<Gameobject>(_data);
+    auto renderer = std::make_shared<Renderer>(*gameobject,_data,"cube","Data/cube.obj","cobble","Data/cobble.bmp");
+    gameobject.get()->AddComponent(renderer);
+    gameobject.get()->transform().Scale(glm::vec3(100,1,100));
+    _data.get()->objectManager.AddObject(gameobject);
+    gameobject.get()->transform().move(glm::vec3(2,-4,2));
     do{
         double currentTime = glfwGetTime();
         frameCount++;

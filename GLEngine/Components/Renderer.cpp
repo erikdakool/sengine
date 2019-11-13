@@ -76,7 +76,7 @@ void Renderer::draw() {
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
     GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-    GLuint Texture = _data->textureLoader.getTextureID(this->name);
+    GLuint Texture = _data->textureLoader.getTextureID("toe");
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);

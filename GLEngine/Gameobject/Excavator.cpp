@@ -7,7 +7,7 @@
 Excavator::Excavator(GameDataRef data):
 Gameobject(data)
 {
-    auto renderer = std::make_shared<Renderer>(*this,_data,"tracks","Data/Excavator/tracks.obj");
+    auto renderer = std::make_shared<Renderer>(*this,_data,"tracks","Data/Excavator/tracks.obj","track","Data/tracktex.bmp");
     Gameobject::AddComponent(renderer);
 
     this->cabin = std::make_shared<Gameobject>(_data);
@@ -16,17 +16,17 @@ Gameobject(data)
     cabin.get()->transform().move(glm::vec3(0,3,0));
 
     this->arm1 = std::make_shared<Gameobject>(_data);
-    auto arm1rend = std::make_shared<Renderer>(*arm1,_data,"cabin","Data/Excavator/arm1.obj","red","Data/red.bmp");
+    auto arm1rend = std::make_shared<Renderer>(*arm1,_data,"arm1","Data/Excavator/arm1.obj","red","Data/red.bmp");
     arm1.get()->AddComponent(arm1rend);
     arm1.get()->transform().move(glm::vec3(-3,5,5));
 
     this->arm2 = std::make_shared<Gameobject>(_data);
-    auto arm2rend = std::make_shared<Renderer>(*arm2,_data,"cabin","Data/Excavator/arm2.obj","grey","Data/grey.bmp");
+    auto arm2rend = std::make_shared<Renderer>(*arm2,_data,"arm2","Data/Excavator/arm2.obj","grey","Data/grey.bmp");
     arm2.get()->AddComponent(arm2rend);
     arm2.get()->transform().move(glm::vec3(-3,5,15));
 
     this->broom = std::make_shared<Gameobject>(_data);
-    auto broomrend = std::make_shared<Renderer>(*broom,_data,"cabin","Data/Excavator/broom.obj","red","Data/red.bmp");
+    auto broomrend = std::make_shared<Renderer>(*broom,_data,"broom","Data/Excavator/broom.obj","red","Data/red.bmp");
     broom.get()->AddComponent(broomrend);
     broom.get()->transform().move(glm::vec3(-3,4,25));
 
@@ -101,9 +101,9 @@ void Excavator::update(float deltaT) {
         broom.get()->transform().RotateAroundPointX(arm2.get()->transform().getPosition(),5*cosf(glm::radians(broom.get()->transform().getRotation().y)));
         broom.get()->transform().RotateAroundPointZ(arm2.get()->transform().getPosition(),5*-sinf(glm::radians(broom.get()->transform().getRotation().y)));
     }else if(_data->inputManager.isKeyPressed(GLFW_KEY_9)){
-        broom.get()->transform().RotateX(-5);
-    }else if(_data->inputManager.isKeyPressed(GLFW_KEY_0)){
         broom.get()->transform().RotateX(5);
+    }else if(_data->inputManager.isKeyPressed(GLFW_KEY_0)){
+        broom.get()->transform().RotateX(-5);
     }
     Gameobject::update(deltaT);
 }
