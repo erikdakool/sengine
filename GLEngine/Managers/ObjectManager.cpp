@@ -13,11 +13,21 @@ ObjectManager::~ObjectManager() {
 }
 
 void ObjectManager::AddObject(std::shared_ptr<Gameobject> object) {
+    object->setId(objectcount);
+    objectcount++;
     objects.push_back(object);
 }
 
+void ObjectManager::RemoveObject(uint64_t id){
+    pendingRemove.push_back(id);
+}
+
 void ObjectManager::UpdateAll(float deltaT) {
-    for(auto & gameobject : objects){
-        gameobject.get()->update(deltaT);
+    for(auto i = objects.begin(); i != objects.end(); i++){
+        if(std::find(pendingRemove.begin(),pendingRemove.end(),i->get()->getId())!=pendingRemove.end()){
+            objects.erase(i);
+        }else{
+            i->get()->update(deltaT);
+        }
     }
 }

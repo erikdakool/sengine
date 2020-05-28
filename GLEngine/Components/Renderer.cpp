@@ -125,12 +125,12 @@ void Renderer::drawIndexed() {
 
     glm::mat4 mvp = Projection * View * Model;
 
-    GLuint vertexbuffer;
+    vertexbuffer;
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(indexed_vertices[0]), &indexed_vertices[0], GL_STATIC_DRAW);
 
-    GLuint uvbuffer;
+    uvbuffer;
     glGenBuffers(1, &uvbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
     glBufferData(GL_ARRAY_BUFFER, indexed_uvs.size() * sizeof(indexed_uvs[0]), &indexed_uvs[0], GL_STATIC_DRAW);
@@ -148,6 +148,11 @@ void Renderer::drawIndexed() {
 
     // Bind our texture in Texture Unit 0
     glActiveTexture(GL_TEXTURE0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
     glBindTexture(GL_TEXTURE_2D, Texture);
 
     // Set our "myTextureSampler" sampler to use Texture Unit 0

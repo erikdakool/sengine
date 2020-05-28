@@ -3,6 +3,11 @@ project(GLEngine)
 
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(GLEW CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(Bullet CONFIG REQUIRED)
+
 add_executable(GLEngine
         main.cpp
         Camera.cpp
@@ -35,5 +40,13 @@ add_executable(GLEngine
         Managers/ObjectManager.cpp
         Managers/ObjectManager.h
         Components/Collider.cpp
-        Components/Collider.h CollisionManager.cpp CollisionManager.h Managers/InputManager.cpp Managers/InputManager.h Gameobject/Excavator.cpp Gameobject/Excavator.h)
-target_link_libraries(GLEngine GL glfw GLEW reactphysics3d)
+        Components/Collider.h
+        CollisionManager.cpp
+        CollisionManager.h
+        Managers/InputManager.cpp
+        Managers/InputManager.h
+        Gameobject/Excavator.cpp
+        Gameobject/Excavator.h Components/NoclipController.cpp Components/NoclipController.h Structs/Block.h Managers/BlockManager.cpp Managers/BlockManager.h)
+
+
+target_link_libraries(GLEngine PRIVATE GL GLEW glfw glm LinearMath Bullet3Common BulletDynamics BulletSoftBody)

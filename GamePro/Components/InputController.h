@@ -7,8 +7,7 @@
 
 #include <SFML/Window/Joystick.hpp>
 #include <SFML/Window.hpp>
-#include <jsoncpp/json/json.h>
-
+#include <json/json.h>
 struct Input{
     std::string name;
     sf::Keyboard keyboard;

@@ -24,6 +24,8 @@ using namespace glm;
 #include "Components/Physics.h"
 #include "Components/Collider.h"
 #include "Gameobject/Excavator.h"
+#include "Components/NoclipController.h"
+#include "Managers/BlockManager.h"
 
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -31,7 +33,7 @@ GLFWwindow* window;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 
-GameDataRef _data;
+GameDataRef data;
 
 float fov = 60;
 float width = 1600.0f;
@@ -101,28 +103,40 @@ int main( void )
     // Create and compile our GLSL program from the shaders
     GLuint programID = LoadShaders( "SimpleVertexShader.glsl", "SimpleFragmentShader.glsl" );
 
-    _data = std::make_shared<GameData>();
-    _data->camera = Camera();
-    _data->textureLoader = TextureLoader();
-    _data->modelLoader = ModelLoader();
-    _data->objectManager = ObjectManager();
-    _data->inputManager = InputManager(window);
+    data = std::make_shared<GameData>();
+    data->camera = Camera();
+    data->textureLoader = TextureLoader();
+    data->modelLoader = ModelLoader();
+    data->objectManager = ObjectManager();
+    data->inputManager = InputManager(window);
 
-    _data->camera.programID = programID;
-    _data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
-    _data->camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
+    data->camera.programID = programID;
+    data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
+    data->camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
 
     TextureLoader textureLoader = TextureLoader();
 
-    auto excavator = std::make_shared<Excavator>(_data);
-    _data.get()->objectManager.AddObject(excavator);
 
-    auto gameobject = std::make_shared<Gameobject>(_data);
-    auto renderer = std::make_shared<Renderer>(*gameobject,_data,"cube","Data/cube.obj","cobble","Data/cobble.bmp");
-    gameobject.get()->AddComponent(renderer);
-    gameobject.get()->transform().Scale(glm::vec3(100,1,100));
-    _data.get()->objectManager.AddObject(gameobject);
-    gameobject.get()->transform().move(glm::vec3(2,-4,2));
+    auto excavator = std::make_shared<Excavator>(data);
+    //data.get()->objectManager.AddObject(excavator);
+
+    auto brick  = std::make_shared<Gameobject>(data);
+    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj","cobble","Data/numbered.bmp");
+    auto noclip = std::make_shared<NoclipController>(*brick,data);
+    brick.get()->AddComponent(noclip);
+    brick.get()->AddComponent(renderer);
+
+    //data.get()->objectManager.AddObject(brick);
+    brick.get()->transform().move(glm::vec3(0,-4,2));
+    brick.get()->transform().Scale(glm::vec3(10,10,10));
+
+    BlockManager blockManager(data);
+    blockManager.AddBlock(glm::vec3(1,1,1),"pholder");
+
+    blockManager.AddBlock(glm::vec3(4,1,1),"pholder");
+    blockManager.AddBlock(glm::vec3(1,4,1),"pholder");
+    blockManager.AddBlock(glm::vec3(4,3,1),"pholder");
+
     do{
         double currentTime = glfwGetTime();
         frameCount++;
@@ -138,25 +152,26 @@ int main( void )
         glUseProgram(programID);
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
-            _data->camera.moveUp(-1);
+            data->camera.moveUp(-1);
         }
         if(glfwGetKey(window,GLFW_KEY_E) == GLFW_PRESS) {
-            _data->camera.moveUp(1);
+            data->camera.moveUp(1);
         }
         if(glfwGetKey(window,GLFW_KEY_W) == GLFW_PRESS) {
-            _data->camera.moveForward(1);
+            data->camera.moveForward(1);
         }
         if(glfwGetKey(window,GLFW_KEY_S) == GLFW_PRESS) {
-            _data->camera.moveForward(-1);
+            data->camera.moveForward(-1);
         }
         if(glfwGetKey(window,GLFW_KEY_D) == GLFW_PRESS) {
-            _data->camera.moveSide(1);
+            data->camera.moveSide(1);
         }
         if(glfwGetKey(window,GLFW_KEY_A) == GLFW_PRESS) {
-            _data->camera.moveSide(-1);
+            data->camera.moveSide(-1);
         }
 
-        _data.get()->objectManager.UpdateAll(1.f);
+        data.get()->objectManager.UpdateAll(1.f);
+        blockManager.Draw();
 
         // Swap buffers
         glfwSwapBuffers(window);
@@ -187,5 +202,5 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     yoffset *= sensitivity;
 
     glm::vec3 rotate = glm::vec3(xoffset,yoffset,0);
-    _data->camera.rotate(rotate);
+    data->camera.rotate(rotate);
 }

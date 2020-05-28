@@ -49,14 +49,6 @@ glm::mat4 Transform::getTransformMatrix() {
     return transform;
 }
 
-rp3d::Vector3 Transform::getRPVPosition() {
-    return rp3d::Vector3(translate.x,translate.y,translate.z);
-}
-
-rp3d::Vector3 Transform::getRPVRotation() {
-    return rp3d::Vector3(rotation.x,rotation.y,rotation.z);
-}
-
 void Transform::RotateX(float r) {
     rotation.x += r;
     updateTransform = true;
@@ -121,6 +113,11 @@ glm::vec3 Transform::RotateAroundPointZ(glm::vec3 point, float r) {
 void Transform::Scale(glm::vec3 v) {
     scale = v;
     updateTransform = true;
+}
+
+void Transform::Scale(float scale){
+     this->scale = glm::vec3(scale);
+
 }
 
 void Transform::move(glm::vec3 move) {

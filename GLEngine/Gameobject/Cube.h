@@ -20,6 +20,12 @@ public:
     ~Cube();
     void Draw(Camera& camera);
 private:
+    glm::vec3 vec = glm::vec3(-1,-1,0);
+
+    std::vector<unsigned short> indices;
+    std::vector<glm::vec3> indexed_vertices;
+    std::vector<glm::vec3> indexed_normals;
+
     GLfloat g_vertex_buffer_data[108] = {
             -1.0f,-1.0f,-1.0f,
             -1.0f,-1.0f, 1.0f,
@@ -60,7 +66,7 @@ private:
     };
 
     // Two UV coordinatesfor each vertex. They were created with Blender.
-     GLfloat g_uv_buffer_data[72] = {
+    GLfloat g_uv_buffer_data[72] = {
             0.000059f, 1.0f-0.000004f,
             0.000103f, 1.0f-0.336048f,
             0.335973f, 1.0f-0.335903f,
@@ -98,10 +104,6 @@ private:
             1.000004f, 1.0f-0.671847f,
             0.667979f, 1.0f-0.335851f
     };
-
-    std::vector<unsigned short> indices;
-    std::vector<glm::vec3> indexed_vertices;
-    std::vector<glm::vec3> indexed_uvs;
 
     GLuint vertexbuffer;
     GLuint uvbuffer;

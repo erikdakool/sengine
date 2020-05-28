@@ -7,6 +7,8 @@
 
 #include <memory>
 #include <vector>
+#include <list>
+#include <algorithm>
 
 class Gameobject;
 class Object;
@@ -15,10 +17,13 @@ public:
     ObjectManager();
     ~ObjectManager();
     void AddObject(std::shared_ptr<Gameobject> object);
+    void RemoveObject(uint64_t id);
 
     void UpdateAll(float deltaT);
 private:
-    std::vector<std::shared_ptr<Gameobject>> objects;
+    std::list<std::shared_ptr<Gameobject>> objects;
+    uint64_t objectcount = 1;
+    std::list<uint64_t> pendingRemove;
 };
 
 

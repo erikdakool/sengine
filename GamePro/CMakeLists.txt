@@ -3,7 +3,12 @@ project(GamePro)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(GamePro
+find_package(SFML 2.5 COMPONENTS system window graphics audio system REQUIRED)
+find_package(jsoncpp CONFIG REQUIRED)
+find_package(OpenAL CONFIG REQUIRED)
+
+add_executable(
+        GamePro
         main.cpp
         App.cpp
         App.h
@@ -50,4 +55,4 @@ add_executable(GamePro
         Controllers/ObjectFactory.h
         SceneVariables.h)
 
-target_link_libraries (GamePro jsoncpp tgui sfml-graphics sfml-audio sfml-window sfml-system)
+target_link_libraries (GamePro PRIVATE OpenAL::OpenAL jsoncpp_lib sfml-graphics sfml-audio sfml-window sfml-system)

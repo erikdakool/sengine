@@ -3,6 +3,8 @@
 //
 
 #include "ModelLoader.h"
+#include <stdio.h>
+#include <string.h>
 
 ModelLoader::ModelLoader() {
 

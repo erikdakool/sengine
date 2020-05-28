@@ -10,8 +10,7 @@
 #include <string>
 #include <typeinfo>
 
-#include <jsoncpp/json/json.h>
-
+#include <json/json.h>
 #include "../Components/Transform.h"
 #include "../Components/RenderCom.h"
 #include "../Manager.h"

@@ -38,3 +38,11 @@ void Gameobject::AddChild(std::shared_ptr<Gameobject> gameobject) {
 std::vector<std::shared_ptr<Gameobject>> Gameobject::getChildren() {
     return children;
 }
+
+uint32_t Gameobject::getId() const {
+    return id;
+}
+
+void Gameobject::setId(uint32_t id) {
+    Gameobject::id = id;
+}

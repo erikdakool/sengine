@@ -5,7 +5,7 @@
 #ifndef GAMEPRO_TRANSFORM_H
 #define GAMEPRO_TRANSFORM_H
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include "Component.h"
 
 class Transform : public Component {

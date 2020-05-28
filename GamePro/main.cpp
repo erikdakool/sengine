@@ -3,8 +3,6 @@
 #include "App.h"
 #include "Controllers/ObjectLoader.h"
 
-#include <TGUI/TGUI.hpp>
-
 int main()
 {
     ObjectLoader objectStreamer;

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Camera.h"
+
 Camera::Camera() {
     rotation = glm::vec3(0,-90,0);
     pos = glm::vec3(0,0,3);

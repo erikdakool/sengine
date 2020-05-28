@@ -8,6 +8,7 @@ Excavator::Excavator(GameDataRef data):
 Gameobject(data)
 {
     auto renderer = std::make_shared<Renderer>(*this,_data,"tracks","Data/Excavator/tracks.obj","track","Data/tracktex.bmp");
+
     Gameobject::AddComponent(renderer);
 
     this->cabin = std::make_shared<Gameobject>(_data);

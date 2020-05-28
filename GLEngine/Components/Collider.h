@@ -7,7 +7,6 @@
 
 
 #include "Component.h"
-#include <reactphysics3d/reactphysics3d.h>
 
 class Collider : public Component {
 public:
@@ -16,8 +15,6 @@ public:
     void update(float deltaT) override;
 
 private:
-    void updateCollisionTransform(rp3d::Transform& transform);
-    rp3d::CollisionBody* body;
 };
 
 
