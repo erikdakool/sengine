@@ -46,7 +46,7 @@ add_executable(GLEngine
         Managers/InputManager.cpp
         Managers/InputManager.h
         Gameobject/Excavator.cpp
-        Gameobject/Excavator.h Components/NoclipController.cpp Components/NoclipController.h Structs/Block.h Managers/BlockManager.cpp Managers/BlockManager.h)
+        Gameobject/Excavator.h Components/NoclipController.cpp Components/NoclipController.h Structs/Block.h Managers/BlockManager.cpp Managers/BlockManager.h Managers/TerrainGenerator.cpp Managers/TerrainGenerator.h Structs/Face.h)
 
 
 target_link_libraries(GLEngine PRIVATE GL GLEW glfw glm LinearMath Bullet3Common BulletDynamics BulletSoftBody)

@@ -26,6 +26,7 @@ using namespace glm;
 #include "Gameobject/Excavator.h"
 #include "Components/NoclipController.h"
 #include "Managers/BlockManager.h"
+#include "Managers/TerrainGenerator.h"
 
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -121,7 +122,7 @@ int main( void )
     //data.get()->objectManager.AddObject(excavator);
 
     auto brick  = std::make_shared<Gameobject>(data);
-    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj","cobble","Data/numbered.bmp");
+    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj","cobble","Data/cobble3x3.bmp");
     auto noclip = std::make_shared<NoclipController>(*brick,data);
     brick.get()->AddComponent(noclip);
     brick.get()->AddComponent(renderer);
@@ -131,11 +132,8 @@ int main( void )
     brick.get()->transform().Scale(glm::vec3(10,10,10));
 
     BlockManager blockManager(data);
-    blockManager.AddBlock(glm::vec3(1,1,1),"pholder");
-
-    blockManager.AddBlock(glm::vec3(4,1,1),"pholder");
-    blockManager.AddBlock(glm::vec3(1,4,1),"pholder");
-    blockManager.AddBlock(glm::vec3(4,3,1),"pholder");
+    //TerrainGenerator terrainGenerator(blockManager,data);
+    blockManager.AddBlock(glm::vec3(1,1,1),"cobble",1);
 
     do{
         double currentTime = glfwGetTime();

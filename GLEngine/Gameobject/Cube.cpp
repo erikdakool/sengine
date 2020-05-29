@@ -299,8 +299,6 @@ Cube::Cube(glm::vec3 in, GameDataRef data)
 
     //indexVBO(vertexbuffer,uvbuffer,indices,indexed_vertices,indexed_uvs);
 
-
-
     _data->textureLoader.loadDDS("noe","Data/uvtemplate.DDS");
     _data->textureLoader.loadBMPTexture("toe","Data/cobble3x3.bmp");
 }

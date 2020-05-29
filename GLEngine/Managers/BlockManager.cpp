@@ -4,6 +4,9 @@
 
 #include "BlockManager.h"
 
+#include <glm/glm.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+
 BlockManager::BlockManager(GameDataRef data) {
     _data = data;
     //points[0] = glm::vec3(0,0,0);
@@ -14,36 +17,47 @@ BlockManager::BlockManager(GameDataRef data) {
             -1.0f,-1.0f,-1.0f,
             -1.0f,-1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f,
+
             1.0f, 1.0f,-1.0f,
             -1.0f,-1.0f,-1.0f,
             -1.0f, 1.0f,-1.0f,
+
             1.0f,-1.0f, 1.0f,
             -1.0f,-1.0f,-1.0f,
             1.0f,-1.0f,-1.0f,
+
             1.0f, 1.0f,-1.0f,
             1.0f,-1.0f,-1.0f,
             -1.0f,-1.0f,-1.0f,
+
             -1.0f,-1.0f,-1.0f,
             -1.0f, 1.0f, 1.0f,
             -1.0f, 1.0f,-1.0f,
+
             1.0f,-1.0f, 1.0f,
             -1.0f,-1.0f, 1.0f,
             -1.0f,-1.0f,-1.0f,
+
             -1.0f, 1.0f, 1.0f,
             -1.0f,-1.0f, 1.0f,
             1.0f,-1.0f, 1.0f,
+
             1.0f, 1.0f, 1.0f,
             1.0f,-1.0f,-1.0f,
             1.0f, 1.0f,-1.0f,
+
             1.0f,-1.0f,-1.0f,
             1.0f, 1.0f, 1.0f,
             1.0f,-1.0f, 1.0f,
+
             1.0f, 1.0f, 1.0f,
             1.0f, 1.0f,-1.0f,
             -1.0f, 1.0f,-1.0f,
+
             1.0f, 1.0f, 1.0f,
             -1.0f, 1.0f,-1.0f,
             -1.0f, 1.0f, 1.0f,
+
             1.0f, 1.0f, 1.0f,
             -1.0f, 1.0f, 1.0f,
             1.0f,-1.0f, 1.0f
@@ -115,8 +129,10 @@ void BlockManager::Draw() {
     GLuint uvbuffer[blocks.size()];
 
     for (int i = 0; i < blocks.size(); ++i) {
+
         glCreateVertexArrays(1,&vao[i]);
         glBindVertexArray(vao[i]);
+
         glGenBuffers(1, &buffers[i]);
         glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
         glBufferData(GL_ARRAY_BUFFER, blocks[i].Quad.size() * sizeof(blocks[i].Quad[0]), &blocks[i].Quad[0], GL_STATIC_DRAW);
@@ -162,13 +178,24 @@ void BlockManager::Draw() {
                 0,                                // stride
                 (void*)0                          // array buffer offset
         );
+
+        glVertexAttribPointer(
+                2,
+                3,
+                GL_FLOAT,
+                GL_FALSE,
+                0,
+                (void*)0
+            ); // 3: Nx, Ny, Nz  -  GL_TRUE: values should be normalized
+
+
         glEnableVertexAttribArray(vao[i]);
     }
 
 
     for (int i = 0; i < blocks.size(); ++i) {
         glBindVertexArray(vao[i]);
-        glDrawArrays(GL_TRIANGLES, 0, blocks[i].Quad.size() );
+        glDrawArrays(GL_TRIANGLES, 0, blocks[i].Quad.size());
         glDisableVertexAttribArray(vao[i]);
     }
 
@@ -180,12 +207,17 @@ void BlockManager::Draw() {
 
 }
 
-uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId) {
+uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk) {
     Block block;
-    block.Location = position;
 
+    block.ChunkId = chunk;
+    block.Location = position;
     for (int i = 0; i < 36; ++i) {
-        block.Quad.push_back(points[i]+position);
+        //block.Quad.push_back(points[i]+position);
+    }
+
+    for (int j = 0; j < 6; ++j) {
+        block.Quad.push_back(block.face.points[j]);
     }
 
     blocks.push_back(block);

@@ -10,9 +10,15 @@
 
 #include <glm/glm.hpp>
 
+#include "Face.h"
+
 struct Block{
     glm::vec3 Location;
     std::vector<glm::vec3> Quad;
+    std::vector<glm::vec3> Normal;
+
+    Face face = Face(FRONT);
+
     uint64_t TextureId;
     uint64_t Id;
     uint64_t ChunkId;
