@@ -52,6 +52,48 @@ BlockManager::BlockManager(GameDataRef data) {
     for (int i = 0; i < 36; ++i) {
         points[i] = glm::vec3(pre[3*i],pre[3*i+1],pre[3*i+2]);
     }
+
+    float g_uv_buffer_data[72] = {
+            0.000059f, 1.0f-0.000004f,
+            0.000103f, 1.0f-0.336048f,
+            0.335973f, 1.0f-0.335903f,
+            1.000023f, 1.0f-0.000013f,
+            0.667979f, 1.0f-0.335851f,
+            0.999958f, 1.0f-0.336064f,
+            0.667979f, 1.0f-0.335851f,
+            0.336024f, 1.0f-0.671877f,
+            0.667969f, 1.0f-0.671889f,
+            1.000023f, 1.0f-0.000013f,
+            0.668104f, 1.0f-0.000013f,
+            0.667979f, 1.0f-0.335851f,
+            0.000059f, 1.0f-0.000004f,
+            0.335973f, 1.0f-0.335903f,
+            0.336098f, 1.0f-0.000071f,
+            0.667979f, 1.0f-0.335851f,
+            0.335973f, 1.0f-0.335903f,
+            0.336024f, 1.0f-0.671877f,
+            1.000004f, 1.0f-0.671847f,
+            0.999958f, 1.0f-0.336064f,
+            0.667979f, 1.0f-0.335851f,
+            0.668104f, 1.0f-0.000013f,
+            0.335973f, 1.0f-0.335903f,
+            0.667979f, 1.0f-0.335851f,
+            0.335973f, 1.0f-0.335903f,
+            0.668104f, 1.0f-0.000013f,
+            0.336098f, 1.0f-0.000071f,
+            0.000103f, 1.0f-0.336048f,
+            0.000004f, 1.0f-0.671870f,
+            0.336024f, 1.0f-0.671877f,
+            0.000103f, 1.0f-0.336048f,
+            0.336024f, 1.0f-0.671877f,
+            0.335973f, 1.0f-0.335903f,
+            0.667969f, 1.0f-0.671889f,
+            1.000004f, 1.0f-0.671847f,
+            0.667979f, 1.0f-0.335851f
+    };
+    for (int i = 0; i < 36; ++i) {
+        uvs[i] = glm::vec2(g_uv_buffer_data[2*i],g_uv_buffer_data[2*i+1]);
+    }
 }
 
 BlockManager::~BlockManager() {
@@ -70,6 +112,8 @@ void BlockManager::Draw() {
     glm::mat4 mvp = Projection * View;
     GLuint buffers[blocks.size()];
     GLuint vao[blocks.size()];
+    GLuint uvbuffer[blocks.size()];
+
     for (int i = 0; i < blocks.size(); ++i) {
         glCreateVertexArrays(1,&vao[i]);
         glBindVertexArray(vao[i]);
@@ -77,19 +121,19 @@ void BlockManager::Draw() {
         glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
         glBufferData(GL_ARRAY_BUFFER, blocks[i].Quad.size() * sizeof(blocks[i].Quad[0]), &blocks[i].Quad[0], GL_STATIC_DRAW);
 
+        glGenBuffers(1,&uvbuffer[i]);
+        glBindBuffer(GL_ARRAY_BUFFER,uvbuffer[i]);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(uvs),uvs,GL_STATIC_DRAW);
 
-        GLuint uvbuffer;
-        glGenBuffers(1, &uvbuffer);
-        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-        //glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(uvs[0]), &uvs[0], GL_STATIC_DRAW);
 
         glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
         GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-        GLuint Texture = _data->textureLoader.getTextureID("toe");
+        GLuint Texture = _data->textureLoader.getTextureID("cobble");
 
         // Bind our texture in Texture Unit 0
         glActiveTexture(GL_TEXTURE0);
+
         glBindTexture(GL_TEXTURE_2D, Texture);
 
         // Set our "myTextureSampler" sampler to use Texture Unit 0
@@ -109,7 +153,7 @@ void BlockManager::Draw() {
 
         // 2nd attribute buffer : UVs
         glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer[i]);
         glVertexAttribPointer(
                 1,                                // attribute
                 2,                                // size
@@ -131,7 +175,7 @@ void BlockManager::Draw() {
 
     for (int i = 0; i < blocks.size(); ++i) {
         glDeleteBuffers(1,&buffers[i]);
-        //glDeleteBuffers(1,&uvbuffer);
+        glDeleteBuffers(1,&uvbuffer[i]);
     }
 
 }
