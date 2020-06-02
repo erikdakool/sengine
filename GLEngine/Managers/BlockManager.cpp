@@ -12,6 +12,7 @@ BlockManager::BlockManager(GameDataRef data) {
     //points[0] = glm::vec3(0,0,0);
     //points[1] = glm::vec3(1,0,0);
     //points[2] = glm::vec3(0,0,1);
+    _data->textureLoader.loadBMPTexture("test","Data/uvtemplate.bmp");
 
     float pre[108] = {
             -1.0f,-1.0f,-1.0f,
@@ -124,87 +125,57 @@ void BlockManager::Draw() {
     //glm::mat4 Model      =  gameobject.transform().getTransformMatrix();
 
     glm::mat4 mvp = Projection * View;
-    GLuint buffers[blocks.size()];
-    GLuint vao[blocks.size()];
-    GLuint uvbuffer[blocks.size()];
+    glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
-    for (int i = 0; i < blocks.size(); ++i) {
+    GLuint buffers;
+    GLuint indiceB;
 
-        glCreateVertexArrays(1,&vao[i]);
-        glBindVertexArray(vao[i]);
+    float vertices[] = {-1, -1, 0, // bottom left corner
+                          1, -1, 0, // top left corner
+                          1,  1, 0, // top right corner
+                          -1, 1, 0}; // bottom right corner
 
-        glGenBuffers(1, &buffers[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-        glBufferData(GL_ARRAY_BUFFER, blocks[i].Quad.size() * sizeof(blocks[i].Quad[0]), &blocks[i].Quad[0], GL_STATIC_DRAW);
+    unsigned int indices[] = {0,1,2,2,3,0};
 
-        glGenBuffers(1,&uvbuffer[i]);
-        glBindBuffer(GL_ARRAY_BUFFER,uvbuffer[i]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(uvs),uvs,GL_STATIC_DRAW);
+    glGenBuffers(1,&buffers);
+    glBindBuffer(GL_ARRAY_BUFFER,buffers);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),&vertices[0],GL_STATIC_DRAW);
 
+    glGenBuffers(1,&indiceB);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),&indices[0],GL_STATIC_DRAW);
 
-        glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
+    GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
+    GLuint Texture = _data->textureLoader.getTextureID("test");
 
-        GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-        GLuint Texture = _data->textureLoader.getTextureID("cobble");
+    // Bind our texture in Texture Unit 0
+    glActiveTexture(GL_TEXTURE0);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glBindTexture(GL_TEXTURE_2D, Texture);
 
-        // Bind our texture in Texture Unit 0
-        glActiveTexture(GL_TEXTURE0);
+    // Set our "myTextureSampler" sampler to use Texture Unit 0
+    glUniform1i(TextureID, 0);
 
-        glBindTexture(GL_TEXTURE_2D, Texture);
+    // 1rst attribute buffer : vertices
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, buffers);
+    glVertexAttribPointer(
+            0,                  // attribute
+            3,                  // size
+            GL_FLOAT,           // type
+            GL_FALSE,           // normalized?
+            0,                  // stride
+            (void*)0            // array buffer offset
+    );
 
-        // Set our "myTextureSampler" sampler to use Texture Unit 0
-        glUniform1i(TextureID, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
+    glDrawElements(GL_TRIANGLES, 6,GL_UNSIGNED_INT, (void*)0);
 
-        // 1rst attribute buffer : vertices
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-        glVertexAttribPointer(
-                0,                  // attribute
-                3,                  // size
-                GL_FLOAT,           // type
-                GL_FALSE,           // normalized?
-                0,                  // stride
-                (void*)0            // array buffer offset
-        );
-
-        // 2nd attribute buffer : UVs
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer[i]);
-        glVertexAttribPointer(
-                1,                                // attribute
-                2,                                // size
-                GL_FLOAT,                         // type
-                GL_FALSE,                         // normalized?
-                0,                                // stride
-                (void*)0                          // array buffer offset
-        );
-
-        glVertexAttribPointer(
-                2,
-                3,
-                GL_FLOAT,
-                GL_FALSE,
-                0,
-                (void*)0
-            ); // 3: Nx, Ny, Nz  -  GL_TRUE: values should be normalized
-
-
-        glEnableVertexAttribArray(vao[i]);
-    }
-
-
-    for (int i = 0; i < blocks.size(); ++i) {
-        glBindVertexArray(vao[i]);
-        glDrawArrays(GL_TRIANGLES, 0, blocks[i].Quad.size());
-        glDisableVertexAttribArray(vao[i]);
-    }
-
-
-    for (int i = 0; i < blocks.size(); ++i) {
-        glDeleteBuffers(1,&buffers[i]);
-        glDeleteBuffers(1,&uvbuffer[i]);
-    }
-
+    glDisableVertexAttribArray(0);
+    glDeleteBuffers(1,&buffers);
 }
 
 uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk) {

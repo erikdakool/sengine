@@ -118,22 +118,23 @@ int main( void )
     TextureLoader textureLoader = TextureLoader();
 
 
-    auto excavator = std::make_shared<Excavator>(data);
+    //auto excavator = std::make_shared<Excavator>(data);
     //data.get()->objectManager.AddObject(excavator);
+    glDeleteBuffers;
 
     auto brick  = std::make_shared<Gameobject>(data);
-    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj","cobble","Data/cobble3x3.bmp");
+    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj");
     auto noclip = std::make_shared<NoclipController>(*brick,data);
     brick.get()->AddComponent(noclip);
     brick.get()->AddComponent(renderer);
 
-    //data.get()->objectManager.AddObject(brick);
-    brick.get()->transform().move(glm::vec3(0,-4,2));
-    brick.get()->transform().Scale(glm::vec3(10,10,10));
+    data.get()->objectManager.AddObject(brick);
+    brick.get()->transform().move(glm::vec3(0,-4,0));
+    brick.get()->transform().Scale(glm::vec3(1,1,1));
 
     BlockManager blockManager(data);
     //TerrainGenerator terrainGenerator(blockManager,data);
-    blockManager.AddBlock(glm::vec3(1,1,1),"cobble",1);
+    //blockManager.AddBlock(glm::vec3(1,1,1),"cobble",1);
 
     do{
         double currentTime = glfwGetTime();
@@ -145,7 +146,6 @@ int main( void )
         }
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         // Use our shader
         glUseProgram(programID);
 

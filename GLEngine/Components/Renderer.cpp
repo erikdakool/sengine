@@ -152,7 +152,6 @@ void Renderer::drawIndexed() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
     glBindTexture(GL_TEXTURE_2D, Texture);
 
     // Set our "myTextureSampler" sampler to use Texture Unit 0
@@ -197,5 +196,4 @@ void Renderer::drawIndexed() {
     glDisableVertexAttribArray(1);
     glDeleteBuffers(1,&vertexbuffer);
     glDeleteBuffers(1,&uvbuffer);
-    glDeleteBuffers(1,&elementbuffer);
 }
