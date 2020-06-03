@@ -5,7 +5,7 @@
 #ifndef GLENGINE_BLOCKMANAGER_H
 #define GLENGINE_BLOCKMANAGER_H
 
-#include "../Structs/Block.h"
+#include "../Object/Block.h"
 #include "../Managers.h"
 
 class BlockManager {
@@ -24,6 +24,11 @@ private:
 
     std::map<GLuint,std::string> texturesLoaded;
     std::vector<Block> blocks;
+
+    std::vector<float> vertexes;
+    std::vector<unsigned int> indices;
+    std::vector<float> colors;
+
 
     glm::vec3 points[36];
     glm::vec2 uvs[36];

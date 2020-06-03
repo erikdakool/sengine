@@ -335,7 +335,7 @@ void Cube::Draw(Camera &camera) {
     // Set our "myTextureSampler" sampler to use Texture Unit 0
     glUniform1i(TextureID, 0);
 
-    // 1st attribute buffer : vertices
+    // 1st attribute buffer : squareVertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
@@ -360,7 +360,7 @@ void Cube::Draw(Camera &camera) {
             (void*)0                          // array buffer offset
     );
     // Draw the triangle !
-    glDrawArrays(GL_TRIANGLES, 0, 12*3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+    glDrawArrays(GL_TRIANGLES, 0, 12*3); // Starting from vertex 0; 3 squareVertices total -> 1 triangle
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

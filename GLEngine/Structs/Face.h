@@ -23,18 +23,28 @@ struct Face{
     Face(DIR dir){
         switch (dir) {
             case FRONT:
-                points[0] = glm::vec3(-1,-1,0);
-                points[1] = glm::vec3(-1,1,0);
-                points[2] = glm::vec3(1,1,0);
-
-                points[4] = glm::vec3(-1,-1,0);
-                points[3] = glm::vec3(1,1,0);
-                points[5] = glm::vec3(1,-1,0);
+                indices = {0,1,2,2,3,0};
+                break;
+            case BACK:
+                indices = {4,7,6,6,5,4};
+                break;
+            case LEFT:
+                indices = {4,0,3,3,7,4};
+                break;
+            case RIGHT:
+                 indices = {1,5,6,6,2,1};
+                break;
+            case UP:
+                 indices = {3,2,6,6,7,3};
+                break;
+            case DOWN:
+                 indices ={1,0,4,4,5,1};
                 break;
             default:
                 break;
         }
     };
 
-    glm::vec3 points[6];
+    std::vector<float> vertices;
+    std::vector<unsigned int> indices;
 };

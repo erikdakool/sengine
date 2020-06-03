@@ -85,7 +85,7 @@ void Renderer::draw() {
     // Set our "myTextureSampler" sampler to use Texture Unit 0
     glUniform1i(TextureID, 0);
 
-    // 1rst attribute buffer : vertices
+    // 1rst attribute buffer : squareVertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
@@ -157,7 +157,7 @@ void Renderer::drawIndexed() {
     // Set our "myTextureSampler" sampler to use Texture Unit 0
     glUniform1i(TextureID, 0);
 
-    // 1rst attribute buffer : vertices
+    // 1rst attribute buffer : squareVertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
@@ -190,7 +190,7 @@ void Renderer::drawIndexed() {
             (void*)0           // element array buffer offset
     );
     // Draw the triangle !
-    //glDrawArrays(GL_TRIANGLES, 0, vertices.size() );
+    //glDrawArrays(GL_TRIANGLES, 0, squareVertices.size() );
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);

@@ -102,7 +102,7 @@ int main( void )
     glEnable(GL_CULL_FACE);
 
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders( "SimpleVertexShader.glsl", "SimpleFragmentShader.glsl" );
+    GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
@@ -133,8 +133,10 @@ int main( void )
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
     BlockManager blockManager(data);
-    //TerrainGenerator terrainGenerator(blockManager,data);
-    //blockManager.AddBlock(glm::vec3(1,1,1),"cobble",1);
+    TerrainGenerator terrainGenerator(blockManager,data);
+    //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1);
+    //blockManager.AddBlock(glm::vec3(2,0,0),"cobble",1);
+    //blockManager.AddBlock(glm::vec3(0,0,3),"cobble",1);
 
     do{
         double currentTime = glfwGetTime();
@@ -168,7 +170,7 @@ int main( void )
             data->camera.moveSide(-1);
         }
 
-        data.get()->objectManager.UpdateAll(1.f);
+        //data.get()->objectManager.UpdateAll(1.f);
         blockManager.Draw();
 
         // Swap buffers

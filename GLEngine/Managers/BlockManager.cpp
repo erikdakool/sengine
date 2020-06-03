@@ -4,111 +4,12 @@
 
 #include "BlockManager.h"
 
+#include "shader.hpp"
 #include <glm/glm.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 
 BlockManager::BlockManager(GameDataRef data) {
     _data = data;
-    //points[0] = glm::vec3(0,0,0);
-    //points[1] = glm::vec3(1,0,0);
-    //points[2] = glm::vec3(0,0,1);
-    _data->textureLoader.loadBMPTexture("test","Data/uvtemplate.bmp");
-
-    float pre[108] = {
-            -1.0f,-1.0f,-1.0f,
-            -1.0f,-1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-
-            1.0f, 1.0f,-1.0f,
-            -1.0f,-1.0f,-1.0f,
-            -1.0f, 1.0f,-1.0f,
-
-            1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f,-1.0f,
-            1.0f,-1.0f,-1.0f,
-
-            1.0f, 1.0f,-1.0f,
-            1.0f,-1.0f,-1.0f,
-            -1.0f,-1.0f,-1.0f,
-
-            -1.0f,-1.0f,-1.0f,
-            -1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f,-1.0f,
-
-            1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f, 1.0f,
-            -1.0f,-1.0f,-1.0f,
-
-            -1.0f, 1.0f, 1.0f,
-            -1.0f,-1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f,
-
-            1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f,-1.0f,
-            1.0f, 1.0f,-1.0f,
-
-            1.0f,-1.0f,-1.0f,
-            1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f,
-
-            1.0f, 1.0f, 1.0f,
-            1.0f, 1.0f,-1.0f,
-            -1.0f, 1.0f,-1.0f,
-
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f,-1.0f,
-            -1.0f, 1.0f, 1.0f,
-
-            1.0f, 1.0f, 1.0f,
-            -1.0f, 1.0f, 1.0f,
-            1.0f,-1.0f, 1.0f
-    };
-
-    for (int i = 0; i < 36; ++i) {
-        points[i] = glm::vec3(pre[3*i],pre[3*i+1],pre[3*i+2]);
-    }
-
-    float g_uv_buffer_data[72] = {
-            0.000059f, 1.0f-0.000004f,
-            0.000103f, 1.0f-0.336048f,
-            0.335973f, 1.0f-0.335903f,
-            1.000023f, 1.0f-0.000013f,
-            0.667979f, 1.0f-0.335851f,
-            0.999958f, 1.0f-0.336064f,
-            0.667979f, 1.0f-0.335851f,
-            0.336024f, 1.0f-0.671877f,
-            0.667969f, 1.0f-0.671889f,
-            1.000023f, 1.0f-0.000013f,
-            0.668104f, 1.0f-0.000013f,
-            0.667979f, 1.0f-0.335851f,
-            0.000059f, 1.0f-0.000004f,
-            0.335973f, 1.0f-0.335903f,
-            0.336098f, 1.0f-0.000071f,
-            0.667979f, 1.0f-0.335851f,
-            0.335973f, 1.0f-0.335903f,
-            0.336024f, 1.0f-0.671877f,
-            1.000004f, 1.0f-0.671847f,
-            0.999958f, 1.0f-0.336064f,
-            0.667979f, 1.0f-0.335851f,
-            0.668104f, 1.0f-0.000013f,
-            0.335973f, 1.0f-0.335903f,
-            0.667979f, 1.0f-0.335851f,
-            0.335973f, 1.0f-0.335903f,
-            0.668104f, 1.0f-0.000013f,
-            0.336098f, 1.0f-0.000071f,
-            0.000103f, 1.0f-0.336048f,
-            0.000004f, 1.0f-0.671870f,
-            0.336024f, 1.0f-0.671877f,
-            0.000103f, 1.0f-0.336048f,
-            0.336024f, 1.0f-0.671877f,
-            0.335973f, 1.0f-0.335903f,
-            0.667969f, 1.0f-0.671889f,
-            1.000004f, 1.0f-0.671847f,
-            0.667979f, 1.0f-0.335851f
-    };
-    for (int i = 0; i < 36; ++i) {
-        uvs[i] = glm::vec2(g_uv_buffer_data[2*i],g_uv_buffer_data[2*i+1]);
-    }
 }
 
 BlockManager::~BlockManager() {
@@ -129,37 +30,21 @@ void BlockManager::Draw() {
 
     GLuint buffers;
     GLuint indiceB;
-
-    float vertices[] = {-1, -1, 0, // bottom left corner
-                          1, -1, 0, // top left corner
-                          1,  1, 0, // top right corner
-                          -1, 1, 0}; // bottom right corner
-
-    unsigned int indices[] = {0,1,2,2,3,0};
+    GLuint colorB;
 
     glGenBuffers(1,&buffers);
     glBindBuffer(GL_ARRAY_BUFFER,buffers);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(vertices),&vertices[0],GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER,vertexes.size()*sizeof(vertexes[0]),&vertexes[0],GL_STATIC_DRAW);
 
     glGenBuffers(1,&indiceB);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),&indices[0],GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,indices.size()*sizeof(indices[0]),&indices[0],GL_STATIC_DRAW);
 
-    GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
-    GLuint Texture = _data->textureLoader.getTextureID("test");
+    glGenBuffers(1,&colorB);
+    glBindBuffer(GL_ARRAY_BUFFER,colorB);
+    glBufferData(GL_ARRAY_BUFFER,colors.size()*sizeof(colors[0]),&colors[0],GL_STATIC_DRAW);
 
-    // Bind our texture in Texture Unit 0
-    glActiveTexture(GL_TEXTURE0);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    glBindTexture(GL_TEXTURE_2D, Texture);
-
-    // Set our "myTextureSampler" sampler to use Texture Unit 0
-    glUniform1i(TextureID, 0);
-
-    // 1rst attribute buffer : vertices
+    // 1rst attribute buffer : squareVertices
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, buffers);
     glVertexAttribPointer(
@@ -171,28 +56,44 @@ void BlockManager::Draw() {
             (void*)0            // array buffer offset
     );
 
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER,colorB);
+    glVertexAttribPointer(
+            1,
+            3,
+            GL_FLOAT,
+            GL_FALSE,
+            0,
+            (void*)0
+    );
+
+    //int vertexColorLocation = glGetUniformLocation(_data->camera.programID, "ourColor");
+
+    glUseProgram(_data->camera.programID);
+    //glUniform4f(vertexColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
-    glDrawElements(GL_TRIANGLES, 6,GL_UNSIGNED_INT, (void*)0);
+    glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT, (void*)0);
 
     glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(1);
+
     glDeleteBuffers(1,&buffers);
+    glDeleteBuffers(1,&indiceB);
+    glDeleteBuffers(1,&colorB);
+
 }
 
 uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk) {
-    Block block;
 
-    block.ChunkId = chunk;
-    block.Location = position;
-    for (int i = 0; i < 36; ++i) {
-        //block.Quad.push_back(points[i]+position);
-    }
-
-    for (int j = 0; j < 6; ++j) {
-        block.Quad.push_back(block.face.points[j]);
-    }
-
+    Block block(position,vertexes.size()/3);
+    auto v = block.getAllVerticesV();
+    auto i = block.getAllIndicesV();
+    auto c = block.getAllColorsV();
+    vertexes.insert(vertexes.end(),v.begin(),v.end());
+    indices.insert(indices.end(),i.begin(),i.end());
+    colors.insert(colors.end(),c.begin(),c.end());
     blocks.push_back(block);
-
     return idCounter;
 }
 
