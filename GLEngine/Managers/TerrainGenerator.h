@@ -19,16 +19,13 @@ public:
 private:
     GameDataRef data;
     BlockManager& blockManager;
-    int chunkHeight = 32;
-    int chunkWidth = 32;
-    int chunkLength = 32;
-
+    float heightMulti = 64;
+    int chunkWidth = 256;
+    int chunkLength = 256;
+    float hardness = 0.1;
     uint64_t chunkCounter = 0;
     std::map<std::tuple<int,int>, uint64_t> chunkMap;
     void generateChunk(int xLoc, int zLoc);
-
-
 };
-
 
 #endif //GLENGINE_TERRAINGENERATOR_H

@@ -15,9 +15,9 @@ public:
 
     void Update();
     void Draw();
-    uint64_t AddBlock(glm::vec3 locaiton, std::string textureId, uint64_t chunk);
+    uint64_t AddBlock(glm::vec3 locaiton, std::string textureId, uint64_t chunk,BlockType type);
     void RemoveBlock(uint64_t id);
-
+    void ClearBlocks();
 private:
     GameDataRef _data;
 

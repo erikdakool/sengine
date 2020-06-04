@@ -7,7 +7,7 @@
 
 Camera::Camera() {
     rotation = glm::vec3(0,-90,0);
-    pos = glm::vec3(0,0,3);
+    pos = glm::vec3(400,400,600);
     center = glm::vec3(0,0,-1);
     upVector = glm::vec3(0,1,0);
     viewMatrix = glm::lookAt(
@@ -88,5 +88,6 @@ void Camera::rotate(glm::vec3 v) {
     direction.z = cos(glm::radians(rotation.x)) * sin(glm::radians(rotation.y));
     center = glm::normalize(direction);
     updateView = true;
-    //std::cout << rotation.x << " " << rotation.y << " " << rotation.z << std::endl;
+    //std::cout << "Rotation: " << rotation.x << " " << rotation.y << " " << rotation.z << std::endl;
+    //std::cout << "Position: " << pos.x << " " << pos.y << " " << pos.z << std::endl;
 }

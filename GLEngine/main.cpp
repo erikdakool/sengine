@@ -106,6 +106,7 @@ int main( void )
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
+    data->camera.rotate(glm::vec3(-36,-20,0));
     data->textureLoader = TextureLoader();
     data->modelLoader = ModelLoader();
     data->objectManager = ObjectManager();
@@ -171,6 +172,7 @@ int main( void )
         }
 
         //data.get()->objectManager.UpdateAll(1.f);
+        terrainGenerator.Update();
         blockManager.Draw();
 
         // Swap buffers

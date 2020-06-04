@@ -12,10 +12,19 @@
 
 #include "../Structs/Face.h"
 
+enum BlockType{
+    Grass,
+    Stone,
+    Dirt,
+    Water,
+    Snow
+};
+
 class Block{
 public:
     Block();
     Block(glm::vec3 pos,int offset);
+    Block(glm::vec3 pos,int offset,BlockType type);
     ~Block();
 
     float* getAllVertices();
@@ -28,6 +37,7 @@ private:
     void calculatePoints(int offset);
     std::vector<Face> faces;
     std::vector<glm::vec3> squareVertices;
+    std::vector<glm::vec3> squareColors;
     std::vector<glm::vec3> vertices;
     std::vector<unsigned int> indices;
     std::vector<glm::vec3> colors;

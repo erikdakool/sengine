@@ -84,9 +84,8 @@ void BlockManager::Draw() {
 
 }
 
-uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk) {
-
-    Block block(position,vertexes.size()/3);
+uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk,BlockType type) {
+    Block block(position,vertexes.size()/3,type);
     auto v = block.getAllVerticesV();
     auto i = block.getAllIndicesV();
     auto c = block.getAllColorsV();
@@ -99,4 +98,11 @@ uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint6
 
 void BlockManager::RemoveBlock(uint64_t id) {
 
+}
+
+void BlockManager::ClearBlocks() {
+    vertexes.clear();
+    indices.clear();
+    colors.clear();
+    blocks.clear();
 }
