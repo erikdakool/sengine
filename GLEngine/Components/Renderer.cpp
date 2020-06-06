@@ -23,7 +23,7 @@ Component(gameobject,data)
     this->name = name;
     std::shared_ptr<ModelStruct> model = _data->modelLoader.LoadOBJ(name,url);
 
-    _data->textureLoader.loadBMPTexture(this->tname,"Data/uvtemplate.bmp");
+    _data->textureLoader.loadBMPTexture(this->tname,"Data/Textures/textureMap.bmp");
 
     vertices = model->vertices;
     uvs = model->uvs;

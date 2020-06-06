@@ -3,6 +3,8 @@
 //
 
 #include <cstring>
+#include <array>
+#include <fstream>
 #include "TextureLoader.h"
 
 TextureLoader::TextureLoader() {
@@ -24,42 +26,67 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     char imagepath[url.length()+1];
     strncpy(imagepath,url.c_str(), sizeof(imagepath));
 
-    // Data read from the header of the BMP file
-    unsigned char header[54]; // Each BMP file begins by a 54-bytes header
-    unsigned int dataPos;     // Position in the file where the actual data begins
-    unsigned int width, height;
-    unsigned int imageSize;   // = width*height*3
-    // Actual RGB data
-    unsigned char * data;
 
-    FILE * file = fopen(imagepath,"rb");
-    if (!file){printf("Image could not be opened\n"); return 0;}
+    static constexpr size_t HEADER_SIZE = 54;
 
-    if(fread(header,1,54,file)!=54){
-        printf("not a correct BMP file \n");
-        return false;
+    std::ifstream bmp(url, std::ios::binary);
+
+    std::array<char, HEADER_SIZE> header;
+    bmp.read(header.data(), header.size());
+
+    auto fileSize = *reinterpret_cast<uint32_t *>(&header[2]);
+    auto dataOffset = *reinterpret_cast<uint32_t *>(&header[10]);
+    auto width = *reinterpret_cast<uint32_t *>(&header[18]);
+    auto height = *reinterpret_cast<uint32_t *>(&header[22]);
+    auto depth = *reinterpret_cast<uint16_t *>(&header[28]);
+
+    std::cout << "fileSize: " << fileSize << std::endl;
+    std::cout << "dataOffset: " << dataOffset << std::endl;
+    std::cout << "width: " << width << std::endl;
+    std::cout << "height: " << height << std::endl;
+    std::cout << "depth: " << depth << "-bit" << std::endl;
+
+    std::vector<char> img(dataOffset - HEADER_SIZE);
+    bmp.read(img.data(), img.size());
+
+    auto dataSize = ((width * 3 + 3) & (~3)) * height;
+    img.resize(dataSize);
+    bmp.read(img.data(), img.size());
+
+
+    int tileX = 1;
+    int tileY = 0;
+
+    int tileW = 32;
+    int tileH = 32;
+    int tileSize = tileW*tileH*3;
+    unsigned char* tileData = new unsigned char [tileSize];
+
+    tileY = height/tileH-tileY-1;
+    std::cout << tileY << std::endl;
+
+    for (int j = 0; j < tileH; ++j) {
+        for (int i = 0; i < tileW; ++i) {
+            tileData[3*(i*tileW+j)]   = img[3*(i*width+j+(tileY*tileH*width)+(tileX*tileW))];
+            tileData[3*(i*tileW+j)+1] = img[3*(i*width+j+(tileY*tileH*width)+(tileX*tileW))+1];
+            tileData[3*(i*tileW+j)+2] = img[3*(i*width+j+(tileY*tileH*width)+(tileX*tileW))+2];
+        }
     }
-    if ( header[0]!='B' || header[1]!='M' ){
-        printf("Not a correct BMP file\n");
-        return 0;
-    }
-    dataPos    = *(int*)&(header[0x0A]);
-    imageSize  = *(int*)&(header[0x22]);
-    width      = *(int*)&(header[0x12]);
-    height     = *(int*)&(header[0x16]);
 
-    // Some BMP files are misformatted, guess missing information
-    if (imageSize==0)    imageSize=width*height*3; // 3 : one byte for each Red, Green and Blue component
-    if (dataPos==0)      dataPos=54; // The BMP header is done that way
-
-    // Create a buffer
-    data = new unsigned char [imageSize];
-
-    // Read the actual data from the file into the buffer
-    fread(data,1,imageSize,file);
-
-    //Everything is in memory now, the file can be closed
-    fclose(file);
+    //for(int i = 0; i < tileSize; i += 3)
+    //{
+    //    // flip the order of every 3 bytes
+    //    unsigned char tmp = img[i];
+    //    img[i] = img[i+2];
+    //    img[i+2] = tmp;
+    //}
+//
+    //for (int i = 0; i < width; ++i) {
+    //    for (int j = 0; j < height; ++j) {
+    //        std::cout << "Px: " << i << " " << j << std::endl;
+    //        std::cout << "R: " << int(img[3*(i*width+j)] & 0xff) << " G: " << int(img[3*(i*height+j)+1] & 0xff) << " B: " << int(img[3*(i*height+j)+2] & 0xff) << std::endl;
+    //    }
+    //}
 
     // Create one OpenGL texture
     GLuint textureID;
@@ -69,8 +96,9 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     glBindTexture(GL_TEXTURE_2D, textureID);
 
     // Give the image to OpenGL
-    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-    delete [] data;
+    //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, tileW, tileH, 0, GL_BGR, GL_UNSIGNED_BYTE, tileData);
+    delete [] tileData;
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
