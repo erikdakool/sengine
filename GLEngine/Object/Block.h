@@ -27,17 +27,16 @@ public:
     Block(glm::vec3 pos,int offset,BlockType type);
     ~Block();
 
-    float* getAllVertices();
-    unsigned int* getAllIndices();
-
     std::vector<float> getAllVerticesV();
     std::vector<float> getAllColorsV();
     std::vector<unsigned int> getAllIndicesV();
+    std::vector<float> getAllTexturePosV();
 private:
     void calculatePoints(int offset);
     std::vector<Face> faces;
     std::vector<glm::vec3> squareVertices;
     std::vector<glm::vec3> squareColors;
+    std::vector<glm::vec2> textureCor;
     std::vector<glm::vec3> vertices;
     std::vector<unsigned int> indices;
     std::vector<glm::vec3> colors;

@@ -102,8 +102,8 @@ int main( void )
     glEnable(GL_CULL_FACE);
 
     // Create and compile our GLSL program from the shaders
-    //GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
-    GLuint programID = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
+    GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
+    //GLuint programID = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
@@ -134,10 +134,13 @@ int main( void )
     brick.get()->transform().move(glm::vec3(0,-4,0));
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
-    //BlockManager blockManager(data);
+    BlockManager blockManager(data);
     //TerrainGenerator terrainGenerator(blockManager,data);
-    //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1);
-    //blockManager.AddBlock(glm::vec3(2,0,0),"cobble",1);
+
+    GLuint textureId = data->textureLoader.loadBMPTexture("cobble","Data/Textures/textureMap.bmp");
+
+    blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
+    //blockManager.AddBlock(glm::vec3(2,0,0),"cobble",1,Stone);
     //blockManager.AddBlock(glm::vec3(0,0,3),"cobble",1);
 
     do{
@@ -152,6 +155,8 @@ int main( void )
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // Use our shader
         glUseProgram(programID);
+
+        glBindTextureUnit(2,textureId);
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
             data->camera.moveUp(-1);
@@ -174,7 +179,7 @@ int main( void )
 
         data.get()->objectManager.UpdateAll(1.f);
         //terrainGenerator.Update();
-        //blockManager.Draw();
+        blockManager.Draw();
 
         // Swap buffers
         glfwSwapBuffers(window);

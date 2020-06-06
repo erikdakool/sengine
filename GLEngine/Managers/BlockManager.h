@@ -28,6 +28,7 @@ private:
     std::vector<float> vertexes;
     std::vector<unsigned int> indices;
     std::vector<float> colors;
+    std::vector<float> texturePos;
 
 
     glm::vec3 points[36];

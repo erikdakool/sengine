@@ -54,7 +54,7 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     bmp.read(img.data(), img.size());
 
 
-    int tileX = 1;
+    int tileX = 0;
     int tileY = 0;
 
     int tileW = 32;
@@ -80,7 +80,7 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     //    img[i] = img[i+2];
     //    img[i+2] = tmp;
     //}
-//
+
     //for (int i = 0; i < width; ++i) {
     //    for (int j = 0; j < height; ++j) {
     //        std::cout << "Px: " << i << " " << j << std::endl;
@@ -94,21 +94,29 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
 
     // "Bind" the newly created texture : all future texture functions will modify this texture
     glBindTexture(GL_TEXTURE_2D, textureID);
+    glBindTextureUnit(0,textureID);
 
     // Give the image to OpenGL
     //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    glTextureStorage2D(textureID, 1, GL_RGBA8, tileW, tileH);
+
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, tileW, tileH, 0, GL_BGR, GL_UNSIGNED_BYTE, tileData);
     delete [] tileData;
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    // When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    // Generate mipmaps, by the way.
-    glGenerateMipmap(GL_TEXTURE_2D);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+//
+    //// When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //// When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
+    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    //// Generate mipmaps, by the way.
+    //glGenerateMipmap(GL_TEXTURE_2D);
 
     Texture texture(name,textureID);
     Textures.push_back(texture);
