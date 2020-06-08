@@ -43,6 +43,7 @@ private:
     std::vector<glm::vec2> indexed_uvs;
     std::vector<glm::vec3> indexed_normals;
 
+    GLuint vertexArrayID;
     GLuint vertexbuffer = 0;
     GLuint uvbuffer = 0;
     std::string name = "default";

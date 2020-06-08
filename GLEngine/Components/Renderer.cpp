@@ -125,6 +125,9 @@ void Renderer::drawIndexed() {
 
     glm::mat4 mvp = Projection * View * Model;
 
+    glCreateVertexArrays(1,&vertexArrayID);
+    glBindVertexArray(vertexArrayID);
+
     vertexbuffer;
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -182,6 +185,7 @@ void Renderer::drawIndexed() {
     );
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+    glBindVertexArray(vertexArrayID);
     // Draw the triangles !
     glDrawElements(
             GL_TRIANGLES,      // mode

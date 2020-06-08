@@ -88,7 +88,7 @@ int main( void )
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     // Dark blue background
-    glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+    //glClearColor(1,0,1, 1);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -104,10 +104,11 @@ int main( void )
     // Create and compile our GLSL program from the shaders
     GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
     //GLuint programID = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
+    glUseProgram(programID);
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
-    data->camera.rotate(glm::vec3(-36,-20,0));
+    //data->camera.rotate(glm::vec3(-36,-20,0));
     data->textureLoader = TextureLoader();
     data->modelLoader = ModelLoader();
     data->objectManager = ObjectManager();
@@ -122,26 +123,24 @@ int main( void )
 
     //auto excavator = std::make_shared<Excavator>(data);
     //data.get()->objectManager.AddObject(excavator);
-    glDeleteBuffers;
+    //glDeleteBuffers;
 
     auto brick  = std::make_shared<Gameobject>(data);
-    auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj");
+    //auto renderer = std::make_shared<Renderer>(*brick,data,"cube","Data/cube.obj");
     auto noclip = std::make_shared<NoclipController>(*brick,data);
     brick.get()->AddComponent(noclip);
-    brick.get()->AddComponent(renderer);
+    //brick.get()->AddComponent(renderer);
 
     data.get()->objectManager.AddObject(brick);
-    brick.get()->transform().move(glm::vec3(0,-4,0));
+    brick.get()->transform().move(glm::vec3(0,3,-2));
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
     BlockManager blockManager(data);
-    //TerrainGenerator terrainGenerator(blockManager,data);
+    TerrainGenerator terrainGenerator(blockManager,data);
 
-    GLuint textureId = data->textureLoader.loadBMPTexture("cobble","Data/Textures/textureMap.bmp");
-
-    blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
-    //blockManager.AddBlock(glm::vec3(2,0,0),"cobble",1,Stone);
-    //blockManager.AddBlock(glm::vec3(0,0,3),"cobble",1);
+    //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
+    //blockManager.AddBlock(glm::vec3(3,0,0),"cobble",1,Grass);
+    //blockManager.AddBlock(glm::vec3(6,0,0),"cobble",1,Dirt);
 
     do{
         double currentTime = glfwGetTime();
@@ -156,7 +155,7 @@ int main( void )
         // Use our shader
         glUseProgram(programID);
 
-        glBindTextureUnit(2,textureId);
+        //glBindTextureUnit(2,textureId);
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
             data->camera.moveUp(-1);
@@ -177,7 +176,7 @@ int main( void )
             data->camera.moveSide(-1);
         }
 
-        data.get()->objectManager.UpdateAll(1.f);
+        //data.get()->objectManager.UpdateAll(1.f);
         //terrainGenerator.Update();
         blockManager.Draw();
 

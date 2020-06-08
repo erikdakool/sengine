@@ -31,6 +31,7 @@ public:
     TextureLoader();
     ~TextureLoader();
     GLuint loadBMPTexture(const std::string& name,const std::string& url);
+    GLuint loadBMPTexture(const std::string& name,const std::string& url,const int tileX, int tileY, const int tileW, const int tileH,int unit);
     GLuint loadDDS( std::string name, std::string url);
     GLuint getTextureID( const std::string& name);
 

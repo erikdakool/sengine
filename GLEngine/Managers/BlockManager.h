@@ -21,20 +21,33 @@ public:
 private:
     GameDataRef _data;
 
+    void updateBuffer();
 
     std::map<GLuint,std::string> texturesLoaded;
     std::vector<Block> blocks;
 
+    std::vector<float> vertices;
     std::vector<float> vertexes;
     std::vector<unsigned int> indices;
     std::vector<float> colors;
     std::vector<float> texturePos;
 
+    uint32_t* indicesArr;
 
     glm::vec3 points[36];
     glm::vec2 uvs[36];
 
     uint64_t idCounter = 0;
+
+    GLuint vertexArrayID;
+    GLuint vertexBufferID;
+    GLuint indiceBufferID;
+
+    GLuint indiceCounter = 0;
+
+    GLuint grassId;
+    GLuint dirtId;
+    GLuint stoneId;
 };
 
 #endif //GLENGINE_BLOCKMANAGER_H

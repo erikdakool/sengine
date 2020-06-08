@@ -10,6 +10,7 @@
 
 BlockManager::BlockManager(GameDataRef data) {
     _data = data;
+
 }
 
 BlockManager::~BlockManager() {
@@ -28,119 +29,140 @@ void BlockManager::Draw() {
     glm::mat4 mvp = Projection * View;
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
-    GLuint buffers;
-    GLuint indiceB;
-    GLuint colorB;
-    GLuint textureB;
-    GLuint texCorB;
-
     glUseProgram(_data->camera.programID);
-    auto loc = glGetUniformLocation(_data->camera.programID,"u_Textures");
-    int samplers[3] = {0,1,2};
-    glUniform1iv(loc,2,samplers);
 
-    float * textures = new float[vertexes.size()];
-    for (int j = 0; j < vertexes.size(); ++j) {
-        textures[j] = 2.0f;
-    }
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,grassId);
+    GLint sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[0]");
+    glUniform1i(sampler,0);
 
-    glGenBuffers(1,&buffers);
-    glBindBuffer(GL_ARRAY_BUFFER,buffers);
-    glBufferData(GL_ARRAY_BUFFER,vertexes.size()*sizeof(vertexes[0]),&vertexes[0],GL_STATIC_DRAW);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D,dirtId);
+    sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[1]");
+    glUniform1i(sampler,1);
 
-    glGenBuffers(1,&indiceB);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,indices.size()*sizeof(indices[0]),&indices[0],GL_STATIC_DRAW);
+    glActiveTexture(GL_TEXTURE2);
+    glBindTexture(GL_TEXTURE_2D,stoneId);
+    sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[2]");
+    glUniform1i(sampler,2);
 
-    glGenBuffers(1,&colorB);
-    glBindBuffer(GL_ARRAY_BUFFER,colorB);
-    glBufferData(GL_ARRAY_BUFFER,colors.size()*sizeof(colors[0]),&colors[0],GL_STATIC_DRAW);
-
-    glGenBuffers(1,&texCorB);
-    glBindBuffer(GL_ARRAY_BUFFER,texCorB);
-    glBufferData(GL_ARRAY_BUFFER,texturePos.size()*sizeof(texturePos[0]),&texturePos[0],GL_STATIC_DRAW);
-
-    glGenBuffers(1,&textureB);
-    glBindBuffer(GL_ARRAY_BUFFER,textureB);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(textures),&textures[0],GL_STATIC_DRAW);
-
-    // 1rst attribute buffer : squareVertices
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, buffers);
-    glVertexAttribPointer(
-            0,                  // attribute
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            (void*)0            // array buffer offset
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER,colorB);
-    glVertexAttribPointer(
-            1,
-            4,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
-    );
-
-    glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER,texCorB);
-    glVertexAttribPointer(
-            2,
-            2,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
-    );
-
-    glEnableVertexAttribArray(3);
-    glBindBuffer(GL_ARRAY_BUFFER,textureB);
-    glVertexAttribPointer(
-            3,
-            1,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
-    );
-
-    //int vertexColorLocation = glGetUniformLocation(_data->camera.programID, "ourColor");
-
-    //glUniform4f(vertexColorLocation, 0.0f, 1.0f, 0.0f, 1.0f);
-
-
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceB);
-    glDrawElements(GL_TRIANGLES, indices.size(),GL_UNSIGNED_INT, (void*)0);
-
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(1);
-    glDisableVertexAttribArray(3);
-
-    glDeleteBuffers(1,&buffers);
-    glDeleteBuffers(1,&indiceB);
-    glDeleteBuffers(1,&colorB);
-    glDeleteBuffers(1,&textureB);
-
+    glBindVertexArray(vertexArrayID);
+    //glDrawElements(GL_TRIANGLES, indiceCounter,GL_UNSIGNED_INT, (void*)0);
+    glDrawRangeElements(GL_TRIANGLES,0,indiceCounter,indiceCounter,GL_UNSIGNED_INT,(void*)0);
 }
 
 uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk,BlockType type) {
-    Block block(position,vertexes.size()/3,type);
-    auto v = block.getAllVerticesV();
-    auto i = block.getAllIndicesV();
+    Block block(position,indiceCounter);
+    auto v = block.getAllVertexesV();
     auto c = block.getAllColorsV();
     auto p = block.getAllTexturePosV();
-    vertexes.insert(vertexes.end(),v.begin(),v.end());
-    indices.insert(indices.end(),i.begin(),i.end());
-    colors.insert(colors.end(),c.begin(),c.end());
-    texturePos.insert(texturePos.end(),p.begin(),p.end());
+    //vertexes.insert(vertexes.end(),v.begin(),v.end());
+    //indices.insert(indices.end(),i.begin(),i.end());
+    //colors.insert(colors.end(),c.begin(),c.end());
+    //texturePos.insert(texturePos.end(),p.begin(),p.end());
     blocks.push_back(block);
+
+    auto ver = block.getAllVertices(indices.size());
+    auto i = block.getAllIndicesV(indices.size());
+
+    vertices.insert(vertices.end(),ver.begin(),ver.end());
+
+    indices.insert(indices.end(),i.begin(),i.end());
+    indiceCounter+=indices.size();
+
+    //int e = 0;
+    //for (int j = 0; j < 8; ++j) {
+    //    for (int k = 0; k < 9; ++k) {
+    //        std::cout << ver[e] << " ";
+    //        e++;
+    //    }
+    //    std::cout << std::endl;
+    //}
+
+    //for (int l = 0; l < 36; ++l) {
+    //    std::cout << i[l] << " ";
+    //}
+    //std::cout << std::endl;
+
+
+    updateBuffer();
     return idCounter;
+}
+
+void BlockManager::updateBuffer() {
+    //std::cout << "Buffer length " << vertices.size() << std::endl;
+
+    ///OpenGL buffer inserts
+    glUseProgram(_data->camera.programID);
+
+    auto loc = glGetUniformLocation(_data->camera.programID,"u_Textures");
+    int samplers[3] = {0,1,2};
+    glUniform1iv(loc,3,samplers);
+
+    glClearColor(0.1,0.1,0.1,1);
+
+    //float vert[] = {
+    //        -1,-1,0,1,1,1,0,0,0.f,
+    //        1,-1,0,1,1,1,1,0,0.f,
+    //        1,1,0,1,1,1,1,1,0.f,
+    //        -1,1,0,1,1,1,0,1,0.f,
+
+    //        -4,-1,0,1,1,1,0,0,1.0f,
+    //        -2,-1,0,1,1,1,1,0,1.0f,
+    //        -2,1,0,1,1,1,1,1,1.0f,
+    //        -4,1,0,1,1,1,0,1,1.0f,
+
+    //        4,-1,0,1,1,1,0,0,2.0f,
+    //        6,-1,0,1,1,1,1,0,2.0f,
+    //        6,1,0,1,1,1,1,1,2.0f,
+    //        4,1,0,1,1,1,0,1,2.0f
+    //};
+
+    //unsigned int ind[] = {
+    //        0,1,2,2,3,0,
+    //        4,5,6,6,7,4,
+    //        8,9,10,10,11,8
+    //};
+
+    glCreateVertexArrays(1,&vertexArrayID);
+    glBindVertexArray(vertexArrayID);
+
+    //Data buffer binding
+    glGenBuffers(1,&vertexBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+    glBufferData(GL_ARRAY_BUFFER,vertices.size()*sizeof(vertices[0]),&vertices[0],GL_STATIC_DRAW);
+
+    //Indice binding
+    glGenBuffers(1,&indiceBufferID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBufferID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER,indices.size()*sizeof(indices[0]),&indices[0],GL_STATIC_DRAW);
+
+    //Vertex attribute binding
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(void*)0);
+
+    //Color attribute binding
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(const  void*)12);
+
+    //TexturePos attribute binding
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2,2,GL_FLOAT,GL_FALSE,9*sizeof(float),(const void*)24);
+
+    //Texture attribute binding
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3,1,GL_FLOAT,GL_FALSE,9*sizeof(float),(const void*)32);
+
+    grassId = _data->textureLoader.loadBMPTexture("grass2","Data/Textures/textureMap.bmp",0,0,32,32,0);
+    //GLint sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[0]");
+    //glUniform1i(sampler,0);
+
+    dirtId = _data->textureLoader.loadBMPTexture("dirt1","Data/Textures/textureMap.bmp",1,0,32,32,1);
+    //sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[1]");
+    //glUniform1i(sampler,1);
+    stoneId = _data->textureLoader.loadBMPTexture("dirt2","Data/Textures/textureMap.bmp",2,0,32,32,2);
+    //sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[2]");
+    //glUniform1i(sampler,2);
 }
 
 void BlockManager::RemoveBlock(uint64_t id) {
@@ -148,8 +170,5 @@ void BlockManager::RemoveBlock(uint64_t id) {
 }
 
 void BlockManager::ClearBlocks() {
-    vertexes.clear();
-    indices.clear();
-    colors.clear();
-    blocks.clear();
+
 }

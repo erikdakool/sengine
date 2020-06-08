@@ -2,6 +2,7 @@
 // Created by erikdesk on 6/2/20.
 //
 #include <algorithm>
+#include <iostream>
 #include "Block.h"
 
 Block::Block() {
@@ -15,10 +16,10 @@ Block::Block() {
     squareVertices.push_back(glm::vec3(1.0, 1.0,  -1.0));
     squareVertices.push_back(glm::vec3(-1.0, 1.0,  -1.0));
 
-    faces.push_back(Face(UP));
-    faces.push_back(Face(DOWN));
     faces.push_back(Face(FRONT));
     faces.push_back(Face(BACK));
+    faces.push_back(Face(UP));
+    faces.push_back(Face(DOWN));
     faces.push_back(Face(LEFT));
     faces.push_back(Face(RIGHT));
 
@@ -32,6 +33,14 @@ Block::Block() {
     squareColors.push_back(glm::vec4(.0, 0., 1.0,1.0));
     squareColors.push_back(glm::vec4(.0, 0., 1.0,1.0));
 
+    textureCor.push_back(glm::vec2(0,0));
+    textureCor.push_back(glm::vec2(1,0));
+    textureCor.push_back(glm::vec2(1,1));
+    textureCor.push_back(glm::vec2(0,1));
+    textureCor.push_back(glm::vec2(0,0));
+    textureCor.push_back(glm::vec2(1,0));
+    textureCor.push_back(glm::vec2(1,1));
+    textureCor.push_back(glm::vec2(0,1));
    // calculatePoints();
 }
 
@@ -102,7 +111,7 @@ Block::Block(glm::vec3 pos,int offset, BlockType type)
             break;
     }
 
-    calculatePoints(offset);
+    //calculatePoints(offset);
 }
 
 
@@ -136,7 +145,39 @@ void Block::calculatePoints(int offset) {
     }
 }
 
-std::vector<float> Block::getAllVerticesV() {
+std::vector<float> Block::getAllVertices(int offset) {
+    std::vector<float> ret;
+    indices.clear();
+    int indCounter = offset;
+
+    //std::cout << "Pos x " << pos.x << std::endl;
+
+    for (auto & face : faces) {
+        int texCounter = 0;
+        for(auto & indice : face.indices){
+            ret.push_back(squareVertices.at(indice).x+pos.x);
+            ret.push_back(squareVertices.at(indice).y+pos.y);
+            ret.push_back(squareVertices.at(indice).z+pos.z);
+
+            ret.push_back(0.5f);
+            ret.push_back(0.5f);
+            ret.push_back(0.5f);
+
+
+            ret.push_back(face.texturePos[texCounter]);
+            ret.push_back(face.texturePos[texCounter+1]);
+            ret.push_back(face.textureId);
+
+            indices.push_back(indCounter);
+            indCounter++;
+
+            texCounter+=2;
+        }
+    }
+    return ret;
+}
+
+std::vector<float> Block::getAllVertexesV() {
     std::vector<float> ret;
     for (int j = 0; j < vertices.size(); ++j) {
         ret.push_back(vertices.at(j).x);
@@ -146,7 +187,7 @@ std::vector<float> Block::getAllVerticesV() {
     return ret;
 }
 
-std::vector<unsigned int> Block::getAllIndicesV() {
+std::vector<unsigned int> Block::getAllIndicesV(int offset) {
     return indices;
 }
 

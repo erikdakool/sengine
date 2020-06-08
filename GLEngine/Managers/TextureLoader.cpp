@@ -18,7 +18,7 @@ TextureLoader::~TextureLoader() {
 GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string& url){
     for (int i = 0; i < Textures.size(); ++i) {
         if(Textures.at(i).name == name){
-            return 0;
+            return Textures.at(i).TextureId;
         }
     }
 
@@ -53,12 +53,91 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     img.resize(dataSize);
     bmp.read(img.data(), img.size());
 
+    char* imageData = &img[0];
 
-    int tileX = 0;
-    int tileY = 0;
+    //for(int i = 0; i < tileSize; i += 3)
+    //{
+    //    // flip the order of every 3 bytes
+    //    unsigned char tmp = img[i];
+    //    img[i] = img[i+2];
+    //    img[i+2] = tmp;
+    //}
 
-    int tileW = 32;
-    int tileH = 32;
+    //for (int i = 0; i < width; ++i) {
+    //    for (int j = 0; j < height; ++j) {
+    //        std::cout << "Px: " << i << " " << j << std::endl;
+    //        std::cout << "R: " << int(img[3*(i*width+j)] & 0xff) << " G: " << int(img[3*(i*height+j)+1] & 0xff) << " B: " << int(img[3*(i*height+j)+2] & 0xff) << std::endl;
+    //    }
+    //}
+
+    // Create one OpenGL texture
+    GLuint textureID;
+    glGenTextures(1, &textureID);
+
+    // "Bind" the newly created texture : all future texture functions will modify this texture
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    //glBindTextureUnit(0,textureID);
+
+    // Give the image to OpenGL
+    //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, imageData);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+    // When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    // Generate mipmaps, by the way.
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    Texture texture(name,textureID);
+    Textures.push_back(texture);
+    return textureID;
+}
+
+GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string& url,const int tileX, int tileY, const int tileW, const int tileH,int unit){
+    for (int i = 0; i < Textures.size(); ++i) {
+        if(Textures.at(i).name == name){
+            return Textures.at(i).TextureId;
+        }
+    }
+
+    std::cout << "Reading image " << name << " at " << url << std::endl;
+    char imagepath[url.length()+1];
+    strncpy(imagepath,url.c_str(), sizeof(imagepath));
+
+
+    static constexpr size_t HEADER_SIZE = 54;
+
+    std::ifstream bmp(url, std::ios::binary);
+
+    std::array<char, HEADER_SIZE> header;
+    bmp.read(header.data(), header.size());
+
+    auto fileSize = *reinterpret_cast<uint32_t *>(&header[2]);
+    auto dataOffset = *reinterpret_cast<uint32_t *>(&header[10]);
+    auto width = *reinterpret_cast<uint32_t *>(&header[18]);
+    auto height = *reinterpret_cast<uint32_t *>(&header[22]);
+    auto depth = *reinterpret_cast<uint16_t *>(&header[28]);
+
+    std::cout << "fileSize: " << fileSize << std::endl;
+    std::cout << "dataOffset: " << dataOffset << std::endl;
+    std::cout << "width: " << width << std::endl;
+    std::cout << "height: " << height << std::endl;
+    std::cout << "depth: " << depth << "-bit" << std::endl;
+
+    std::vector<char> img(dataOffset - HEADER_SIZE);
+    bmp.read(img.data(), img.size());
+
+    auto dataSize = ((width * 3 + 3) & (~3)) * height;
+    img.resize(dataSize);
+    bmp.read(img.data(), img.size());
+
     int tileSize = tileW*tileH*3;
     unsigned char* tileData = new unsigned char [tileSize];
 
@@ -93,24 +172,18 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     glGenTextures(1, &textureID);
 
     // "Bind" the newly created texture : all future texture functions will modify this texture
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glBindTextureUnit(0,textureID);
 
-    // Give the image to OpenGL
-    //glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-    glTextureStorage2D(textureID, 1, GL_RGBA8, tileW, tileH);
-
+    glActiveTexture(GL_TEXTURE0+unit);
+    glBindTexture(GL_TEXTURE_2D,textureID);
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, tileW, tileH, 0, GL_BGR, GL_UNSIGNED_BYTE, tileData);
     delete [] tileData;
 
-    glTextureParameteri(textureID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-//
+
     //// When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     //// When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too

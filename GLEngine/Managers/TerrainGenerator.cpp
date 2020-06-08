@@ -65,37 +65,38 @@ void TerrainGenerator::generateChunk(int xLoc, int zLoc) {
             if(y < 35){
                 y = 35;
             }
+            y =45;
             //Grass
             if(y>55 + 20){
                 blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Snow);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
             }
             else if(y> 53+ 16){
                 blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-6)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-6)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
             }
             else if(y>37){
                 blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Grass);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
             }else if(y>=36){
                 blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
-                blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-2)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-3)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-4)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
+                //blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-5)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);
             }
             else{
                 blockManager.AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Dirt);

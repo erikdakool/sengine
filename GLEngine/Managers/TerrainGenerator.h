@@ -20,8 +20,8 @@ private:
     GameDataRef data;
     BlockManager& blockManager;
     float heightMulti = 64;
-    int chunkWidth = 256;
-    int chunkLength = 256;
+    int chunkWidth = 16;
+    int chunkLength = 16;
     float hardness = 0.1;
     uint64_t chunkCounter = 0;
     std::map<std::tuple<int,int>, uint64_t> chunkMap;
