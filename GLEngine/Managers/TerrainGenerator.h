@@ -11,21 +11,23 @@
 
 class TerrainGenerator {
 public:
-    TerrainGenerator(BlockManager& blockManager, GameDataRef data);
+    TerrainGenerator(GameDataRef data);
     ~TerrainGenerator();
 
     void Update();
 
 private:
     GameDataRef data;
-    BlockManager& blockManager;
-    float heightMulti = 64;
-    int chunkWidth = 16;
-    int chunkLength = 16;
-    float hardness = 0.1;
+
+    std::vector<std::shared_ptr<BlockManager>> blockManagers;
+
+    float heightMulti = 32;
+    int chunkWidth = 32;
+    int chunkLength = 32;
+    float hardness = 0.8;
     uint64_t chunkCounter = 0;
     std::map<std::tuple<int,int>, uint64_t> chunkMap;
-    void generateChunk(int xLoc, int zLoc);
+    void generateChunk(int xLoc, int zLoc, int man);
 };
 
 #endif //GLENGINE_TERRAINGENERATOR_H

@@ -135,8 +135,8 @@ int main( void )
     brick.get()->transform().move(glm::vec3(0,3,-2));
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
-    BlockManager blockManager(data);
-    TerrainGenerator terrainGenerator(blockManager,data);
+    //BlockManager blockManager(data);
+    TerrainGenerator terrainGenerator(data);
 
     //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
     //blockManager.AddBlock(glm::vec3(3,0,0),"cobble",1,Grass);
@@ -177,8 +177,8 @@ int main( void )
         }
 
         //data.get()->objectManager.UpdateAll(1.f);
-        //terrainGenerator.Update();
-        blockManager.Draw();
+        terrainGenerator.Update();
+        //blockManager.Draw();
 
         // Swap buffers
         glfwSwapBuffers(window);

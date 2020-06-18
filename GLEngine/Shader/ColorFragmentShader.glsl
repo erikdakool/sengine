@@ -13,4 +13,5 @@ void main()
     int index = int(v_TexIndex);
     color = texture(u_Textures[index],v_TexCoord).rgb;
     //color = vec3(v_TexIndex,v_TexIndex,v_TexIndex);
+    //color = vec3(index,index,index);
 }

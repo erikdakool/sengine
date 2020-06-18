@@ -47,8 +47,8 @@ void BlockManager::Draw() {
     glUniform1i(sampler,2);
 
     glBindVertexArray(vertexArrayID);
-    //glDrawElements(GL_TRIANGLES, indiceCounter,GL_UNSIGNED_INT, (void*)0);
-    glDrawRangeElements(GL_TRIANGLES,0,indiceCounter,indiceCounter,GL_UNSIGNED_INT,(void*)0);
+    glDrawElements(GL_TRIANGLES, indiceCounter,GL_UNSIGNED_INT, (void*)0);
+    //glDrawRangeElements(GL_TRIANGLES,0,indiceCounter,indiceCounter,GL_UNSIGNED_INT,(void*)0);
 }
 
 uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk,BlockType type) {
@@ -95,11 +95,11 @@ void BlockManager::updateBuffer() {
     ///OpenGL buffer inserts
     glUseProgram(_data->camera.programID);
 
-    auto loc = glGetUniformLocation(_data->camera.programID,"u_Textures");
-    int samplers[3] = {0,1,2};
-    glUniform1iv(loc,3,samplers);
-
-    glClearColor(0.1,0.1,0.1,1);
+    //auto loc = glGetUniformLocation(_data->camera.programID,"u_Textures");
+    //int samplers[3] = {0,1,2};
+    ////glUniform1iv(loc,3,samplers);
+    //glUniform1i(loc,01);
+    //glClearColor(0.1,0.1,0.1,1);
 
     //float vert[] = {
     //        -1,-1,0,1,1,1,0,0,0.f,
@@ -129,12 +129,12 @@ void BlockManager::updateBuffer() {
 
     //Data buffer binding
     glGenBuffers(1,&vertexBufferID);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);
+    glBindBuffer(GL_ARRAY_BUFFER,vertexBufferID);
     glBufferData(GL_ARRAY_BUFFER,vertices.size()*sizeof(vertices[0]),&vertices[0],GL_STATIC_DRAW);
 
     //Indice binding
     glGenBuffers(1,&indiceBufferID);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBufferID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,indiceBufferID);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,indices.size()*sizeof(indices[0]),&indices[0],GL_STATIC_DRAW);
 
     //Vertex attribute binding
@@ -143,7 +143,7 @@ void BlockManager::updateBuffer() {
 
     //Color attribute binding
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(const  void*)12);
+    glVertexAttribPointer(1,3,GL_FLOAT,GL_FALSE,9*sizeof(float),(const void*)12);
 
     //TexturePos attribute binding
     glEnableVertexAttribArray(2);
