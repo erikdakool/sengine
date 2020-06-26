@@ -3,6 +3,12 @@
 //
 
 #include "ModelLoader.h"
+#include <string>
+#include <vector>
+#include <glm/glm.hpp>
+#include <map>
+#include <memory>
+#include <cstring>
 
 ModelLoader::ModelLoader() {
 

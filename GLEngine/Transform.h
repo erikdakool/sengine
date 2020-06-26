@@ -9,7 +9,6 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/transform.hpp>
-#include <reactphysics3d/reactphysics3d.h>
 
 class Gameobject;
 class Transform {
@@ -22,8 +21,7 @@ public:
     glm::mat4 getScaleMatrix();
     glm::mat4 getTransformMatrix();
 
-    rp3d::Vector3 getRPVPosition();
-    rp3d::Vector3 getRPVRotation();
+
 
     void RotateX(float r);
     void RotateY(float r);
