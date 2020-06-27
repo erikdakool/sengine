@@ -6,11 +6,46 @@
 
 #include "shader.hpp"
 #include <glm/glm.hpp>
+#include <fstream>
+#include <json/json.h>
+
+
 #define GLM_ENABLE_EXPERIMENTAL
 
 BlockManager::BlockManager(GameDataRef data) {
     _data = data;
 
+    std::ifstream block_File("Data/Json/block.json");
+    std::ifstream textures_File("Data/Json/textures.json");
+
+    Json::Value textureInfo;
+    textures_File >> textureInfo;
+
+    for(Json::Value::ArrayIndex i = 0; i != textureInfo.size(); i++) {
+        TextureInfo tex;
+        tex.x = textureInfo[i]["x"].asInt();
+        tex.y = textureInfo[i]["y"].asInt();
+        tex.id = textureInfo[i]["id"].asInt();
+        tex.name = textureInfo[i]["name"].asString();
+        this->textureInfo.push_back(tex);
+    }
+
+
+    Json::Value blockInfo;
+    block_File >> blockInfo;
+
+    for(Json::Value::ArrayIndex i = 0; i != blockInfo.size(); i++){
+        BlockInfo block;
+        block.id = blockInfo[i]["id"].asInt();
+        block.name = blockInfo[i]["name"].asString();
+        block.left = blockInfo[i]["left"].asInt();
+        block.right = blockInfo[i]["right"].asInt();
+        block.front = blockInfo[i]["front"].asInt();
+        block.back = blockInfo[i]["back"].asInt();
+        block.top = blockInfo[i]["top"].asInt();
+        block.bottom = blockInfo[i]["bottom"].asInt();
+        this->blockInfo.push_back(block);
+    }
 }
 
 BlockManager::~BlockManager() {
@@ -31,28 +66,31 @@ void BlockManager::Draw() {
 
     glUseProgram(_data->camera.programID);
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,grassId);
-    GLint sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[0]");
-    glUniform1i(sampler,0);
+    auto sampler = glGetUniformLocation(_data->camera.programID,"u_Textures");
+    //glUniform1i(sampler,0);
+    //sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[1]");
+    //glUniform1i(sampler,1);
 
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D,dirtId);
-    sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[1]");
-    glUniform1i(sampler,1);
+    int samplers[texturesCount];
+    for (int j = 0; j < texturesCount; ++j) {
+        samplers[j] = j;
+    }
+    glUniform1iv(sampler, texturesCount, samplers);
 
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D,stoneId);
-    sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[2]");
-    glUniform1i(sampler,2);
+    for (int i = 0; i < texturesCount; ++i) {
+        glActiveTexture(GL_TEXTURE0+i);
+        glBindTexture(GL_TEXTURE_2D,this->textures[i]);
+    }
+
+    auto units = GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS;
 
     glBindVertexArray(vertexArrayID);
-    glDrawElements(GL_TRIANGLES, indiceCounter,GL_UNSIGNED_INT, (void*)0);
-    //glDrawRangeElements(GL_TRIANGLES,0,indiceCounter,indiceCounter,GL_UNSIGNED_INT,(void*)0);
+    //glDrawElements(GL_TRIANGLES, indiceCounter,GL_UNSIGNED_INT, (void*)0);
+    glDrawRangeElements(GL_TRIANGLES,0,indiceCounter,indiceCounter,GL_UNSIGNED_INT,(void*)0);
 }
 
-uint64_t BlockManager::AddBlock(glm::vec3 position, std::string textureId, uint64_t chunk,BlockType type) {
-    Block block(position,indiceCounter);
+uint64_t BlockManager::AddBlock(glm::vec3 location, std::string textureId, uint64_t chunk, int type) {
+    Block block(blockInfo.at(type),location, indiceCounter);
     auto v = block.getAllVertexesV();
     auto c = block.getAllColorsV();
     auto p = block.getAllTexturePosV();
@@ -153,16 +191,10 @@ void BlockManager::updateBuffer() {
     glEnableVertexAttribArray(3);
     glVertexAttribPointer(3,1,GL_FLOAT,GL_FALSE,9*sizeof(float),(const void*)32);
 
-    grassId = _data->textureLoader.loadBMPTexture("grass2","Data/Textures/textureMap.bmp",0,0,32,32,0);
-    //GLint sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[0]");
-    //glUniform1i(sampler,0);
-
-    dirtId = _data->textureLoader.loadBMPTexture("dirt1","Data/Textures/textureMap.bmp",1,0,32,32,1);
-    //sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[1]");
-    //glUniform1i(sampler,1);
-    stoneId = _data->textureLoader.loadBMPTexture("dirt2","Data/Textures/textureMap.bmp",2,0,32,32,2);
-    //sampler = glGetUniformLocation(_data->camera.programID,"u_Textures[2]");
-    //glUniform1i(sampler,2);
+    textures.reserve(textureInfo.size());
+    for(auto tex : textureInfo){
+        textures[tex.id] = _data->textureLoader.loadBMPTexture(tex.name,"Data/Textures/textureMap2.bmp",tex.x,tex.y,128,128,tex.id);
+    }
 }
 
 void BlockManager::RemoveBlock(uint64_t id) {

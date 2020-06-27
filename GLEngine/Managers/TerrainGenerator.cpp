@@ -44,8 +44,9 @@ void TerrainGenerator::generateChunk(int xLoc, int zLoc, int man) {
             double height = perlinNoise.noise(x+xLoc,z+zLoc,hardness);
 
             int y = (int)(height*heightMulti);
-
-            blockManagers[man]->AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Snow);
+            y = 0;
+            blockManagers[man]->AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,1);
+            blockManagers[man]->AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,y*2-2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,2);
             //blockManagers[man]->AddBlock(glm::vec3(xLoc*chunkWidth*2+i*2,(y-1)*2,zLoc*chunkLength*2+j*2),"cobble",chunkCounter,Stone);
         }
     }

@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Block.h"
 
-Block::Block() {
+Block::Block(BlockInfo blockInfo) {
     squareVertices.push_back(glm::vec3(-1.0, -1.0,  1.0));
     squareVertices.push_back(glm::vec3(1.0, -1.0,  1.0));
     squareVertices.push_back(glm::vec3(1.0, 1.0,  1.0));
@@ -16,12 +16,12 @@ Block::Block() {
     squareVertices.push_back(glm::vec3(1.0, 1.0,  -1.0));
     squareVertices.push_back(glm::vec3(-1.0, 1.0,  -1.0));
 
-    faces.push_back(Face(FRONT));
-    faces.push_back(Face(BACK));
-    faces.push_back(Face(UP));
-    faces.push_back(Face(DOWN));
-    faces.push_back(Face(LEFT));
-    faces.push_back(Face(RIGHT));
+   faces.push_back(Face(FRONT,blockInfo.front));
+   faces.push_back(Face(BACK,blockInfo.back));
+   faces.push_back(Face(TOP, blockInfo.top));
+   faces.push_back(Face(BOTTOM, blockInfo.bottom));
+   faces.push_back(Face(LEFT,blockInfo.left));
+   faces.push_back(Face(RIGHT,blockInfo.right));
 
 
     squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
@@ -44,75 +44,14 @@ Block::Block() {
    // calculatePoints();
 }
 
-Block::Block(glm::vec3 pos,int offset)
-:Block()
+Block::Block(BlockInfo blockInfo,glm::vec3 pos,int offset)
+:Block(blockInfo)
 {
     this->pos =pos;
     calculatePoints(offset);
 }
 
-Block::Block(glm::vec3 pos,int offset, BlockType type)
-:Block()
-{
-    this->pos =pos;
 
-    squareColors.clear();
-    switch (type) {
-        case Grass:
-
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
-            squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
-            squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
-            break;
-        case Stone:
-            squareColors.push_back(glm::vec4(.128, .128, 0.128,1.0));
-            squareColors.push_back(glm::vec4(.128, .128, 0.128,1.0));
-            squareColors.push_back(glm::vec4(.160, .160, 0.160,1.0));
-            squareColors.push_back(glm::vec4(.128, .128, 0.128,1.0));
-            squareColors.push_back(glm::vec4(.32, .32, 0.32,1.0));
-            squareColors.push_back(glm::vec4(.32, .32, 0.32,1.0));
-            squareColors.push_back(glm::vec4(.160, .160, 0.160,1.0));
-            squareColors.push_back(glm::vec4(.32, .32, 0.32,1.0));
-            break;
-        case Dirt:
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(1., .8, 0.5,1.0));
-            squareColors.push_back(glm::vec4(.8,.4,.0,1.0));
-            squareColors.push_back(glm::vec4(1., .5, 0.,1.0));
-            squareColors.push_back(glm::vec4(1., .5, 0.,1.0));
-            squareColors.push_back(glm::vec4(1., .8, 0.5,1.0));
-            squareColors.push_back(glm::vec4(1., .5, 0.,1.0));
-            break;
-        case Water:
-            squareColors.push_back(glm::vec4(.3,1,1,1.0));
-            squareColors.push_back(glm::vec4(.3,1,1,1.0));
-            squareColors.push_back(glm::vec4(.2,.7,1,1.0));
-            squareColors.push_back(glm::vec4(.3,1,1,1.0));
-            squareColors.push_back(glm::vec4(.3,.55,1,1.0));
-            squareColors.push_back(glm::vec4(.3,.55,1,1.0));
-            squareColors.push_back(glm::vec4(.2,.7,1,1.0));
-            squareColors.push_back(glm::vec4(.3,.55,1,1.0));
-            break;
-        case Snow:
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            squareColors.push_back(glm::vec4(1,1,1,1.0));
-            break;
-    }
-
-    //calculatePoints(offset);
-}
 
 
 

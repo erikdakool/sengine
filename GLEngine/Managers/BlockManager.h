@@ -7,6 +7,8 @@
 
 #include "../Object/Block.h"
 #include "../Managers.h"
+#include "../Structs/BlockInfo.h"
+#include "../Structs/TextureInfo.h"
 
 class BlockManager {
 public:
@@ -15,7 +17,7 @@ public:
 
     void Update();
     void Draw();
-    uint64_t AddBlock(glm::vec3 locaiton, std::string textureId, uint64_t chunk,BlockType type);
+    uint64_t AddBlock(glm::vec3 location, std::string textureId, uint64_t chunk, int type);
     void RemoveBlock(uint64_t id);
     void ClearBlocks();
 private:
@@ -23,19 +25,13 @@ private:
 
     void updateBuffer();
 
-    std::map<GLuint,std::string> texturesLoaded;
+    std::vector<BlockInfo> blockInfo;
+    std::vector<TextureInfo> textureInfo;
+
     std::vector<Block> blocks;
 
     std::vector<float> vertices;
-    std::vector<float> vertexes;
     std::vector<unsigned int> indices;
-    std::vector<float> colors;
-    std::vector<float> texturePos;
-
-    uint32_t* indicesArr;
-
-    glm::vec3 points[36];
-    glm::vec2 uvs[36];
 
     uint64_t idCounter = 0;
 
@@ -45,9 +41,8 @@ private:
 
     GLuint indiceCounter = 0;
 
-    GLuint grassId;
-    GLuint dirtId;
-    GLuint stoneId;
+    int texturesCount = 4;
+    std::vector<GLuint> textures;
 };
 
 #endif //GLENGINE_BLOCKMANAGER_H

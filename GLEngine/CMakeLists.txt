@@ -7,7 +7,7 @@ find_package(GLEW CONFIG REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(Bullet CONFIG REQUIRED)
-
+find_package(jsoncpp CONFIG REQUIRED)
 add_executable(GLEngine
         main.cpp
         Camera.cpp
@@ -46,7 +46,7 @@ add_executable(GLEngine
         Managers/InputManager.cpp
         Managers/InputManager.h
         Gameobject/Excavator.cpp
-        Gameobject/Excavator.h Components/NoclipController.cpp Components/NoclipController.h Object/Block.h Managers/BlockManager.cpp Managers/BlockManager.h Managers/TerrainGenerator.cpp Managers/TerrainGenerator.h Structs/Face.h Object/Block.cpp Managers/PerlinNoise.cpp Managers/PerlinNoise.h)
+        Gameobject/Excavator.h Components/NoclipController.cpp Components/NoclipController.h Object/Block.h Managers/BlockManager.cpp Managers/BlockManager.h Managers/TerrainGenerator.cpp Managers/TerrainGenerator.h Structs/Face.h Object/Block.cpp Managers/PerlinNoise.cpp Managers/PerlinNoise.h Structs/BlockInfo.h Structs/TextureInfo.h)
 
 
-target_link_libraries(GLEngine PRIVATE GL GLEW glfw glm LinearMath Bullet3Common BulletDynamics BulletSoftBody)
+target_link_libraries(GLEngine PRIVATE GL GLEW glfw glm LinearMath Bullet3Common BulletDynamics BulletSoftBody jsoncpp_lib)

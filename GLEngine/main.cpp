@@ -37,8 +37,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 GameDataRef data;
 
 float fov = 60;
-float width = 1600.0f;
-float height = 1200.0f;
+float width = 1200.0f;
+float height = 800.0f;
 float near = 0.1f;
 float far = 1000.0f;
 double previousTime = glfwGetTime();
@@ -98,9 +98,9 @@ int main( void )
     glEnable(GL_DEPTH_TEST);
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
-
     glEnable(GL_CULL_FACE);
 
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // Create and compile our GLSL program from the shaders
     GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
     //GLuint programID = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
@@ -136,11 +136,12 @@ int main( void )
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
     //BlockManager blockManager(data);
+
     TerrainGenerator terrainGenerator(data);
 
-    //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
-    //blockManager.AddBlock(glm::vec3(3,0,0),"cobble",1,Grass);
-    //blockManager.AddBlock(glm::vec3(6,0,0),"cobble",1,Dirt);
+   //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
+   //blockManager.AddBlock(glm::vec3(3,0,0),"cobble",1,Grass);
+   //blockManager.AddBlock(glm::vec3(6,0,0),"cobble",1,Dirt);
 
     do{
         double currentTime = glfwGetTime();
@@ -152,9 +153,10 @@ int main( void )
         }
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearDepth(GL_DEPTH_BUFFER);
         // Use our shader
         glUseProgram(programID);
-
+        glClearColor(1,0,1, 1);
         //glBindTextureUnit(2,textureId);
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
@@ -178,7 +180,7 @@ int main( void )
 
         //data.get()->objectManager.UpdateAll(1.f);
         terrainGenerator.Update();
-        //blockManager.Draw();
+      //  blockManager.Draw();
 
         // Swap buffers
         glfwSwapBuffers(window);

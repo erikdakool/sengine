@@ -10,21 +10,14 @@
 
 #include <glm/glm.hpp>
 
+#include "../Structs/BlockInfo.h"
 #include "../Structs/Face.h"
-
-enum BlockType{
-    Grass,
-    Stone,
-    Dirt,
-    Water,
-    Snow
-};
 
 class Block{
 public:
-    Block();
-    Block(glm::vec3 pos,int offset);
-    Block(glm::vec3 pos,int offset,BlockType type);
+    Block(BlockInfo blockInfo);
+    Block(BlockInfo blockInfo, glm::vec3 pos,int offset,int type);
+    Block(BlockInfo blockInfo, glm::vec3 pos,int offset);
     ~Block();
 
     std::vector<float> getAllVertices(int offset);

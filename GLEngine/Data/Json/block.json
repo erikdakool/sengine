@@ -1,0 +1,32 @@
+[
+  {
+    "id":0,
+    "name":"grey",
+    "left":0,
+    "right":0,
+    "bottom":0,
+    "top":0,
+    "front":0,
+    "back":0
+  },
+  {
+    "id":1,
+    "name":"grass",
+    "left":3,
+    "right":3,
+    "bottom":2,
+    "top":1,
+    "front":3,
+    "back":3
+  },
+  {
+    "id":1,
+    "name":"dirt",
+    "left":2,
+    "right":2,
+    "bottom":2,
+    "top":2,
+    "front":2,
+    "back":2
+  }
+]

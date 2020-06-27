@@ -8,8 +8,8 @@
 #include <glm/glm.hpp>
 
 enum DIR{
-    UP,
-    DOWN,
+    TOP,
+    BOTTOM,
     LEFT,
     RIGHT,
     BACK,
@@ -17,7 +17,7 @@ enum DIR{
 };
 
 struct Face{
-    Face(DIR dir){
+    Face(DIR dir, int textureId){
         switch (dir) {
             case FRONT:
                 indices = {0,1,2,2,3,0};
@@ -35,24 +35,23 @@ struct Face{
                 indices = {1,5,6,6,2,1};
                 texturePos={0,0,1,0,1,1,1,1,0,1,0,0};
                 break;
-            case UP:
+            case TOP:
                 indices = {3,2,6,6,7,3};
                 texturePos={0,0,1,0,1,1,1,1,0,1,0,0};
-                textureId = 0.0;
                 break;
-            case DOWN:
+            case BOTTOM:
                 indices ={1,0,4,4,5,1};
                 texturePos={0,0,1,0,1,1,1,1,0,1,0,0};
-                textureId=1;
                 break;
             default:
                 break;
         }
+        this->textureId = textureId;
     };
 
     std::vector<unsigned int> indices;
     std::vector<float> texturePos;
-    float textureId = 2.0f;
+    float textureId;
 };
 
 #endif //GLENGINE_FACE_H
