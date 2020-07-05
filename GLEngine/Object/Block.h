@@ -15,8 +15,7 @@
 
 class Block{
 public:
-    Block(BlockInfo blockInfo);
-    Block(BlockInfo blockInfo, glm::vec3 pos,int offset,int type);
+    explicit Block(BlockInfo blockInfo);
     Block(BlockInfo blockInfo, glm::vec3 pos,int offset);
     ~Block();
 
@@ -25,8 +24,10 @@ public:
     std::vector<float> getAllColorsV();
     std::vector<unsigned int> getAllIndicesV(int offset);
     std::vector<float> getAllTexturePosV();
-private:
+
+    void addFace(DIR face);
     void calculatePoints(int offset);
+private:
     std::vector<Face> faces;
 
     std::vector<glm::vec3> squareVertices;
@@ -38,6 +39,8 @@ private:
     std::vector<glm::vec4> colors;
     std::vector<float> textureId;
     std::vector<float> verticesV;
+
+    BlockInfo blockInfo;
 
     glm::vec3 pos = glm::vec3(0,0,0);
 };

@@ -10,11 +10,12 @@
 #include <glm/gtx/transform.hpp>
 #include <GL/glew.h>
 
+#define FOV 90
+
 class Camera {
 public:
     Camera();
     ~Camera();
-
 
 public:
     const glm::mat4 &getViewMatrix();
@@ -33,7 +34,18 @@ public:
     void moveUp(float r);
     void move(glm::vec3 v);
     void rotate(glm::vec3 v);
-    GLuint programID;
+
+    GLuint getModelProgramId() const;
+    void setModelProgramId(GLuint modelProgramId);
+    GLuint getBlockProgramId() const;
+    void setBlockProgramId(GLuint blockProgramId);
+    GLuint getBlockMatrixId() const;
+    void setBlockMatrixId(GLuint blockMatrixId);
+    const glm::vec3 &getPos() const;
+    void setPos(const glm::vec3 &pos);
+    const glm::vec3 &getRotation() const;
+    void setRotation(const glm::vec3 &rotation);
+
 private:
     glm::vec3 rotation;
     glm::vec3 pos;
@@ -41,10 +53,13 @@ private:
     glm::vec3 upVector;
     glm::mat4 viewMatrix;
     glm::mat4 perspectiveMatrix;
-    GLuint  MatrixId;
+    GLuint  ModelMatrixId;
+    GLuint BlockMatrixId;
     bool updateView = false;
     float xrot = 0;
 
+    GLuint modelProgramID;
+    GLuint blockProgramID;
 };
 
 #endif //GLENGINE_CAMERA_H

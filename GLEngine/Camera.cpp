@@ -8,7 +8,7 @@
 Camera::Camera() {
     rotation = glm::vec3(0,-90,0);
     //pos = glm::vec3(400,400,600);
-    pos=glm::vec3(0,0,0);
+    pos=glm::vec3(-1,0,-1);
     center = glm::vec3(0,0,-1);
     upVector = glm::vec3(0,1,0);
     viewMatrix = glm::lookAt(
@@ -45,11 +45,11 @@ void Camera::setPerspectiveMatrix(const glm::mat4 &perspectiveMatrix) {
 }
 
 GLuint Camera::getMatrixId() const {
-    return MatrixId;
+    return ModelMatrixId;
 }
 
 void Camera::setMatrixId(GLuint matrixId) {
-    MatrixId = matrixId;
+    ModelMatrixId = matrixId;
 }
 
 void Camera::move(glm::vec3 v) {
@@ -82,6 +82,15 @@ void Camera::rotate(glm::vec3 v) {
     if(rotation.x < -89.0f){
         rotation.x = -89.0f;
     }
+    if(rotation.x > 360){
+        rotation.x -=360;
+    }
+    if(rotation.y > 360){
+        rotation.y -=360;
+    }
+    if(rotation.z > 360){
+        rotation.z -=360;
+    }
 
     glm::vec3 direction;
     direction.x = cos(glm::radians(rotation.x)) * cos(glm::radians(rotation.y));
@@ -91,4 +100,44 @@ void Camera::rotate(glm::vec3 v) {
     updateView = true;
     //std::cout << "Rotation: " << rotation.x << " " << rotation.y << " " << rotation.z << std::endl;
     //std::cout << "Position: " << pos.x << " " << pos.y << " " << pos.z << std::endl;
+}
+
+GLuint Camera::getModelProgramId() const {
+    return modelProgramID;
+}
+
+void Camera::setModelProgramId(GLuint modelProgramId) {
+    modelProgramID = modelProgramId;
+}
+
+GLuint Camera::getBlockProgramId() const {
+    return blockProgramID;
+}
+
+void Camera::setBlockProgramId(GLuint blockProgramId) {
+    blockProgramID = blockProgramId;
+}
+
+GLuint Camera::getBlockMatrixId() const {
+    return BlockMatrixId;
+}
+
+void Camera::setBlockMatrixId(GLuint blockMatrixId) {
+    BlockMatrixId = blockMatrixId;
+}
+
+const glm::vec3 &Camera::getPos() const {
+    return pos;
+}
+
+void Camera::setPos(const glm::vec3 &pos) {
+    Camera::pos = pos;
+}
+
+const glm::vec3 &Camera::getRotation() const {
+    return rotation;
+}
+
+void Camera::setRotation(const glm::vec3 &rotation) {
+    Camera::rotation = rotation;
 }

@@ -325,7 +325,7 @@ void Cube::Draw(Camera &camera) {
 
 
 
-    GLuint TextureID  = glGetUniformLocation(camera.programID, "myTextureSampler");
+    GLuint TextureID  = glGetUniformLocation(camera.getModelProgramId(), "myTextureSampler");
     GLuint Texture = _data->textureLoader.getTextureID("toe");
 
     // Bind our texture in Texture Unit 0

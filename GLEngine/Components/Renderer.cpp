@@ -75,7 +75,7 @@ void Renderer::draw() {
 
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
-    GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
+    GLuint TextureID  = glGetUniformLocation(_data->camera.getModelProgramId(), "myTextureSampler");
     GLuint Texture = _data->textureLoader.getTextureID("toe");
 
     // Bind our texture in Texture Unit 0
@@ -119,6 +119,8 @@ void Renderer::draw() {
 }
 
 void Renderer::drawIndexed() {
+    glUseProgram(_data->camera.getModelProgramId());
+
     glm::mat4 Projection = _data->camera.getPerspectiveMatrix();
     glm::mat4 View       = _data->camera.getViewMatrix();
     glm::mat4 Model      =  gameobject.transform().getTransformMatrix();
@@ -146,7 +148,7 @@ void Renderer::drawIndexed() {
 
     glUniformMatrix4fv(_data->camera.getMatrixId(),1,GL_FALSE, &mvp[0][0]);
 
-    GLuint TextureID  = glGetUniformLocation(_data->camera.programID, "myTextureSampler");
+    GLuint TextureID  = glGetUniformLocation(_data->camera.getModelProgramId(), "myTextureSampler");
     GLuint Texture = _data->textureLoader.getTextureID(this->tname);
 
     // Bind our texture in Texture Unit 0

@@ -5,9 +5,8 @@
 #ifndef GLENGINE_TERRAINGENERATOR_H
 #define GLENGINE_TERRAINGENERATOR_H
 
-#include "BlockManager.h"
+#include "ChunkManager.h"
 #include "../Managers.h"
-
 
 class TerrainGenerator {
 public:
@@ -15,19 +14,19 @@ public:
     ~TerrainGenerator();
 
     void Update();
+    std::shared_ptr<ChunkManager> GetChunk(int x, int y , int z);
 
 private:
     GameDataRef data;
 
-    std::vector<std::shared_ptr<BlockManager>> blockManagers;
-
-    float heightMulti = 32;
-    int chunkWidth = 32;
-    int chunkLength = 32;
+    float heightMulti = 16;
+    int chunkWidth = CHUNKSIZE;
+    int chunkLength = CHUNKSIZE;
     float hardness = 0.8;
-    uint64_t chunkCounter = 0;
-    std::map<std::tuple<int,int>, uint64_t> chunkMap;
-    void generateChunk(int xLoc, int zLoc, int man);
+    void generateChunk(int xLoc, int zLoc, std::shared_ptr<ChunkManager> manager);
+
+    std::map<std::tuple<int,int,int>,std::shared_ptr<ChunkManager>> ChunkMap;
+    void insertChunkManager(std::shared_ptr<ChunkManager> man, int x, int y, int z);
 };
 
 #endif //GLENGINE_TERRAINGENERATOR_H

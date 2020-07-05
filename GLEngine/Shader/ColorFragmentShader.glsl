@@ -6,7 +6,7 @@ in vec3 fragmentColor;
 in vec2 v_TexCoord;
 in float v_TexIndex;
 
-uniform sampler2D u_Textures[4];
+uniform sampler2D u_Textures[5];
 
 void main()
 {
@@ -24,6 +24,10 @@ void main()
         break;
         case 3:
         color = texture(u_Textures[3],v_TexCoord).rgb;
+        break;
+        case 4:
+        color = texture(u_Textures[4],v_TexCoord).rgb;
+        break;
     }
 
     //color = texture(u_Textures[index],v_TexCoord).rgb;

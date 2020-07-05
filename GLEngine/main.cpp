@@ -13,6 +13,10 @@
 
 // Include GLM
 #include <glm/glm.hpp>
+#include <thread>
+#include <zconf.h>
+
+
 using namespace glm;
 
 #include "Managers/shader.hpp"
@@ -25,9 +29,9 @@ using namespace glm;
 #include "Components/Collider.h"
 #include "Gameobject/Excavator.h"
 #include "Components/NoclipController.h"
-#include "Managers/BlockManager.h"
+#include "Managers/ChunkManager.h"
 #include "Managers/TerrainGenerator.h"
-
+#include "Shader/ShaderGenerator.cpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
 GLFWwindow* window;
@@ -36,9 +40,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 GameDataRef data;
 
-float fov = 60;
-float width = 1200.0f;
-float height = 800.0f;
+float fov = FOV;
+float width = 2400.0f;
+float height = 1600.0f;
 float near = 0.1f;
 float far = 1000.0f;
 double previousTime = glfwGetTime();
@@ -89,6 +93,7 @@ int main( void )
 
     // Dark blue background
     //glClearColor(1,0,1, 1);
+    glClearColor(0.1,0.1,0.1,1);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -102,9 +107,9 @@ int main( void )
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // Create and compile our GLSL program from the shaders
-    GLuint programID = LoadShaders( "Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
-    //GLuint programID = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
-    glUseProgram(programID);
+    GLuint modelProgramId = LoadShaders("Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
+    //GLuint modelProgramId = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
+    glUseProgram(modelProgramId);
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
@@ -114,9 +119,10 @@ int main( void )
     data->objectManager = ObjectManager();
     data->inputManager = InputManager(window);
 
-    data->camera.programID = programID;
+    data->camera.setModelProgramId(modelProgramId);
+
     data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
-    data->camera.setMatrixId(glGetUniformLocation(programID,"MVP"));
+    data->camera.setMatrixId(glGetUniformLocation(modelProgramId, "MVP"));
 
     TextureLoader textureLoader = TextureLoader();
 
@@ -135,13 +141,16 @@ int main( void )
     brick.get()->transform().move(glm::vec3(0,3,-2));
     brick.get()->transform().Scale(glm::vec3(1,1,1));
 
-    //BlockManager blockManager(data);
+    //ChunkManager blockManager(data);
 
     TerrainGenerator terrainGenerator(data);
 
    //blockManager.AddBlock(glm::vec3(0,0,0),"cobble",1,Stone);
    //blockManager.AddBlock(glm::vec3(3,0,0),"cobble",1,Grass);
    //blockManager.AddBlock(glm::vec3(6,0,0),"cobble",1,Dirt);
+
+    //Vsync on/off
+    glfwSwapInterval(1);
 
     do{
         double currentTime = glfwGetTime();
@@ -151,12 +160,13 @@ int main( void )
             frameCount = 0;
             previousTime = currentTime;
         }
+
         // Clear the screen
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearDepth(GL_DEPTH_BUFFER);
         // Use our shader
-        glUseProgram(programID);
-        glClearColor(1,0,1, 1);
+        glUseProgram(modelProgramId);
+        //glClearColor(1,0,1, 1);
         //glBindTextureUnit(2,textureId);
 
         if(glfwGetKey(window,GLFW_KEY_Q) == GLFW_PRESS) {
@@ -185,6 +195,8 @@ int main( void )
         // Swap buffers
         glfwSwapBuffers(window);
         glfwPollEvents();
+        //usleep(100*1000);
+
     } // Check if the ESC key was pressed or the window was closed
     while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
            glfwWindowShouldClose(window) == 0 );
@@ -192,11 +204,9 @@ int main( void )
 
     // Cleanup VBO
     glDeleteVertexArrays(1, &VertexArrayID);
-    glDeleteProgram(programID);
-
+    glDeleteProgram(modelProgramId);
     // Close OpenGL window and terminate GLFW
     glfwTerminate();
-
     return 0;
 }
 

@@ -5,7 +5,9 @@
 #include <iostream>
 #include "Block.h"
 
-Block::Block(BlockInfo blockInfo) {
+Block::Block(BlockInfo blockInfo):
+blockInfo(blockInfo)
+{
     squareVertices.push_back(glm::vec3(-1.0, -1.0,  1.0));
     squareVertices.push_back(glm::vec3(1.0, -1.0,  1.0));
     squareVertices.push_back(glm::vec3(1.0, 1.0,  1.0));
@@ -16,12 +18,12 @@ Block::Block(BlockInfo blockInfo) {
     squareVertices.push_back(glm::vec3(1.0, 1.0,  -1.0));
     squareVertices.push_back(glm::vec3(-1.0, 1.0,  -1.0));
 
-   faces.push_back(Face(FRONT,blockInfo.front));
-   faces.push_back(Face(BACK,blockInfo.back));
-   faces.push_back(Face(TOP, blockInfo.top));
-   faces.push_back(Face(BOTTOM, blockInfo.bottom));
-   faces.push_back(Face(LEFT,blockInfo.left));
-   faces.push_back(Face(RIGHT,blockInfo.right));
+    //faces.push_back(Face(FRONT,blockInfo.front));
+    //faces.push_back(Face(BACK,blockInfo.back));
+    //faces.push_back(Face(TOP, blockInfo.top));
+    //faces.push_back(Face(BOTTOM, blockInfo.bottom));
+    //faces.push_back(Face(LEFT,blockInfo.left));
+    //faces.push_back(Face(RIGHT,blockInfo.right));
 
 
     squareColors.push_back(glm::vec4(.0, 1., 0.0,1.0));
@@ -48,16 +50,36 @@ Block::Block(BlockInfo blockInfo,glm::vec3 pos,int offset)
 :Block(blockInfo)
 {
     this->pos =pos;
-    calculatePoints(offset);
+    //calculatePoints(offset);
 }
-
-
-
-
 
 Block::~Block() {
 
 }
+
+void Block::addFace(DIR face) {
+    switch (face) {
+        case LEFT:
+            faces.push_back(Face(LEFT,blockInfo.left));
+            break;
+        case FRONT:
+            faces.push_back(Face(FRONT,blockInfo.front));
+            break;
+        case BACK:
+            faces.push_back(Face(BACK,blockInfo.back));
+            break;
+        case TOP:
+            faces.push_back(Face(TOP, blockInfo.top));
+            break;
+        case BOTTOM:
+            faces.push_back(Face(BOTTOM, blockInfo.bottom));
+            break;
+        case RIGHT:
+            faces.push_back(Face(RIGHT,blockInfo.right));
+            break;
+    }
+}
+
 
 void Block::calculatePoints(int offset) {
     vertices.clear();
