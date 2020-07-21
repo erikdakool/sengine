@@ -1,9 +1,6 @@
 ﻿﻿using System;
  using System.Threading.Tasks;
  using CoreEngine.Components;
- using CoreEngine.GameObjects;
-using CoreEngine.Manager;
-using CoreEngine.OpenGLModels;
  using OpenTK;
  using OpenTK.Graphics;
  using OpenTK.Graphics.OpenGL4;
@@ -23,7 +20,7 @@ using CoreEngine.OpenGLModels;
 
         private Managers managers;
         private CameraController _fpsCamera;
-
+        
         public App(int width, int height, string title)
             : base(width, height, GraphicsMode.Default, title)
         {

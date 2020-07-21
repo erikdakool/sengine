@@ -19,7 +19,7 @@ namespace CoreEngine.Manager
         private ConcurrentDictionary<Vector3I, Chunk> _drawing = new ConcurrentDictionary<Vector3I, Chunk>();
         private Vector3I _current;
 
-        private static int Range = 10;
+        private static int Range = 12;
         public TerrainManager()
         {
             _current = new Vector3I(0,0,0);

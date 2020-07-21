@@ -36,6 +36,7 @@ namespace CoreEngine.Manager
 
         ~Chunk()
         {
+            Console.WriteLine("Delete");
             DeleteBuffers();    
         }
 
@@ -125,9 +126,10 @@ namespace CoreEngine.Manager
             
             var sampler = GL.GetUniformLocation(_blockManager._shader.Handle, "u_Textures");
 
-            int[] samplers = Enumerable.Range(0, 8).ToArray();
-            GL.Uniform1(sampler,8,samplers);
-
+            //int[] samplers = Enumerable.Range(0, 8).ToArray();
+            //GL.Uniform1i(sampler,8,samplers);
+            //GL.Uniform1(sampler,1);
+            
             _vertexArrayId = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayId);
             
@@ -157,7 +159,7 @@ namespace CoreEngine.Manager
         public void Render()
         {
             _blockManager._shader.Use();
-            _blockManager.BindBlockTextures();
+            //_blockManager.BindBlockTextures();
 
             //_shader.SetMatrix4("model", model);
             _blockManager._shader.SetMatrix4("view", _Camera.GetViewMatrix());

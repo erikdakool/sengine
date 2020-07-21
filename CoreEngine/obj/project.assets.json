@@ -52,6 +52,76 @@
           }
         }
       },
+      "Noesis.GUI/2.2.6": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Noesis.GUI.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Noesis.GUI.dll": {}
+        },
+        "build": {
+          "build/netcoreapp2.0/Noesis.GUI.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/android-arm/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "android-arm"
+          },
+          "runtimes/android-arm64/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "android-arm64"
+          },
+          "runtimes/android-x86/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "android-x86"
+          },
+          "runtimes/ios/native/Symbols.cpp": {
+            "assetType": "native",
+            "rid": "ios"
+          },
+          "runtimes/ios/native/libNoesis.a": {
+            "assetType": "native",
+            "rid": "ios"
+          },
+          "runtimes/linux-arm/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "linux-arm"
+          },
+          "runtimes/linux-arm64/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "linux-arm64"
+          },
+          "runtimes/linux-x64/native/libNoesis.so": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/Noesis.bundle/Contents/MacOS/Noesis": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/Noesis.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/Noesis.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win10-arm/native/Noesis.dll": {
+            "assetType": "native",
+            "rid": "win10-arm"
+          },
+          "runtimes/win10-x64/native/Noesis.dll": {
+            "assetType": "native",
+            "rid": "win10-x64"
+          },
+          "runtimes/win10-x86/native/Noesis.dll": {
+            "assetType": "native",
+            "rid": "win10-x86"
+          }
+        }
+      },
       "OpenTK.NetStandard/1.0.5.22": {
         "type": "package",
         "dependencies": {
@@ -213,6 +283,40 @@
         "version.txt"
       ]
     },
+    "Noesis.GUI/2.2.6": {
+      "sha512": "y3z5AfXAZJWONMX3gG8Qehqm1viXTFzcrCzLttgvNK+x1Cigf2ZXjC+DoEb9m9yQLi/uy9PiRplYj7o6uOQYFA==",
+      "type": "package",
+      "path": "noesis.gui/2.2.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "build/Mono/Noesis.GUI.targets",
+        "build/MonoAndroid/Noesis.GUI.targets",
+        "build/Xamarin.Mac/Noesis.GUI.targets",
+        "build/Xamarin.iOS/Noesis.GUI.targets",
+        "build/net461/Noesis.GUI.targets",
+        "build/netcoreapp2.0/Noesis.GUI.targets",
+        "lib/netstandard2.0/Noesis.GUI.dll",
+        "lib/netstandard2.0/Noesis.GUI.dll.config",
+        "noesis.gui.2.2.6.nupkg.sha512",
+        "noesis.gui.nuspec",
+        "runtimes/android-arm/native/libNoesis.so",
+        "runtimes/android-arm64/native/libNoesis.so",
+        "runtimes/android-x86/native/libNoesis.so",
+        "runtimes/ios/native/Symbols.cpp",
+        "runtimes/ios/native/libNoesis.a",
+        "runtimes/linux-arm/native/libNoesis.so",
+        "runtimes/linux-arm64/native/libNoesis.so",
+        "runtimes/linux-x64/native/libNoesis.so",
+        "runtimes/osx-x64/native/Noesis.bundle/Contents/MacOS/Noesis",
+        "runtimes/win-x64/native/Noesis.dll",
+        "runtimes/win-x86/native/Noesis.dll",
+        "runtimes/win10-arm/native/Noesis.dll",
+        "runtimes/win10-x64/native/Noesis.dll",
+        "runtimes/win10-x86/native/Noesis.dll"
+      ]
+    },
     "OpenTK.NetStandard/1.0.5.22": {
       "sha512": "guqcezEdyq9K+pG4/yYw6Zz4FfLUAqAkDrvegT81OfGFQ1cZj+oHbkUJRvGEkESUyQ09A6Z65yPlLmvZaKtmhA==",
       "type": "package",
@@ -362,6 +466,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Noesis.GUI >= 2.2.6",
       "OpenTK.NetStandard >= 1.0.5.22"
     ]
   },
@@ -400,6 +505,10 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
+          "Noesis.GUI": {
+            "target": "Package",
+            "version": "[2.2.6, )"
+          },
           "OpenTK.NetStandard": {
             "target": "Package",
             "version": "[1.0.5.22, )"

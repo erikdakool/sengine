@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "CoreEngine/1.0.0": {
         "dependencies": {
+          "Noesis.GUI": "2.2.6",
           "OpenTK.NetStandard": "1.0.5.22"
         },
         "runtime": {
@@ -37,6 +38,86 @@
             "assetType": "runtime",
             "assemblyVersion": "4.0.0.0",
             "fileVersion": "4.6.26515.6"
+          }
+        }
+      },
+      "Noesis.GUI/2.2.6": {
+        "runtime": {
+          "lib/netstandard2.0/Noesis.GUI.dll": {
+            "assemblyVersion": "2.2.6.8609",
+            "fileVersion": "2.2.6.8609"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/android-arm/native/libNoesis.so": {
+            "rid": "android-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/android-arm64/native/libNoesis.so": {
+            "rid": "android-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/android-x86/native/libNoesis.so": {
+            "rid": "android-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/ios/native/Symbols.cpp": {
+            "rid": "ios",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/ios/native/libNoesis.a": {
+            "rid": "ios",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm/native/libNoesis.so": {
+            "rid": "linux-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-arm64/native/libNoesis.so": {
+            "rid": "linux-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/linux-x64/native/libNoesis.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/Noesis.bundle/Contents/MacOS/Noesis": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/Noesis.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/Noesis.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win10-arm/native/Noesis.dll": {
+            "rid": "win10-arm",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win10-x64/native/Noesis.dll": {
+            "rid": "win10-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win10-x86/native/Noesis.dll": {
+            "rid": "win10-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
           }
         }
       },
@@ -113,6 +194,13 @@
       "sha512": "sha512-LuI1oG+24TUj1ZRQQjM5Ew73BKnZE5NZ/7eAdh1o8ST5dPhUnJvIkiIn2re3MwnkRy6ELRnvEbBxHP8uALKhJw==",
       "path": "microsoft.win32.systemevents/4.5.0",
       "hashPath": "microsoft.win32.systemevents.4.5.0.nupkg.sha512"
+    },
+    "Noesis.GUI/2.2.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-y3z5AfXAZJWONMX3gG8Qehqm1viXTFzcrCzLttgvNK+x1Cigf2ZXjC+DoEb9m9yQLi/uy9PiRplYj7o6uOQYFA==",
+      "path": "noesis.gui/2.2.6",
+      "hashPath": "noesis.gui.2.2.6.nupkg.sha512"
     },
     "OpenTK.NetStandard/1.0.5.22": {
       "type": "package",
