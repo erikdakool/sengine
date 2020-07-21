@@ -27,6 +27,7 @@ public:
 
     void addFace(DIR face);
     void calculatePoints(int offset);
+    void clearFaces();
 private:
     std::vector<Face> faces;
 

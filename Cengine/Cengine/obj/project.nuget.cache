@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "dgSpecHash": "IK0Heitu6uclpuHDqjuenOh8MXh7DQgvsqERM54Y/oP+7VFxyNEsU0eblSqSHqM9III2DpxJNA3QmIZ1JoGrWg==",
+  "success": true,
+  "projectFilePath": "/home/erikdesk/github/sengine/Cengine/Cengine/Cengine.csproj",
+  "expectedPackageFiles": [
+    "/home/erikdesk/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/microsoft.dotnet.platformabstractions/3.1.1/microsoft.dotnet.platformabstractions.3.1.1.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/microsoft.extensions.dependencymodel/3.1.1/microsoft.extensions.dependencymodel.3.1.1.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.core/1.4.0/silk.net.core.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.glfw/1.4.0/silk.net.glfw.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.input/1.4.0/silk.net.input.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.input.common/1.4.0/silk.net.input.common.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.input.desktop/1.4.0/silk.net.input.desktop.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.opengl/1.4.0/silk.net.opengl.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.windowing/1.4.0/silk.net.windowing.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.windowing.common/1.4.0/silk.net.windowing.common.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/silk.net.windowing.desktop/1.4.0/silk.net.windowing.desktop.1.4.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/sixlabors.imagesharp/1.0.0-rc0003/sixlabors.imagesharp.1.0.0-rc0003.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.numerics.vectors/4.5.0/system.numerics.vectors.4.5.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.reflection.emit/4.7.0/system.reflection.emit.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.reflection.emit.ilgeneration/4.7.0/system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.runtime.compilerservices.unsafe/4.7.0/system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.text.json/4.7.0/system.text.json.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/ultz.native.glfw/3.3.2/ultz.native.glfw.3.3.2.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/ultz.superinvoke/1.1.0/ultz.superinvoke.1.1.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/ultz.superinvoke.loader/1.1.0/ultz.superinvoke.loader.1.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

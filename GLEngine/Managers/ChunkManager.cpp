@@ -29,10 +29,6 @@ ChunkManager::ChunkManager(GameDataRef data,TerrainGenerator& terrainGenerator, 
 
     _data = data;
 
-    auto blockProgram = LoadBlockShader(texturesCount);
-    this->_data->camera.setBlockProgramId(blockProgram);
-    data->camera.setBlockMatrixId(glGetUniformLocation(blockProgram, "MVP"));
-
     std::ifstream block_File("Data/Json/block.json");
     std::ifstream textures_File("Data/Json/textures.json");
 
@@ -116,70 +112,70 @@ uint64_t ChunkManager::AddBlock(int x, int y, int z, int chunkXoffset, int chunk
     auto c = block->getAllColorsV();
     auto p = block->getAllTexturePosV();
 
-    blocks.push_back(block);
-
     return idCounter;
 }
 
 void ChunkManager::calculateSides() {
-
+    indiceCounter = 0;
+    indices.clear();
+    vertices.clear();
     for (int x = 0; x < chunkSize; ++x) {
         for (int y = 0; y < chunkSize; ++y) {
             for (int z = 0; z < chunkSize; ++z) {
                 auto block = getBlock(x,y,z);
-
                 if(block!= nullptr){
-                  if(x==0){
+                    block->clearFaces();
+                    if(x==0){
                      auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc)-1,std::get<1>(chunkLoc),std::get<2>(chunkLoc));
-                     if(chunk!= nullptr){
-                         if(!chunk->getBlockExists(chunkSize-1,y,z)){
-                             block->addFace(LEFT);
+                         if(chunk!= nullptr){
+                             if(!chunk->getBlockExists(chunkSize-1,y,z)){
+                                 block->addFace(LEFT);
+                             }
                          }
-                     }
-                  }
-                  else if (!getBlockExists(x-1,y,z)) {
-                      block->addFace(LEFT);
-                  }
-
-                  if(x==chunkSize-1){
-                      auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc)+1,std::get<1>(chunkLoc),std::get<2>(chunkLoc));
-                      if(chunk!= nullptr){
-                          if(!chunk->getBlockExists(0,y,z)){
-                              block->addFace(RIGHT);
-                          }
-                      }
-                  }else if(!getBlockExists(x+1,y,z)){
-                      block->addFace(RIGHT);
-                  }
-
-                    if(!getBlockExists(x,y+1,z)){
-                        block->addFace(TOP);
                     }
-                    if(!getBlockExists(x,y-1,z)){
-                        block->addFace(BOTTOM);
+                    else if (!getBlockExists(x-1,y,z)) {
+                        block->addFace(LEFT);
                     }
 
-                  if(z==0){
-                      auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc),std::get<1>(chunkLoc),std::get<2>(chunkLoc)-1);
-                      if(chunk!= nullptr){
-                          if(!chunk->getBlockExists(x,y,chunkSize-1)){
-                              block->addFace(BACK);
-                          }
-                      }
-                  }else if(!getBlockExists(x,y,z-1)) {
-                      block->addFace(BACK);
-                  }
+                    if(x==chunkSize-1){
+                        auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc)+1,std::get<1>(chunkLoc),std::get<2>(chunkLoc));
+                        if(chunk!= nullptr){
+                            if(!chunk->getBlockExists(0,y,z)){
+                                block->addFace(RIGHT);
+                            }
+                        }
+                    }else if(!getBlockExists(x+1,y,z)){
+                        block->addFace(RIGHT);
+                    }
 
-                  if(z==chunkSize-1){
-                      auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc),std::get<1>(chunkLoc),std::get<2>(chunkLoc)+1);
-                      if(chunk!= nullptr){
-                          if(!chunk->getBlockExists(x,y,0)){
-                              block->addFace(FRONT);
-                          }
+                      if(!getBlockExists(x,y+1,z)){
+                          block->addFace(TOP);
                       }
-                  }else if(!getBlockExists(x,y,z+1)){
-                      block->addFace(FRONT);
-                  }
+                      if(!getBlockExists(x,y-1,z)){
+                          block->addFace(BOTTOM);
+                      }
+
+                    if(z==0){
+                        auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc),std::get<1>(chunkLoc),std::get<2>(chunkLoc)-1);
+                        if(chunk!= nullptr){
+                            if(!chunk->getBlockExists(x,y,chunkSize-1)){
+                                block->addFace(BACK);
+                            }
+                        }
+                    }else if(!getBlockExists(x,y,z-1)) {
+                        block->addFace(BACK);
+                    }
+
+                    if(z==chunkSize-1){
+                        auto chunk = terrainGenerator.GetChunk(std::get<0>(chunkLoc),std::get<1>(chunkLoc),std::get<2>(chunkLoc)+1);
+                        if(chunk!= nullptr){
+                            if(!chunk->getBlockExists(x,y,0)){
+                                block->addFace(FRONT);
+                            }
+                        }
+                    }else if(!getBlockExists(x,y,z+1)){
+                        block->addFace(FRONT);
+                    }
 
                     block->calculatePoints(indiceCounter);
                     auto ver = block->getAllVertices(indices.size());
@@ -193,8 +189,6 @@ void ChunkManager::calculateSides() {
             }
         }
     }
-
-    updateBuffer();
 }
 
 std::shared_ptr<Block> ChunkManager::getBlock(int x, int y, int z) {
@@ -212,6 +206,16 @@ bool ChunkManager::getBlockExists(int x, int y, int z) {
     }
     auto mapPos = std::tuple<int,int,int>(x,y,z);
     return ChunkBlocks.find(mapPos) !=ChunkBlocks.end();
+}
+
+void ChunkManager::deleteBuffers() {
+    glBindVertexArray(0);
+    if(vertexBufferID!=0){
+        glDeleteBuffers(1,&vertexBufferID);
+    }
+    if(indiceBufferID!=0){
+        glDeleteBuffers(1,&indiceBufferID);
+    }
 }
 
 void ChunkManager::updateBuffer() {
@@ -253,10 +257,11 @@ void ChunkManager::updateBuffer() {
     }
 }
 
-void ChunkManager::RemoveBlock(uint64_t id) {
-
+const std::tuple<int, int, int> &ChunkManager::getChunkLoc() const {
+    return chunkLoc;
 }
 
-void ChunkManager::ClearBlocks() {
-
+void ChunkManager::setChunkLoc(const std::tuple<int, int, int> &chunkLoc) {
+    ChunkManager::chunkLoc = chunkLoc;
 }
+

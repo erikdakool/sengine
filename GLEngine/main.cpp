@@ -41,6 +41,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 GameDataRef data;
 
 float fov = FOV;
+
 float width = 2400.0f;
 float height = 1600.0f;
 float near = 0.1f;
@@ -105,14 +106,22 @@ int main( void )
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
 
+    ///Wireframe on off
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     // Create and compile our GLSL program from the shaders
-    GLuint modelProgramId = LoadShaders("Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
     //GLuint modelProgramId = LoadShaders( "Shader/SimpleVertexShader.glsl", "Shader/SimpleFragmentShader.glsl" );
-    glUseProgram(modelProgramId);
 
     data = std::make_shared<GameData>();
     data->camera = Camera();
+
+    auto blockProgram = LoadBlockShader(5);
+    glUseProgram(blockProgram);
+    data->camera.setBlockProgramId(blockProgram);
+    data->camera.setBlockMatrixId(glGetUniformLocation(blockProgram, "MVP"));
+
+    GLuint modelProgramId = LoadShaders("Shader/ColorVertexShader.glsl", "Shader/ColorFragmentShader.glsl" );
+    glUseProgram(modelProgramId);
+
     //data->camera.rotate(glm::vec3(-36,-20,0));
     data->textureLoader = TextureLoader();
     data->modelLoader = ModelLoader();
@@ -120,10 +129,10 @@ int main( void )
     data->inputManager = InputManager(window);
 
     data->camera.setModelProgramId(modelProgramId);
+    data->camera.setBlockProgramId(blockProgram);
 
     data->camera.setPerspectiveMatrix(glm::perspective(glm::radians(fov),width/height,near,far));
     data->camera.setMatrixId(glGetUniformLocation(modelProgramId, "MVP"));
-
     TextureLoader textureLoader = TextureLoader();
 
 

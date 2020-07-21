@@ -22,21 +22,24 @@ public:
     void Update();
     void Draw();
     uint64_t AddBlock(int x, int y, int z, int chunkXoffset, int chunkYoffset,int type);
-    void RemoveBlock(uint64_t id);
-    void ClearBlocks();
     void calculateSides();
+    void deleteBuffers();
+    void updateBuffer();
+    bool rendering = false;
+    bool pendingOpengl = false;
+
+    const std::tuple<int, int, int> &getChunkLoc() const;
+    void setChunkLoc(const std::tuple<int, int, int> &chunkLoc);
+
 private:
     GameDataRef _data;
     TerrainGenerator& terrainGenerator;
 
-    void updateBuffer();
     std::shared_ptr<Block> getBlock(int x, int y, int z);
     bool getBlockExists(int x, int y, int z);
 
     std::vector<BlockInfo> blockInfo;
     std::vector<TextureInfo> textureInfo;
-
-    std::vector<std::shared_ptr<Block>> blocks;
 
     std::map<std::tuple<int,int,int>,std::shared_ptr<Block>> ChunkBlocks;
 
@@ -45,9 +48,9 @@ private:
 
     uint64_t idCounter = 0;
 
-    GLuint vertexArrayID;
-    GLuint vertexBufferID;
-    GLuint indiceBufferID;
+    GLuint vertexArrayID =0;
+    GLuint vertexBufferID =0;
+    GLuint indiceBufferID =0;
 
     GLuint indiceCounter = 0;
 

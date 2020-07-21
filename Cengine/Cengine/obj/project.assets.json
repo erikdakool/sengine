@@ -1,0 +1,878 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Microsoft.CSharp/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "Microsoft.DotNet.PlatformAbstractions/3.1.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Microsoft.DotNet.PlatformAbstractions.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.DotNet.PlatformAbstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.DependencyModel/3.1.1": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Json": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll": {}
+        }
+      },
+      "Silk.NET.Core/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "System.Memory": "4.5.3",
+          "System.Numerics.Vectors": "4.5.0",
+          "System.Reflection.Emit": "4.7.0",
+          "System.Reflection.Emit.ILGeneration": "4.7.0",
+          "System.Runtime.CompilerServices.Unsafe": "4.7.0",
+          "Ultz.SuperInvoke": "1.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Core.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Core.dll": {}
+        }
+      },
+      "Silk.NET.GLFW/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Core": "1.4.0",
+          "Ultz.Native.GLFW": "3.3.2"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.GLFW.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.GLFW.dll": {}
+        }
+      },
+      "Silk.NET.Input/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Input.Common": "1.4.0",
+          "Silk.NET.Input.Desktop": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Input.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Input.dll": {}
+        }
+      },
+      "Silk.NET.Input.Common/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Windowing.Common": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Input.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Input.Common.dll": {}
+        }
+      },
+      "Silk.NET.Input.Desktop/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Input.Common": "1.4.0",
+          "Silk.NET.Windowing.Desktop": "1.4.0",
+          "System.Memory": "4.5.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Input.Desktop.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Input.Desktop.dll": {}
+        }
+      },
+      "Silk.NET.OpenGL/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Core": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.OpenGL.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.OpenGL.dll": {}
+        }
+      },
+      "Silk.NET.Windowing/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Windowing.Desktop": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Windowing.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Windowing.dll": {}
+        }
+      },
+      "Silk.NET.Windowing.Common/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.Core": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Windowing.Common.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Windowing.Common.dll": {}
+        }
+      },
+      "Silk.NET.Windowing.Desktop/1.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Silk.NET.GLFW": "1.4.0",
+          "Silk.NET.Windowing.Common": "1.4.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Silk.NET.Windowing.Desktop.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Silk.NET.Windowing.Desktop.dll": {}
+        }
+      },
+      "SixLabors.ImageSharp/1.0.0-rc0003": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/SixLabors.ImageSharp.dll": {}
+        }
+      },
+      "System.Memory/4.5.3": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.1/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/_._": {}
+        }
+      },
+      "System.Numerics.Vectors/4.5.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.Reflection.Emit/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.Reflection.Emit.ILGeneration/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netcoreapp2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.Runtime.CompilerServices.Unsafe/4.7.0": {
+        "type": "package",
+        "compile": {
+          "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
+        }
+      },
+      "System.Text.Json/4.7.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/System.Text.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Text.Json.dll": {}
+        }
+      },
+      "Ultz.Native.GLFW/3.3.2": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libglfw.so.3": {
+            "assetType": "native",
+            "rid": "linux-x64"
+          },
+          "runtimes/osx-x64/native/libglfw.3.dylib": {
+            "assetType": "native",
+            "rid": "osx-x64"
+          },
+          "runtimes/win-x64/native/glfw3.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/glfw3.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
+      "Ultz.SuperInvoke/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Memory": "4.5.3",
+          "System.Reflection.Emit": "4.7.0",
+          "Ultz.SuperInvoke.Loader": "1.1.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Ultz.SuperInvoke.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Ultz.SuperInvoke.dll": {}
+        }
+      },
+      "Ultz.SuperInvoke.Loader/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyModel": "3.1.1",
+          "microsoft.dotnet.platformabstractions": "3.1.1"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/Ultz.SuperInvoke.Loader.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/Ultz.SuperInvoke.Loader.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "type": "package",
+      "path": "microsoft.csharp/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/Microsoft.CSharp.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.3/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
+        "lib/portable-net45+win8+wp8+wpa81/_._",
+        "lib/uap10.0.16299/_._",
+        "lib/win8/_._",
+        "lib/wp80/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
+        "microsoft.csharp.nuspec",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcore50/Microsoft.CSharp.dll",
+        "ref/netcore50/Microsoft.CSharp.xml",
+        "ref/netcore50/de/Microsoft.CSharp.xml",
+        "ref/netcore50/es/Microsoft.CSharp.xml",
+        "ref/netcore50/fr/Microsoft.CSharp.xml",
+        "ref/netcore50/it/Microsoft.CSharp.xml",
+        "ref/netcore50/ja/Microsoft.CSharp.xml",
+        "ref/netcore50/ko/Microsoft.CSharp.xml",
+        "ref/netcore50/ru/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hans/Microsoft.CSharp.xml",
+        "ref/netcore50/zh-hant/Microsoft.CSharp.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/Microsoft.CSharp.dll",
+        "ref/netstandard1.0/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/de/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/es/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/fr/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/it/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ja/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ko/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/ru/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hans/Microsoft.CSharp.xml",
+        "ref/netstandard1.0/zh-hant/Microsoft.CSharp.xml",
+        "ref/netstandard2.0/Microsoft.CSharp.dll",
+        "ref/netstandard2.0/Microsoft.CSharp.xml",
+        "ref/portable-net45+win8+wp8+wpa81/_._",
+        "ref/uap10.0.16299/_._",
+        "ref/win8/_._",
+        "ref/wp80/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Microsoft.DotNet.PlatformAbstractions/3.1.1": {
+      "sha512": "5lV+Vejn4bKC3wEUPH2Z/FTYkaHBO0AVJqqTD+ATE0rP6jQARIJbtWKc+aF2TWGsxFeiARW8Y0lnMFHdLOJFqA==",
+      "type": "package",
+      "path": "microsoft.dotnet.platformabstractions/3.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net45/Microsoft.DotNet.PlatformAbstractions.dll",
+        "lib/net45/Microsoft.DotNet.PlatformAbstractions.xml",
+        "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.dll",
+        "lib/netstandard1.3/Microsoft.DotNet.PlatformAbstractions.xml",
+        "lib/netstandard2.0/Microsoft.DotNet.PlatformAbstractions.dll",
+        "lib/netstandard2.0/Microsoft.DotNet.PlatformAbstractions.xml",
+        "microsoft.dotnet.platformabstractions.3.1.1.nupkg.sha512",
+        "microsoft.dotnet.platformabstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.DependencyModel/3.1.1": {
+      "sha512": "JjNCPx5Jbk7WTjaFI9Kyq+ZRVwMJ7Ee2AmgLKraQUS8AuciAO+euxHAhlhv0AWCsVyibyRr+5USxjyc7U6VsMA==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencymodel/3.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net451/Microsoft.Extensions.DependencyModel.dll",
+        "lib/net451/Microsoft.Extensions.DependencyModel.xml",
+        "lib/netstandard1.3/Microsoft.Extensions.DependencyModel.dll",
+        "lib/netstandard1.3/Microsoft.Extensions.DependencyModel.xml",
+        "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.dll",
+        "lib/netstandard1.6/Microsoft.Extensions.DependencyModel.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.xml",
+        "microsoft.extensions.dependencymodel.3.1.1.nupkg.sha512",
+        "microsoft.extensions.dependencymodel.nuspec"
+      ]
+    },
+    "Silk.NET.Core/1.4.0": {
+      "sha512": "1i3dgm6IfxHE99Zv2o36rwFGLMPjaR+4pOtWfCI/AoUPr8Cdm2exptalnIYFy4ppP9IOrMv7yhGJCAj62faNYQ==",
+      "type": "package",
+      "path": "silk.net.core/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Core.dll",
+        "lib/netstandard2.0/Silk.NET.Core.xml",
+        "silk.net.core.1.4.0.nupkg.sha512",
+        "silk.net.core.nuspec"
+      ]
+    },
+    "Silk.NET.GLFW/1.4.0": {
+      "sha512": "JhJh3kfwOuPu6RO1RqI2WZYYPRnU+BvPnYX2BJ+0HEPt7TeJ/ozAq4NsK+OEhGseIv2OhLRpo3TwDUw1RLXWLw==",
+      "type": "package",
+      "path": "silk.net.glfw/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.GLFW.dll",
+        "lib/netstandard2.0/Silk.NET.GLFW.xml",
+        "silk.net.glfw.1.4.0.nupkg.sha512",
+        "silk.net.glfw.nuspec"
+      ]
+    },
+    "Silk.NET.Input/1.4.0": {
+      "sha512": "LpMrkD+qxd5sOgEJ5bxIrcIXbbdkmaj+pO2+Zpf1eR2KIWXUgKSklgKgJx1+cCwkSK/Q1KWAGsHxqBA/PKRM5Q==",
+      "type": "package",
+      "path": "silk.net.input/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Input.dll",
+        "lib/netstandard2.0/Silk.NET.Input.xml",
+        "silk.net.input.1.4.0.nupkg.sha512",
+        "silk.net.input.nuspec"
+      ]
+    },
+    "Silk.NET.Input.Common/1.4.0": {
+      "sha512": "p4vnOQKbxEz7jip+81dJt4Af113+Ks1Z0uXfpZLHxTCVEQBmy2dX2Ax1W/aW8ycvnXRFvdVOQJgZeUdKoU6PRQ==",
+      "type": "package",
+      "path": "silk.net.input.common/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Input.Common.dll",
+        "lib/netstandard2.0/Silk.NET.Input.Common.xml",
+        "silk.net.input.common.1.4.0.nupkg.sha512",
+        "silk.net.input.common.nuspec"
+      ]
+    },
+    "Silk.NET.Input.Desktop/1.4.0": {
+      "sha512": "ABeP2YrKlpQ+ebShB6rI2YYa5MSaE1UD+S14uvw43j91qmi/1XL+hL3lszNA8+b786paJ5xxXjbPV5leRAk1vA==",
+      "type": "package",
+      "path": "silk.net.input.desktop/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Input.Desktop.dll",
+        "lib/netstandard2.0/Silk.NET.Input.Desktop.xml",
+        "silk.net.input.desktop.1.4.0.nupkg.sha512",
+        "silk.net.input.desktop.nuspec"
+      ]
+    },
+    "Silk.NET.OpenGL/1.4.0": {
+      "sha512": "+f+ekRH5Nq5kKLSZlZEkevmm8VqmdGz4+QJBIgxWpt+hVCRcfMbl77ehXGc38jtNMsjU5JEuZtnu/enMrIZGDA==",
+      "type": "package",
+      "path": "silk.net.opengl/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.OpenGL.dll",
+        "lib/netstandard2.0/Silk.NET.OpenGL.xml",
+        "silk.net.opengl.1.4.0.nupkg.sha512",
+        "silk.net.opengl.nuspec"
+      ]
+    },
+    "Silk.NET.Windowing/1.4.0": {
+      "sha512": "BLnTCueBNvkCCaXC1retTatgZC0h5GJxEex46zgN1zzMemCcuYO46w3LkuClUY++UnPoQQeKMGyx/UXU91qdGg==",
+      "type": "package",
+      "path": "silk.net.windowing/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Windowing.dll",
+        "lib/netstandard2.0/Silk.NET.Windowing.xml",
+        "silk.net.windowing.1.4.0.nupkg.sha512",
+        "silk.net.windowing.nuspec"
+      ]
+    },
+    "Silk.NET.Windowing.Common/1.4.0": {
+      "sha512": "4fWOW211dYhul++bhsWU6jHJK619TW+typiyKWoHGDfkRpWrQRjJzIkCftQLoedo/IFdjWbcBgpchVACEPindw==",
+      "type": "package",
+      "path": "silk.net.windowing.common/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Windowing.Common.dll",
+        "lib/netstandard2.0/Silk.NET.Windowing.Common.xml",
+        "silk.net.windowing.common.1.4.0.nupkg.sha512",
+        "silk.net.windowing.common.nuspec"
+      ]
+    },
+    "Silk.NET.Windowing.Desktop/1.4.0": {
+      "sha512": "ws8FnofzfhNkVduP5BWUCl1omVGpNV7WnFGQlzm5YqoQCAuFBUYQMi1/WV1/UdNF9Ev3LA3j/kcs0x3TK4EIpQ==",
+      "type": "package",
+      "path": "silk.net.windowing.desktop/1.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netstandard2.0/Silk.NET.Windowing.Desktop.dll",
+        "lib/netstandard2.0/Silk.NET.Windowing.Desktop.xml",
+        "silk.net.windowing.desktop.1.4.0.nupkg.sha512",
+        "silk.net.windowing.desktop.nuspec"
+      ]
+    },
+    "SixLabors.ImageSharp/1.0.0-rc0003": {
+      "sha512": "/pz5SPFX+eFzlcU9wQnRTkOnCH3W97/x7+/fHQJF7sJIfq7VR8KkjxHLdmHJaDbK5jBfciD2McE4dTCMbMKltA==",
+      "type": "package",
+      "path": "sixlabors.imagesharp/1.0.0-rc0003",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/SixLabors.ImageSharp.dll",
+        "lib/net472/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp2.1/SixLabors.ImageSharp.xml",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.dll",
+        "lib/netcoreapp3.1/SixLabors.ImageSharp.xml",
+        "lib/netstandard1.3/SixLabors.ImageSharp.dll",
+        "lib/netstandard1.3/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.0/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.0/SixLabors.ImageSharp.xml",
+        "lib/netstandard2.1/SixLabors.ImageSharp.dll",
+        "lib/netstandard2.1/SixLabors.ImageSharp.xml",
+        "sixlabors.imagesharp.1.0.0-rc0003.nupkg.sha512",
+        "sixlabors.imagesharp.128.png",
+        "sixlabors.imagesharp.nuspec"
+      ]
+    },
+    "System.Memory/4.5.3": {
+      "sha512": "3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "type": "package",
+      "path": "system.memory/4.5.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp2.1/_._",
+        "lib/netstandard1.1/System.Memory.dll",
+        "lib/netstandard1.1/System.Memory.xml",
+        "lib/netstandard2.0/System.Memory.dll",
+        "lib/netstandard2.0/System.Memory.xml",
+        "ref/netcoreapp2.1/_._",
+        "system.memory.4.5.3.nupkg.sha512",
+        "system.memory.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Numerics.Vectors/4.5.0": {
+      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "type": "package",
+      "path": "system.numerics.vectors/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Numerics.Vectors.dll",
+        "lib/net46/System.Numerics.Vectors.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.Numerics.Vectors.dll",
+        "lib/netstandard1.0/System.Numerics.Vectors.xml",
+        "lib/netstandard2.0/System.Numerics.Vectors.dll",
+        "lib/netstandard2.0/System.Numerics.Vectors.xml",
+        "lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.dll",
+        "lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/System.Numerics.Vectors.dll",
+        "ref/net45/System.Numerics.Vectors.xml",
+        "ref/net46/System.Numerics.Vectors.dll",
+        "ref/net46/System.Numerics.Vectors.xml",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/System.Numerics.Vectors.dll",
+        "ref/netstandard1.0/System.Numerics.Vectors.xml",
+        "ref/netstandard2.0/System.Numerics.Vectors.dll",
+        "ref/netstandard2.0/System.Numerics.Vectors.xml",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.numerics.vectors.4.5.0.nupkg.sha512",
+        "system.numerics.vectors.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Reflection.Emit/4.7.0": {
+      "sha512": "VR4kk8XLKebQ4MZuKuIni/7oh+QGFmZW3qORd1GvBq/8026OpW501SzT/oypwiQl4TvT8ErnReh/NzY9u+C6wQ==",
+      "type": "package",
+      "path": "system.reflection.emit/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Reflection.Emit.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.1/System.Reflection.Emit.dll",
+        "lib/netstandard1.1/System.Reflection.Emit.xml",
+        "lib/netstandard1.3/System.Reflection.Emit.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.xml",
+        "lib/netstandard2.1/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.1/System.Reflection.Emit.dll",
+        "ref/netstandard1.1/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/de/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/es/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/fr/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/it/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ja/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ko/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/ru/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/zh-hans/System.Reflection.Emit.xml",
+        "ref/netstandard1.1/zh-hant/System.Reflection.Emit.xml",
+        "ref/netstandard2.0/System.Reflection.Emit.dll",
+        "ref/netstandard2.0/System.Reflection.Emit.xml",
+        "ref/netstandard2.1/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.dll",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.xml",
+        "system.reflection.emit.4.7.0.nupkg.sha512",
+        "system.reflection.emit.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Reflection.Emit.ILGeneration/4.7.0": {
+      "sha512": "AucBYo3DSI0IDxdUjKksBcQJXPHyoPyrCXYURW1WDsLI4M65Ar/goSHjdnHOAY9MiYDNKqDlIgaYm+zL2hA1KA==",
+      "type": "package",
+      "path": "system.reflection.emit.ilgeneration/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net45/_._",
+        "lib/netcore50/System.Reflection.Emit.ILGeneration.dll",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.Reflection.Emit.ILGeneration.dll",
+        "lib/netstandard1.0/System.Reflection.Emit.ILGeneration.xml",
+        "lib/netstandard1.3/System.Reflection.Emit.ILGeneration.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.ILGeneration.dll",
+        "lib/netstandard2.0/System.Reflection.Emit.ILGeneration.xml",
+        "lib/netstandard2.1/_._",
+        "lib/portable-net45+wp8/_._",
+        "lib/wp80/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net45/_._",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard1.0/System.Reflection.Emit.ILGeneration.dll",
+        "ref/netstandard1.0/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/de/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/es/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/fr/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/it/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/ja/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/ko/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/ru/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/zh-hans/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard1.0/zh-hant/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard2.0/System.Reflection.Emit.ILGeneration.dll",
+        "ref/netstandard2.0/System.Reflection.Emit.ILGeneration.xml",
+        "ref/netstandard2.1/_._",
+        "ref/portable-net45+wp8/_._",
+        "ref/wp80/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.ILGeneration.dll",
+        "runtimes/aot/lib/netcore50/System.Reflection.Emit.ILGeneration.xml",
+        "system.reflection.emit.ilgeneration.4.7.0.nupkg.sha512",
+        "system.reflection.emit.ilgeneration.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Runtime.CompilerServices.Unsafe/4.7.0": {
+      "sha512": "IpU1lcHz8/09yDr9N+Juc7SCgNUz+RohkCQI+KsWKR67XxpFr8Z6c8t1iENCXZuRuNCc4HBwme/MDHNVCwyAKg==",
+      "type": "package",
+      "path": "system.runtime.compilerservices.unsafe/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
+        "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
+        "system.runtime.compilerservices.unsafe.4.7.0.nupkg.sha512",
+        "system.runtime.compilerservices.unsafe.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.Text.Json/4.7.0": {
+      "sha512": "IPq/x/d5nAcnD3vIyM3AbPOaTgcqrh0AqPSx7U53UFu3M6k1TH1u/eXc9/h4jm/3mpP1WRUpevlPY4PACd7AWw==",
+      "type": "package",
+      "path": "system.text.json/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.Text.Json.dll",
+        "lib/net461/System.Text.Json.xml",
+        "lib/netcoreapp3.0/System.Text.Json.dll",
+        "lib/netcoreapp3.0/System.Text.Json.xml",
+        "lib/netstandard2.0/System.Text.Json.dll",
+        "lib/netstandard2.0/System.Text.Json.xml",
+        "system.text.json.4.7.0.nupkg.sha512",
+        "system.text.json.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Ultz.Native.GLFW/3.3.2": {
+      "sha512": "vzWTYT0lYC78lGx4E2M7jM0nwlHYRwLJXeQu8vCiLMHNhlVJWFrC+ktvkpwj6swV2G/COo2Gpbi4utelJVhx+w==",
+      "type": "package",
+      "path": "ultz.native.glfw/3.3.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "runtimes/linux-x64/native/libglfw.so.3",
+        "runtimes/osx-x64/native/libglfw.3.dylib",
+        "runtimes/win-x64/native/glfw3.dll",
+        "runtimes/win-x86/native/glfw3.dll",
+        "ultz.native.glfw.3.3.2.nupkg.sha512",
+        "ultz.native.glfw.nuspec"
+      ]
+    },
+    "Ultz.SuperInvoke/1.1.0": {
+      "sha512": "HQteprPNPRya32PKLUYtXgzZx1/KdpdDWAaRYUeJ0AIrS3ozjO9zOT7J+x1tRyF2f2sOZ/SPHSgom8r/wGmO9g==",
+      "type": "package",
+      "path": "ultz.superinvoke/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/Ultz.SuperInvoke.dll",
+        "lib/netcoreapp3.0/Ultz.SuperInvoke.dll",
+        "lib/netstandard2.0/Ultz.SuperInvoke.dll",
+        "ultz.superinvoke.1.1.0.nupkg.sha512",
+        "ultz.superinvoke.nuspec"
+      ]
+    },
+    "Ultz.SuperInvoke.Loader/1.1.0": {
+      "sha512": "l2neRo5lcdrf2ujF8nDy1Tulx+KEC7YMsoEbbG/3bDbUwHa5KRwVOUHu3BjqgkIIF6JYGytxGcl0visqLKtd9w==",
+      "type": "package",
+      "path": "ultz.superinvoke.loader/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/netcoreapp3.0/Ultz.SuperInvoke.Loader.dll",
+        "lib/netstandard2.0/Ultz.SuperInvoke.Loader.dll",
+        "ultz.superinvoke.loader.1.1.0.nupkg.sha512",
+        "ultz.superinvoke.loader.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETCoreApp,Version=v3.1": [
+      "Silk.NET.Core >= 1.4.0",
+      "Silk.NET.Input >= 1.4.0",
+      "Silk.NET.Input.Common >= 1.4.0",
+      "Silk.NET.OpenGL >= 1.4.0",
+      "Silk.NET.Windowing >= 1.4.0",
+      "SixLabors.ImageSharp >= 1.0.0-rc0003"
+    ]
+  },
+  "packageFolders": {
+    "/home/erikdesk/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/erikdesk/github/sengine/Cengine/Cengine/Cengine.csproj",
+      "projectName": "Cengine",
+      "projectPath": "/home/erikdesk/github/sengine/Cengine/Cengine/Cengine.csproj",
+      "packagesPath": "/home/erikdesk/.nuget/packages/",
+      "outputPath": "/home/erikdesk/github/sengine/Cengine/Cengine/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/erikdesk/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "netcoreapp3.1"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "netcoreapp3.1": {
+        "dependencies": {
+          "Silk.NET.Core": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
+          "Silk.NET.Input": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
+          "Silk.NET.Input.Common": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
+          "Silk.NET.OpenGL": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
+          "Silk.NET.Windowing": {
+            "target": "Package",
+            "version": "[1.4.0, )"
+          },
+          "SixLabors.ImageSharp": {
+            "target": "Package",
+            "version": "[1.0.0-rc0003, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.103/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

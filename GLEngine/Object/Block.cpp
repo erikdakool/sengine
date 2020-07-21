@@ -80,7 +80,6 @@ void Block::addFace(DIR face) {
     }
 }
 
-
 void Block::calculatePoints(int offset) {
     vertices.clear();
     indices.clear();
@@ -104,6 +103,10 @@ void Block::calculatePoints(int offset) {
             textureCor.push_back(t);
         }
     }
+}
+
+void Block::clearFaces() {
+    faces.clear();
 }
 
 std::vector<float> Block::getAllVertices(int offset) {

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "IKkn0s1ZDvq6HXRKpmumi+igbG9yhQcnkot0ke8l1jkFJY7RzKMrI4TM5fi1w5qH6+LgQAanONdI/tn2e500+w==",
+  "success": true,
+  "projectFilePath": "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj",
+  "expectedPackageFiles": [
+    "/home/erikdesk/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/microsoft.win32.systemevents/4.5.0/microsoft.win32.systemevents.4.5.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/opentk.netstandard/1.0.5.22/opentk.netstandard.1.0.5.22.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.drawing.common/4.5.0/system.drawing.common.4.5.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "/home/erikdesk/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

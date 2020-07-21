@@ -133,7 +133,7 @@ GLuint LoadBlockShader(int textures) {
     GLint Result = GL_FALSE;
     int InfoLogLength;
 
-    std::string FragmentShaderCode = getBlockShader(5);
+    std::string FragmentShaderCode = getBlockShader(textures);
 
 
     // Compile Vertex Shader

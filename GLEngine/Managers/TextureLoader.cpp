@@ -194,7 +194,7 @@ GLuint TextureLoader::loadBMPTexture(const std::string& name, const std::string&
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     //// When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
     //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    //// Generate mipmaps, by the way.
+    //// Generate mipmaps, by the way.wwwwwww
     //glGenerateMipmap(GL_TEXTURE_2D);
 
     Texture texture(name,textureID);
