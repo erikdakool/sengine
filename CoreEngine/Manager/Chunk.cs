@@ -33,13 +33,7 @@ namespace CoreEngine.Manager
         {
             _loc = loc;
         }
-
-        ~Chunk()
-        {
-            Console.WriteLine("Delete");
-            //DeleteBuffers();    
-        }
-
+        
         public void AddBlock(int x, int y, int z, int id)
         {
             var loc = new Vector3I(x,y,z);
@@ -244,7 +238,7 @@ namespace CoreEngine.Manager
                     return !BlockExists(loc.AddZ(-1));
                 case Dir.TOP:
                     if (loc.Y == Height-1)
-                        return false;
+                        return true;
                     return !BlockExists(loc.AddY(1));
                 case Dir.BOTTOM:
                     if (loc.Y == 0)

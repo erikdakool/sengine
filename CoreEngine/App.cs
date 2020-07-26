@@ -20,7 +20,7 @@
 
         private Managers managers;
         private CameraController _fpsCamera;
-        
+
         public App(int width, int height, string title)
             : base(width, height, GraphicsMode.Default, title)
         {
@@ -114,8 +114,15 @@
 
             _fpsCamera.Update((float)e.Time);
 
-            managers._terrainManager.Update();
+            var t = new Task(() =>
+            {
+                managers._terrainManager.Update();
+            });
+            t.Start();
+            t.Wait();
+            
             managers._terrainManager.InitDraw();
+
             base.OnUpdateFrame(e);
             //Console.WriteLine(DateTime.Now.Ticks - time);
         }

@@ -9,7 +9,7 @@ namespace CoreEngine.staticMethods
         {
             var pointVec = (objectLoc - playerLoc).Normalized();
             float dotProduct = Vector2.Dot(coneVector.Normalized(), pointVec);
-            double angle = Math.Cos(MathHelper.DegreesToRadians(90));
+            double angle = Math.Cos(MathHelper.DegreesToRadians(100));
             return dotProduct > angle;
         }
 

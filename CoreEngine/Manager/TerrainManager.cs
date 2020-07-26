@@ -19,7 +19,7 @@ namespace CoreEngine.Manager
         private ConcurrentDictionary<Vector3I, Chunk> _drawing = new ConcurrentDictionary<Vector3I, Chunk>();
         private Vector3I _current;
 
-        private static int Range = 12;
+        private static int Range = 30;
         public TerrainManager()
         {
             _current = new Vector3I(0,0,0);
@@ -172,22 +172,84 @@ namespace CoreEngine.Manager
                 }
             }        
         }
+
+        private int TopBlockLoc(int x, int z)
+        {
+            FastNoise myNoise = new FastNoise();
+            myNoise.SetNoiseType(FastNoise.NoiseType.SimplexFractal);
+            int y = -(int)(myNoise.GetNoise(x,z)*50);
+            if (y < 0)
+            {
+                y = 0;
+            }
+            return y;
+        }
         
         public void GenerateChunk(Vector3I loc)
         {
-            Random random= new Random();
             var chunk = new Chunk(loc);
             for (int i = 0; i < Chunk.Width; i++)
             {
                 for (int j = 0; j < Chunk.Length; j++)
                 {
                     _managers.SeedManager(chunk);
-                    int y = random.Next(1, 4);
-                    chunk.AddBlock(i,y+8,j,1);
-                    for (int e = y+7; e >= 0; e--)
+                    int y = TopBlockLoc(i + loc.X * Chunk.Width, j + loc.Z * Chunk.Length);
+                    int chunkTop = y;
+                    if (chunkTop > 15)
                     {
-                        chunk.AddBlock(i,e,j,2);
+                        chunkTop = 15;
                     }
+
+                    if (y > 24)
+                    {
+                        for (int e = y; e >= 0; e--)
+                        {
+                            if (e == y)
+                            {
+                                chunk.AddBlock(i,e,j,6);
+                            }
+                            else
+                            {
+                                chunk.AddBlock(i,e,j,3);
+                            }
+                        }
+                    }
+                    else if (y > 20)
+                    {
+                        for (int e = y; e >= 0; e--)
+                        {
+                            chunk.AddBlock(i, e, j, 3);
+                        }
+                    }
+                    else if (y > 2)
+                    {
+                        for (int e = y; e >= 0; e--)
+                        {
+                            if (e == y)
+                            {
+                                chunk.AddBlock(i,e,j,1);
+                            }else if (y-e <= 5)
+                            {
+                                chunk.AddBlock(i,e,j,2);
+                            }else if (y-e >= 5)
+                            {
+                                chunk.AddBlock(i,e,j,3);
+                            }
+                        }
+                    }
+                    else if(y >=1)
+                    {
+                        for (int e = chunkTop; e >= 0; e--)
+                        {
+                            chunk.AddBlock(i,e,j,4);
+                        }
+                    }
+                    else
+                    {
+                        chunk.AddBlock(i,y,j,5);
+                    }
+                    
+
                 }
             }
             
@@ -196,8 +258,7 @@ namespace CoreEngine.Manager
         
         public void InitDraw()
         {
-            var readies =_ready.Where(a => a.Value).Select(a => a.Key).OrderBy(a=>a.Distance(_current)).Take(3);
-    
+            var readies =_ready.Where(a => a.Value).Select(a => a.Key).OrderBy(a=>a.Distance(_current)).Take(2);
             //var ready = readies.FirstOrDefault();
             //if (ready != null)
             //{
@@ -214,18 +275,20 @@ namespace CoreEngine.Manager
             
             foreach (var vector3I in readies)
             {
+
                 Chunk chunk;
                 if (!_chunks.TryGetValue(vector3I, out chunk))
                 {
                     return;
                 }
                 chunk.UpdateSides();
+
                 chunk.UpdateBuffer();
                 _ready.TryRemove(vector3I, out _);
                 _drawing.TryAdd(vector3I, chunk);
+ 
+
             }
-            //GL.Flush();
-            //GL.Finish();
         }
 
         public void Draw()

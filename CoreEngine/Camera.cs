@@ -25,7 +25,7 @@ namespace CoreEngine
         // Rotation around the Y axis (radians)
         private float _yaw = -MathHelper.PiOver2;
         // The field of view of the camera (radians)
-        private float _fov = MathHelper.PiOver2;
+        private float _fov = MathHelper.DegreesToRadians(90);
 
         public Camera(Vector3 position, float aspectRatio)
         {
