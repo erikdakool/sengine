@@ -230,6 +230,7 @@ namespace CoreEngine.Manager
 
         public void Draw()
         {
+            int e = 0;
             //var chunks = _chunks.ToDictionary(entry=>entry.Key,entry=>entry.Value);
             lock (_drawing)
             {
@@ -244,14 +245,15 @@ namespace CoreEngine.Manager
                     if (PointMath.inRange(playerLoc.X - 2*Chunk.Width*2, playerLoc.X + 2*Chunk.Width*2, locv.X) &&
                         PointMath.inRange(playerLoc.Y - 2*Chunk.Width*2, playerLoc.Y + 2*Chunk.Width*2, locv.Y))
                     {
-                        keyValuePair.Value.Render();
+                        e += keyValuePair.Value.Render();
                     }
                     else if (PointMath.InsideFoc(locv, playerLoc, coneVec))
                     {
-                        keyValuePair.Value.Render();
+                        e+= keyValuePair.Value.Render();
                     }
                 }
             }
+            //Console.WriteLine(_chunks.Count + " " + e);
         }
 
         public void UnBind()

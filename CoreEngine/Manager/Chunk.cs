@@ -37,12 +37,13 @@ namespace CoreEngine.Manager
         ~Chunk()
         {
             Console.WriteLine("Delete");
-            DeleteBuffers();    
+            //DeleteBuffers();    
         }
 
         public void AddBlock(int x, int y, int z, int id)
         {
             var loc = new Vector3I(x,y,z);
+            //Console.WriteLine(loc.ToFloat()+_loc.ToFloat()*Width);
             Blocks.Add(loc,new Block(_blockManager.GetBlock(id),loc.ToFloat()+_loc.ToFloat()*Width));
             //Console.WriteLine(loc.ToFloat());
         }
@@ -97,25 +98,29 @@ namespace CoreEngine.Manager
             int offset = 0;
             foreach (var keyValuePair in Blocks)
             {
-                var buffer = keyValuePair.Value.GetBufferObject();
-                for (int i = 0; i < buffer.Indices.Count; i++)
+                keyValuePair.Value.UpdateBufferData(offset);
+                //for (int i = 0; i < buffer.Indices.Count; i++)
+                //{
+                //    Vertices.Add(buffer.Vertices[i].X);
+                //    Vertices.Add(buffer.Vertices[i].Y);
+                //    Vertices.Add(buffer.Vertices[i].Z);
+                //    
+                //    //Vertices.Add(buffer.Colors[i].X);
+                //    //Vertices.Add(buffer.Colors[i].Y);
+                //    //Vertices.Add(buffer.Colors[i].Z);
+                //    
+                //    Vertices.Add(buffer.TextureCor[i].X);
+                //    Vertices.Add(buffer.TextureCor[i].Y);
+                //    Vertices.Add(buffer.TextureId[i]);
+                //    
+                //    Indices.Add((uint)(buffer.Indices[i]+offset));
+                //}
+                Vertices.AddRange(keyValuePair.Value.Vertices);
+                keyValuePair.Value.Indices.ForEach(a =>
                 {
-                    Vertices.Add(buffer.Vertices[i].X);
-                    Vertices.Add(buffer.Vertices[i].Y);
-                    Vertices.Add(buffer.Vertices[i].Z);
-                    
-                    Vertices.Add(buffer.Colors[i].X);
-                    Vertices.Add(buffer.Colors[i].Y);
-                    Vertices.Add(buffer.Colors[i].Z);
-                    
-                    Vertices.Add(buffer.TextureCor[i].X);
-                    Vertices.Add(buffer.TextureCor[i].Y);
-                    Vertices.Add(buffer.TextureId[i]);
-                    
-                    Indices.Add((uint)(buffer.Indices[i]+offset));
-                }
-
-                offset += buffer.Indices.Count;
+                    Indices.Add((uint)(a));
+                });
+                offset = Vertices.Count/6;
             }
         }
 
@@ -143,20 +148,20 @@ namespace CoreEngine.Manager
             GL.BufferData(BufferTarget.ElementArrayBuffer, Indices.Count * sizeof(uint), Indices.ToArray(), BufferUsageHint.StaticDraw);
             
             GL.EnableVertexAttribArray(0);
-            GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float,false,9*sizeof(float),0);
+            GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float,false,6*sizeof(float),0);
             
-            GL.EnableVertexAttribArray(1);
-            GL.VertexAttribPointer(1,3,VertexAttribPointerType.Float,false,9*sizeof(float),3*sizeof(float));
+            //GL.EnableVertexAttribArray(1);
+            //GL.VertexAttribPointer(1,3,VertexAttribPointerType.Float,false,9*sizeof(float),3*sizeof(float));
             
             GL.EnableVertexAttribArray(2);
-            GL.VertexAttribPointer(2,2,VertexAttribPointerType.Float,false,9*sizeof(float),6*sizeof(float));
+            GL.VertexAttribPointer(2,2,VertexAttribPointerType.Float,false,6*sizeof(float),3*sizeof(float));
             
             GL.EnableVertexAttribArray(3);
-            GL.VertexAttribPointer(3,1,VertexAttribPointerType.Float,false,9*sizeof(float),8*sizeof(float));
+            GL.VertexAttribPointer(3,1,VertexAttribPointerType.Float,false,6*sizeof(float),5*sizeof(float));
             //return bufferModel;
         }
 
-        public void Render()
+        public int Render()
         {
             _blockManager._shader.Use();
             //_blockManager.BindBlockTextures();
@@ -167,6 +172,7 @@ namespace CoreEngine.Manager
 
             GL.BindVertexArray(_vertexArrayId);
             GL.DrawElements(PrimitiveType.Triangles,Indices.Count,DrawElementsType.UnsignedInt,0);
+            return Indices.Count;
         }
 
         public void DeleteBuffers()

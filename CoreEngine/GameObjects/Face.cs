@@ -5,8 +5,6 @@ namespace CoreEngine.GameObjects
 {
     public class Face
     {
-        public static List<uint> Indices { get; set; }
-        public static List<float> TexturePos { get; set; }
         public float TextureId { get; set; }
         public Dir Dir { get; set; }
         

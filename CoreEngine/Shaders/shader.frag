@@ -2,7 +2,7 @@
 
 out vec3 color;
 
-in vec3 fragmentColor;
+//in vec3 fragmentColor;
 in vec2 v_TexCoord;
 in float v_TexIndex;
 
@@ -44,4 +44,5 @@ void main()
     //color = vec3(v_TexIndex/10,v_TexIndex/10,v_TexIndex/10);
     //color = vec3(v_TexCoord,0);
     color = texture(u_Textures,vec3(v_TexCoord,index)).rgb;
+    //color = vec3(1,0,1);
 }
