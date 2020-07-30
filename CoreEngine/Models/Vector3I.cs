@@ -33,6 +33,11 @@ namespace CoreEngine.Models
         {
             return new Vector3I(a.X /b, a.Y /b, a.Z /b);
         }
+        
+        public static Vector3I operator *(Vector3I a, int b)
+        {
+            return new Vector3I(a.X *b, a.Y *b, a.Z *b);
+        }
 
 
         public Vector3I AddX(int d)
@@ -54,6 +59,11 @@ namespace CoreEngine.Models
         public Vector3 ToFloat()
         {
             return new Vector3(X,Y,Z);
+        }
+
+        public Vector3I Abs()
+        {
+            return new Vector3I(Math.Abs(X),Math.Abs(Y),Math.Abs(Z));
         }
 
         public override bool Equals(object? obj)

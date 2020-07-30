@@ -25,7 +25,7 @@
             : base(width, height, GraphicsMode.Default, title)
         {
             managers = new Managers(new Camera(Vector3.UnitZ * 3 + new Vector3(0,32,0), Width / (float)Height));
-            _fpsCamera = new NoClipCamera();
+            _fpsCamera = new FPSCamera();
             managers.SeedManager(_fpsCamera);
         }
 

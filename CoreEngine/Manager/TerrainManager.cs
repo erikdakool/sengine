@@ -19,7 +19,7 @@ namespace CoreEngine.Manager
         private ConcurrentDictionary<Vector3I, Chunk> _drawing = new ConcurrentDictionary<Vector3I, Chunk>();
         private Vector3I _current;
 
-        private static int Range = 30;
+        private static int Range = 10;
         public TerrainManager()
         {
             _current = new Vector3I(0,0,0);
@@ -176,8 +176,12 @@ namespace CoreEngine.Manager
         private int TopBlockLoc(int x, int z)
         {
             FastNoise myNoise = new FastNoise();
-            myNoise.SetNoiseType(FastNoise.NoiseType.SimplexFractal);
-            int y = -(int)(myNoise.GetNoise(x,z)*50);
+            myNoise.SetNoiseType(FastNoise.NoiseType.PerlinFractal);
+            FastNoise mynoise2 = new FastNoise();
+            mynoise2.SetNoiseType(FastNoise.NoiseType.SimplexFractal);
+            float offset = mynoise2.GetNoise(x, z);
+            
+            int y =10+ (-(int)(myNoise.GetNoise(x*offset,z*offset)*30));
             if (y < 0)
             {
                 y = 0;
@@ -343,11 +347,12 @@ namespace CoreEngine.Manager
 
         public Block GetBlock(Vector3I loc)
         {
-            var chunkLoc = loc / (Chunk.Width *2);
+            var chunkLoc = loc / (Chunk.Width);
             var chunk = GetChunk(chunkLoc);
             if (chunk != null)
             {
-                return chunk.GetBlock(loc - chunkLoc);
+                Console.WriteLine(loc + " " + new Vector3I(loc.X-chunkLoc.X*16,loc.Y-chunkLoc.Y*16,loc.Z-chunkLoc.Z*16)  + " " + chunkLoc);
+                return chunk.GetBlock(new Vector3I(loc.X-chunkLoc.X*16,loc.Y-chunkLoc.Y*16,loc.Z-chunkLoc.Z*16));
             }
             return null;
         }

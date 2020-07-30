@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj": {}
+    "/home/erik/sengine/CoreEngine/CoreEngine.csproj": {}
   },
   "projects": {
-    "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj": {
+    "/home/erik/sengine/CoreEngine/CoreEngine.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj",
+        "projectUniqueName": "/home/erik/sengine/CoreEngine/CoreEngine.csproj",
         "projectName": "CoreEngine",
-        "projectPath": "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj",
-        "packagesPath": "/home/erikdesk/.nuget/packages/",
-        "outputPath": "/home/erikdesk/github/sengine/CoreEngine/obj/",
+        "projectPath": "/home/erik/sengine/CoreEngine/CoreEngine.csproj",
+        "packagesPath": "/home/erik/.nuget/packages/",
+        "outputPath": "/home/erik/sengine/CoreEngine/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/erikdesk/.nuget/NuGet/NuGet.Config"
+          "/home/erik/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -55,31 +55,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[3.1.3, 3.1.3]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.3, 3.1.3]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[3.1.3, 3.1.3]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.103/RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win10-x64": {
-          "#import": []
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.301/RuntimeIdentifierGraph.json"
         }
       }
     }

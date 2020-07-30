@@ -8,11 +8,11 @@ namespace CoreEngine
     {
         private static void Main()
         {
-            using (var window = new App(1200, 720, "LearnOpenTK - Camera"))
-            {
-                window.VSync = VSyncMode.On;
-                window.Run();
-            }
+           using (var window = new App(1200, 720, "LearnOpenTK - Camera"))
+           {
+               window.VSync = VSyncMode.On;
+               window.Run();
+           }
         }
     }
 }

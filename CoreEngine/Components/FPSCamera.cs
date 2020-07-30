@@ -67,6 +67,7 @@ namespace CoreEngine.Components
             var yDiff = _Camera.Position.Y - diff.Y;
             var xDiff = _Camera.Position.X - diff.X;
             var zDiff = _Camera.Position.Z - diff.Z;
+            
             int x = (int) _Camera.Position.X / 2;
             int y = (int) _Camera.Position.Y / 2;
             int z = (int) _Camera.Position.Z/ 2;
@@ -76,51 +77,61 @@ namespace CoreEngine.Components
             x = (int)_Camera.Position.X/ (Chunk.Width*2);
             y = (int) _Camera.Position.Y / (Chunk.Height*2);
             z = (int)_Camera.Position.Z/ (Chunk.Length*2);
+            
             var newChunk = new Vector3I(x,y,z);
 
-            if (yDiff - _Camera.Position.Y > 0)
-            {
-                if(TerrainManager.GetBlock((newBlock))!=null)
-                {
-                    diff.Y = 0;
-                }
-            }else if (yDiff - _Camera.Position.Y < 0)
-            {
-                if(TerrainManager.GetBlock((newBlock))!=null)
-                {
-                   // diff.Y = 0;
-                }
-            }
+            //if (yDiff - _Camera.Position.Y > 0)
+            //{
+            //    if(TerrainManager.GetBlock((newBlock))!=null)
+            //    {
+            //        diff.Y = 0;
+            //    }
+            //}else if (yDiff - _Camera.Position.Y < 0)
+            //{
+            //    if(TerrainManager.GetBlock((newBlock))!=null)
+            //    {
+            //       // diff.Y = 0;
+            //    }
+            //}
+//
+            //if (xDiff - _Camera.Position.X > 0)
+            //{
+            //    if (TerrainManager.GetBlock(newBlock) != null)
+            //    {
+            //        diff.X = 0;
+            //    }
+            //}else if (xDiff - _Camera.Position.X < 0)
+            //{
+            //    if (TerrainManager.GetBlock(newBlock) != null)
+            //    {
+            //        diff.X = 0;
+            //    }
+            //}
+            //
+            //if (xDiff - _Camera.Position.Z > 0)
+            //{
+            //    if (TerrainManager.GetBlock(newBlock) != null)
+            //    {
+            //        diff.Z = 0;
+            //    }
+            //}else if (xDiff - _Camera.Position.Z < 0)
+            //{
+            //    if (TerrainManager.GetBlock(newBlock) != null)
+            //    {
+            //        diff.Z = 0;
+            //    }
+            //}
+            
+            //Console.WriteLine(_Camera.Position/ 2 + " " + diff);
 
-            if (xDiff - _Camera.Position.X > 0)
+            if (TerrainManager.GetBlock(new Vector3I((_Camera.Position+diff) / 2))==null)
             {
-                if (TerrainManager.GetBlock(newBlock) != null)
-                {
-                    diff.X = 0;
-                }
-            }else if (xDiff - _Camera.Position.X < 0)
-            {
-                if (TerrainManager.GetBlock(newBlock) != null)
-                {
-                    diff.X = 0;
-                }
+                _Camera.Position += diff;
             }
-            
-            if (xDiff - _Camera.Position.Z > 0)
+            else
             {
-                if (TerrainManager.GetBlock(newBlock) != null)
-                {
-                    diff.Z = 0;
-                }
-            }else if (xDiff - _Camera.Position.Z < 0)
-            {
-                if (TerrainManager.GetBlock(newBlock) != null)
-                {
-                    diff.Z = 0;
-                }
+                //Console.WriteLine("hit");
             }
-            
-            _Camera.Position += diff;
         }
     }
 }

@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "ucoTA9kNRu/il7fPtaWhlOxFT90YM3MgPyZ4eRpkW17nTiZS1M71YlSdzvV+mGFIT/fSwFyaK4kj519Tjok5dQ==",
+  "dgSpecHash": "c1uNI7vbD21N37hsizCUiZkcmYue1hF6EwaGmNfJsutHWNY+wqe0Q/CG7jRgDBtnQ2XBdlK6Lcg5s2do3jeYRA==",
   "success": true,
-  "projectFilePath": "/home/erikdesk/github/sengine/CoreEngine/CoreEngine.csproj",
+  "projectFilePath": "/home/erik/sengine/CoreEngine/CoreEngine.csproj",
   "expectedPackageFiles": [
-    "/home/erikdesk/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/microsoft.win32.systemevents/4.5.0/microsoft.win32.systemevents.4.5.0.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/noesis.gui/2.2.6/noesis.gui.2.2.6.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/opentk.netstandard/1.0.5.22/opentk.netstandard.1.0.5.22.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/system.drawing.common/4.5.0/system.drawing.common.4.5.0.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
-    "/home/erikdesk/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512"
+    "/home/erik/.nuget/packages/microsoft.netcore.platforms/3.1.0/microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "/home/erik/.nuget/packages/microsoft.win32.registry/4.7.0/microsoft.win32.registry.4.7.0.nupkg.sha512",
+    "/home/erik/.nuget/packages/microsoft.win32.systemevents/4.5.0/microsoft.win32.systemevents.4.5.0.nupkg.sha512",
+    "/home/erik/.nuget/packages/noesis.gui/2.2.6/noesis.gui.2.2.6.nupkg.sha512",
+    "/home/erik/.nuget/packages/opentk.netstandard/1.0.5.22/opentk.netstandard.1.0.5.22.nupkg.sha512",
+    "/home/erik/.nuget/packages/system.drawing.common/4.5.0/system.drawing.common.4.5.0.nupkg.sha512",
+    "/home/erik/.nuget/packages/system.security.accesscontrol/4.7.0/system.security.accesscontrol.4.7.0.nupkg.sha512",
+    "/home/erik/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }
