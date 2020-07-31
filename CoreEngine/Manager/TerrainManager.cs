@@ -347,7 +347,7 @@ namespace CoreEngine.Manager
 
         public Block GetBlock(Vector3I loc)
         {
-            var chunkLoc = loc / (Chunk.Width);
+            var chunkLoc = loc.Floor(Chunk.Width);
             var chunk = GetChunk(chunkLoc);
             if (chunk != null)
             {

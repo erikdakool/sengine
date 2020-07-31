@@ -28,7 +28,8 @@ namespace CoreEngine.Components
             x = (int)_Camera.Position.X/ (Chunk.Width*2);
             y = (int) _Camera.Position.Y / (Chunk.Height*2);
             z = (int)_Camera.Position.Z/ (Chunk.Length*2);
-            _currentChunk = new Vector3I(x,y,z);        }
+            _currentChunk = new Vector3I(x,y,z);        
+        }
 
         public override void Update(float time)
         {
@@ -40,97 +41,33 @@ namespace CoreEngine.Components
             
             if (input.IsKeyDown(Key.W))
             {
-                diff += _Camera.Front * _speed * time; // Forward
+                diff.Z -= _speed * time; // Forward
             }
 
             if (input.IsKeyDown(Key.S))
             {
-                diff -= _Camera.Front * _speed * time; // Backwards
+                diff.Z += _speed * time; // Backwards
             }
             if (input.IsKeyDown(Key.A))
             {
-                diff -= _Camera.Right * _speed * time; // Left
+                diff.X -= _speed * time; // Left
             }
             if (input.IsKeyDown(Key.D))
             {
-                diff += _Camera.Right * _speed * time; // Right
+                diff.X += _speed * time; // Right
             }
             if (input.IsKeyDown(Key.E))
             {
-                diff += _Camera.Up * _speed * time; // Up
+                diff.Y += _speed * time; // Up
             }
             if (input.IsKeyDown(Key.Q))
             {
-                diff -= _Camera.Up * _speed * time; // Down
+                diff.Y -= _speed * time; // Down
             }
 
-            var yDiff = _Camera.Position.Y - diff.Y;
-            var xDiff = _Camera.Position.X - diff.X;
-            var zDiff = _Camera.Position.Z - diff.Z;
-            
-            int x = (int) _Camera.Position.X / 2;
-            int y = (int) _Camera.Position.Y / 2;
-            int z = (int) _Camera.Position.Z/ 2;
-            
-            var newBlock = new Vector3I(x,y,z);
-            
-            x = (int)_Camera.Position.X/ (Chunk.Width*2);
-            y = (int) _Camera.Position.Y / (Chunk.Height*2);
-            z = (int)_Camera.Position.Z/ (Chunk.Length*2);
-            
-            var newChunk = new Vector3I(x,y,z);
-
-            //if (yDiff - _Camera.Position.Y > 0)
-            //{
-            //    if(TerrainManager.GetBlock((newBlock))!=null)
-            //    {
-            //        diff.Y = 0;
-            //    }
-            //}else if (yDiff - _Camera.Position.Y < 0)
-            //{
-            //    if(TerrainManager.GetBlock((newBlock))!=null)
-            //    {
-            //       // diff.Y = 0;
-            //    }
-            //}
-//
-            //if (xDiff - _Camera.Position.X > 0)
-            //{
-            //    if (TerrainManager.GetBlock(newBlock) != null)
-            //    {
-            //        diff.X = 0;
-            //    }
-            //}else if (xDiff - _Camera.Position.X < 0)
-            //{
-            //    if (TerrainManager.GetBlock(newBlock) != null)
-            //    {
-            //        diff.X = 0;
-            //    }
-            //}
-            //
-            //if (xDiff - _Camera.Position.Z > 0)
-            //{
-            //    if (TerrainManager.GetBlock(newBlock) != null)
-            //    {
-            //        diff.Z = 0;
-            //    }
-            //}else if (xDiff - _Camera.Position.Z < 0)
-            //{
-            //    if (TerrainManager.GetBlock(newBlock) != null)
-            //    {
-            //        diff.Z = 0;
-            //    }
-            //}
-            
-            //Console.WriteLine(_Camera.Position/ 2 + " " + diff);
-
-            if (TerrainManager.GetBlock(new Vector3I((_Camera.Position+diff) / 2))==null)
+            if (!Physics.Collision(_Camera.Position, diff))
             {
                 _Camera.Position += diff;
-            }
-            else
-            {
-                //Console.WriteLine("hit");
             }
         }
     }

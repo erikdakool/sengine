@@ -1,3 +1,4 @@
+using CoreEngine.Models;
 using Noesis;
 using OpenTK;
 
@@ -10,10 +11,13 @@ namespace CoreEngine.Manager
             
         }
 
-        public bool Collision(Vector3 loc, Vector3 diff, out Vector3 colDist)
+        public bool Collision(Vector3 loc, Vector3 diff)
         {
-            colDist = new Vector3();
-            return false;
+            var diff2 = new Vector3(-2,-2,-2);
+
+            return !(TerrainManager.GetBlock(new Vector3I((loc + diff) / 2)) == null
+                    && TerrainManager.GetBlock(new Vector3I((loc + diff + diff2) / 2)) == null
+                );
         }
     }
 }

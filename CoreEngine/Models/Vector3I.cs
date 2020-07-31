@@ -33,6 +33,11 @@ namespace CoreEngine.Models
         {
             return new Vector3I(a.X /b, a.Y /b, a.Z /b);
         }
+
+        public Vector3I Floor(int b)
+        {
+            return new Vector3I((int)Math.Floor((float)X /b), (int)Math.Floor((float)Y /b), (int)Math.Floor((float)Z /b));
+        }
         
         public static Vector3I operator *(Vector3I a, int b)
         {

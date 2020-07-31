@@ -39,12 +39,12 @@ namespace CoreEngine.GameObjects
 
         
         private readonly BlockInfoModel BlockInfoModel;
-        private Vector3 Pos { get;}
+        private Vector3 _chunkPos { get;}
         
-        public Block(BlockInfoModel blockInfoModel, Vector3 pos)
+        public Block(BlockInfoModel blockInfoModel, Vector3 chunkPos)
         {
             BlockInfoModel = blockInfoModel;
-            Pos = pos;
+            _chunkPos = chunkPos;
 
             //AddFace(Dir.TOP);
             //AddFace(Dir.LEFT);
@@ -88,34 +88,16 @@ namespace CoreEngine.GameObjects
             foreach (var face in Faces)
             {
                 int texCounter = 0;
-                //face.Indices.ForEach(a =>
-                //{
-                //    ret.Vertices.Add(SquareVertices[(int)a] + (Pos*2));
-                //    ret.Colors.Add(SquareColors[(int)a]);
-
-                //    
-                //    
-                //    var texcor = new Vector2();
-                //    texcor.X = face.TexturePos[texCounter];
-                //    texcor.Y = face.TexturePos[texCounter + 1];
-                //    ret.TextureCor.Add(texcor);
-                //    //ret.TextureCor.Add(SquareTextureCor[(int)a]);
-                //    
-                //    ret.TextureId.Add(face.TextureId);
-                //    ret.Indices.Add((uint)e);
-                //    e++;
-                //    texCounter += 2;list
-                //});
-
+                
                 Dictionary<uint, uint> indDict = new Dictionary<uint, uint>();
                 foreach (var a in Face.Ind[face.Dir])
                 {
                     if (!indDict.ContainsKey(a))
                     {
                         indDict.Add(a,(uint) indiceCounter);
-                        Vertices.Add(SquareVertices[(int)a].X +Pos.X*2);
-                        Vertices.Add(SquareVertices[(int)a].Y +Pos.Y*2);
-                        Vertices.Add(SquareVertices[(int)a].Z +Pos.Z*2);
+                        Vertices.Add(SquareVertices[(int)a].X +_chunkPos.X*2);
+                        Vertices.Add(SquareVertices[(int)a].Y +_chunkPos.Y*2);
+                        Vertices.Add(SquareVertices[(int)a].Z +_chunkPos.Z*2);
                         Vertices.Add(Face.Tex[face.Dir][texCounter]);
                         Vertices.Add(Face.Tex[face.Dir][texCounter+1]);
                         Vertices.Add(face.TextureId);
@@ -135,7 +117,7 @@ namespace CoreEngine.GameObjects
 
         public override string ToString()
         {
-            return Pos.ToString();
+            return _chunkPos.ToString();
         }
     }
 }

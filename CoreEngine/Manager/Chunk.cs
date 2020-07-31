@@ -47,17 +47,7 @@ namespace CoreEngine.Manager
             foreach (var pair in Blocks)
             {
                 pair.Value.ClearFaces();
-                //if (pair.Key.X == 0)
-                //{
-                //    var chunk = TerrainManager.GetChunk(_loc.AddX(-1));
-                //    if (chunk != null && !chunk.BlockExists(pair.Key.AddX(-1)))
-                //    {
-                //        pair.Value.AddFace(Dir.LEFT);
-                //    }
-                //}else if (!BlockExists(pair.Key.AddX(-1)))
-                //{
-                //    pair.Value.AddFace(Dir.LEFT);
-                //}
+   
                 if (VisibleSide(pair.Key,Dir.LEFT))
                 {
                     pair.Value.AddFace(Dir.LEFT);
@@ -93,22 +83,7 @@ namespace CoreEngine.Manager
             foreach (var keyValuePair in Blocks)
             {
                 keyValuePair.Value.UpdateBufferData(offset);
-                //for (int i = 0; i < buffer.Indices.Count; i++)
-                //{
-                //    Vertices.Add(buffer.Vertices[i].X);
-                //    Vertices.Add(buffer.Vertices[i].Y);
-                //    Vertices.Add(buffer.Vertices[i].Z);
-                //    
-                //    //Vertices.Add(buffer.Colors[i].X);
-                //    //Vertices.Add(buffer.Colors[i].Y);
-                //    //Vertices.Add(buffer.Colors[i].Z);
-                //    
-                //    Vertices.Add(buffer.TextureCor[i].X);
-                //    Vertices.Add(buffer.TextureCor[i].Y);
-                //    Vertices.Add(buffer.TextureId[i]);
-                //    
-                //    Indices.Add((uint)(buffer.Indices[i]+offset));
-                //}
+ 
                 Vertices.AddRange(keyValuePair.Value.Vertices);
                 keyValuePair.Value.Indices.ForEach(a =>
                 {
@@ -120,19 +95,9 @@ namespace CoreEngine.Manager
 
         public void UpdateBuffer()
         {
-            
-            _blockManager._shader.Use();
-            
-            var sampler = GL.GetUniformLocation(_blockManager._shader.Handle, "u_Textures");
-
-            //int[] samplers = Enumerable.Range(0, 8).ToArray();
-            //GL.Uniform1i(sampler,8,samplers);
-            //GL.Uniform1(sampler,1);
-            
             _vertexArrayId = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArrayId);
-            
-            
+
             _vertexBufferId = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer,_vertexBufferId);
             GL.BufferData(BufferTarget.ArrayBuffer, Vertices.Count * sizeof(float), Vertices.ToArray(), BufferUsageHint.StaticDraw);
@@ -152,7 +117,6 @@ namespace CoreEngine.Manager
             
             GL.EnableVertexAttribArray(3);
             GL.VertexAttribPointer(3,1,VertexAttribPointerType.Float,false,6*sizeof(float),5*sizeof(float));
-            //return bufferModel;
         }
 
         public int Render()
