@@ -36,9 +36,13 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "Noesis.App": {
+              "target": "Package",
+              "version": "[3.0.3, )"
+            },
             "Noesis.GUI": {
               "target": "Package",
-              "version": "[2.2.6, )"
+              "version": "[3.0.3, )"
             },
             "OpenTK.NetStandard": {
               "target": "Package",

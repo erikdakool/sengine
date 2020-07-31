@@ -4,6 +4,6 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)noesis.gui/2.2.6/build/netcoreapp2.0/Noesis.GUI.targets" Condition="Exists('$(NuGetPackageRoot)noesis.gui/2.2.6/build/netcoreapp2.0/Noesis.GUI.targets')" />
+    <Import Project="$(NuGetPackageRoot)noesis.gui/3.0.3/build/netcoreapp2.0/Noesis.GUI.targets" Condition="Exists('$(NuGetPackageRoot)noesis.gui/3.0.3/build/netcoreapp2.0/Noesis.GUI.targets')" />
   </ImportGroup>
 </Project>

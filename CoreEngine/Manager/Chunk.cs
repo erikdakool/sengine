@@ -127,6 +127,7 @@ namespace CoreEngine.Manager
             //_shader.SetMatrix4("model", model);
             _blockManager._shader.SetMatrix4("view", _Camera.GetViewMatrix());
             _blockManager._shader.SetMatrix4("projection", _Camera.GetProjectionMatrix());
+            _blockManager._shader.SetVector3("lightColor",new Vector3(1.0f,.1f,.1f));
 
             GL.BindVertexArray(_vertexArrayId);
             GL.DrawElements(PrimitiveType.Triangles,Indices.Count,DrawElementsType.UnsignedInt,0);

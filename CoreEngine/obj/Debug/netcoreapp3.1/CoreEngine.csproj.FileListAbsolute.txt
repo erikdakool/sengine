@@ -46,13 +46,11 @@
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/win/lib/netcoreapp2.0/Microsoft.Win32.SystemEvents.dll
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/android-arm/native/libNoesis.so
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/android-arm64/native/libNoesis.so
-/home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/android-x86/native/libNoesis.so
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/ios/native/Symbols.cpp
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/ios/native/libNoesis.a
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/linux-arm/native/libNoesis.so
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/linux-arm64/native/libNoesis.so
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/linux-x64/native/libNoesis.so
-/home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/osx-x64/native/Noesis.bundle/Contents/MacOS/Noesis
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/win-x64/native/Noesis.dll
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/win-x86/native/Noesis.dll
 /home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/win10-arm/native/Noesis.dll
@@ -68,3 +66,6 @@
 /home/erik/sengine/CoreEngine/obj/Debug/netcoreapp3.1/CoreEngine.dll
 /home/erik/sengine/CoreEngine/obj/Debug/netcoreapp3.1/CoreEngine.pdb
 /home/erik/sengine/CoreEngine/obj/Debug/netcoreapp3.1/CoreEngine.genruntimeconfig.cache
+/home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/Noesis.App.dll
+/home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/Noesis.App.Theme.dll
+/home/erik/sengine/CoreEngine/bin/Debug/netcoreapp3.1/runtimes/osx-x64/native/Noesis.dylib

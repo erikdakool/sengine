@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "CoreEngine/1.0.0": {
         "dependencies": {
-          "Noesis.GUI": "2.2.6",
+          "Noesis.App": "3.0.3",
+          "Noesis.GUI": "3.0.3",
           "OpenTK.NetStandard": "1.0.5.22"
         },
         "runtime": {
@@ -41,11 +42,34 @@
           }
         }
       },
-      "Noesis.GUI/2.2.6": {
+      "Noesis.App/3.0.3": {
+        "dependencies": {
+          "Noesis.App.Theme": "3.0.3",
+          "Noesis.GUI": "3.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Noesis.App.dll": {
+            "assemblyVersion": "3.0.3.9446",
+            "fileVersion": "3.0.3.9446"
+          }
+        }
+      },
+      "Noesis.App.Theme/3.0.3": {
+        "dependencies": {
+          "Noesis.GUI": "3.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Noesis.App.Theme.dll": {
+            "assemblyVersion": "3.0.3.9446",
+            "fileVersion": "3.0.3.9446"
+          }
+        }
+      },
+      "Noesis.GUI/3.0.3": {
         "runtime": {
           "lib/netstandard2.0/Noesis.GUI.dll": {
-            "assemblyVersion": "2.2.6.8609",
-            "fileVersion": "2.2.6.8609"
+            "assemblyVersion": "3.0.3.9446",
+            "fileVersion": "3.0.3.9446"
           }
         },
         "runtimeTargets": {
@@ -56,11 +80,6 @@
           },
           "runtimes/android-arm64/native/libNoesis.so": {
             "rid": "android-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/android-x86/native/libNoesis.so": {
-            "rid": "android-x86",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
@@ -89,7 +108,7 @@
             "assetType": "native",
             "fileVersion": "0.0.0.0"
           },
-          "runtimes/osx-x64/native/Noesis.bundle/Contents/MacOS/Noesis": {
+          "runtimes/osx-x64/native/Noesis.dylib": {
             "rid": "osx-x64",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
@@ -195,12 +214,26 @@
       "path": "microsoft.win32.systemevents/4.5.0",
       "hashPath": "microsoft.win32.systemevents.4.5.0.nupkg.sha512"
     },
-    "Noesis.GUI/2.2.6": {
+    "Noesis.App/3.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-y3z5AfXAZJWONMX3gG8Qehqm1viXTFzcrCzLttgvNK+x1Cigf2ZXjC+DoEb9m9yQLi/uy9PiRplYj7o6uOQYFA==",
-      "path": "noesis.gui/2.2.6",
-      "hashPath": "noesis.gui.2.2.6.nupkg.sha512"
+      "sha512": "sha512-+vm1hr9b2KFQnjJB7IRFpR6pSSwEAxNDOO0c/slQ97j0gFLuMb99O0tReheoX24PfsOzRGOr8/VkCMACXTpYGA==",
+      "path": "noesis.app/3.0.3",
+      "hashPath": "noesis.app.3.0.3.nupkg.sha512"
+    },
+    "Noesis.App.Theme/3.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-EKxXhBrpYdzgxv2cxTDgKz4wM35QPhh1oN4lFEJk1hKeUa1JeZiq9/U97D4vTQdaexW+tZS0b6XGee3f4t9ORw==",
+      "path": "noesis.app.theme/3.0.3",
+      "hashPath": "noesis.app.theme.3.0.3.nupkg.sha512"
+    },
+    "Noesis.GUI/3.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Fx1YzVqhnbEIaDaQo2zd9QPpumz4cZxpEyJqvu8BDnKWZDgTnFeEZVhlOxXrw8ev0iSrqUo28TqjAegZ2I+jTg==",
+      "path": "noesis.gui/3.0.3",
+      "hashPath": "noesis.gui.3.0.3.nupkg.sha512"
     },
     "OpenTK.NetStandard/1.0.5.22": {
       "type": "package",
